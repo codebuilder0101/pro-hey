@@ -12,6 +12,7 @@ import {
   useState
 } from "react";
 import toast from "react-hot-toast";
+import usePollTransactionStatus from "src/hooks/usePollTransactionStatus";
 import usePreventScrollOnNumberInput from "src/hooks/usePreventScrollOnNumberInput";
 import useTransactionLifecycle from "src/hooks/useTransactionLifecycle";
 import { formatUnits } from "viem";
@@ -31,6 +32,7 @@ const Fund: FC<FundProps> = ({ isHeyTip, useNativeToken, onSuccess }) => {
   usePreventScrollOnNumberInput(inputRef as RefObject<HTMLInputElement>);
   const { address } = useAccount();
   const handleTransactionLifecycle = useTransactionLifecycle();
+  const pollTransactionStatus = usePollTransactionStatus();
   const symbol = useNativeToken ? "GHO" : "wGHO";
 
   const { data, isLoading } = useBalance({
@@ -40,15 +42,17 @@ const Fund: FC<FundProps> = ({ isHeyTip, useNativeToken, onSuccess }) => {
   });
 
   const onCompleted = (hash: string) => {
-    console.log("onCompleted", hash);
     setAmount(2);
     setOther(false);
     onSuccess?.();
     setIsSubmitting(false);
     trackEvent(Events.Account.DepositFunds);
-    toast.success(
-      isHeyTip ? "Thank you for your support!" : "Funded account successfully"
-    );
+    toast.success("Deposit initiated");
+    pollTransactionStatus(hash, () => {
+      toast.success(
+        isHeyTip ? "Thank you for your support!" : "Funded account successfully"
+      );
+    });
   };
 
   const onError = (error: any) => {
