@@ -46,5 +46,8 @@ git push --force origin "$CURRENT_BRANCH"
 # Clean up
 git gc --aggressive --prune=all
 
+# Delete the backup branch
+git branch -D "$BACKUP_BRANCH"
+
 echo "✔ Git history has been squashed into a single commit."
 echo "✔ A backup branch '$BACKUP_BRANCH' has been created in case you need to restore."
