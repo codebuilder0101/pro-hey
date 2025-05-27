@@ -4,8 +4,7 @@ import usePollTransactionStatus from "@/hooks/usePollTransactionStatus";
 import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import {
-  DEFAULT_COLLECT_TOKEN,
-  DEFAULT_TOKEN,
+  NATIVE_TOKEN_SYMBOL,
   STATIC_IMAGES_URL,
   SUBSCRIPTION_AMOUNT,
   SUBSCRIPTION_POST_ID
@@ -26,7 +25,7 @@ const Subscribe = () => {
   const pollTransactionStatus = usePollTransactionStatus();
 
   const { data: balance, loading: balanceLoading } = useAccountBalancesQuery({
-    variables: { request: { tokens: [DEFAULT_COLLECT_TOKEN] } },
+    variables: { request: { includeNative: true } },
     pollInterval: 3000,
     skip: !currentAccount?.address,
     fetchPolicy: "no-cache"
@@ -42,7 +41,7 @@ const Subscribe = () => {
   };
 
   const erc20Balance =
-    balance?.accountBalances[0].__typename === "Erc20Amount"
+    balance?.accountBalances[0].__typename === "NativeAmount"
       ? Number(balance.accountBalances[0].value).toFixed(2)
       : 0;
 
@@ -67,8 +66,7 @@ const Subscribe = () => {
     setIsSubmitting(true);
 
     const tipping: TippingAmountInput = {
-      currency: DEFAULT_COLLECT_TOKEN,
-      value: SUBSCRIPTION_AMOUNT.toString()
+      native: SUBSCRIPTION_AMOUNT.toString()
     };
 
     return executeTipAction({
@@ -102,13 +100,12 @@ const Subscribe = () => {
           disabled={isSubmitting}
           loading={isSubmitting}
         >
-          Subscribe for {SUBSCRIPTION_AMOUNT} WGHO/year
+          Subscribe for {SUBSCRIPTION_AMOUNT} {NATIVE_TOKEN_SYMBOL}/year
         </Button>
       ) : (
         <TransferFundButton
           className="w-sm"
-          token={DEFAULT_TOKEN}
-          label={`Transfer ${SUBSCRIPTION_AMOUNT} WGHO to your account`}
+          label={`Transfer ${SUBSCRIPTION_AMOUNT} ${NATIVE_TOKEN_SYMBOL} to your account`}
           outline
         />
       )}

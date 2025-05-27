@@ -7,8 +7,7 @@ import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { useProStore } from "@/store/persisted/useProStore";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import {
-  DEFAULT_COLLECT_TOKEN,
-  DEFAULT_TOKEN,
+  NATIVE_TOKEN_SYMBOL,
   PRO_POST_ID,
   PRO_SUBSCRIPTION_AMOUNT,
   STATIC_IMAGES_URL
@@ -30,7 +29,7 @@ const ProModal = () => {
   const pollTransactionStatus = usePollTransactionStatus();
 
   const { data: balance, loading: balanceLoading } = useAccountBalancesQuery({
-    variables: { request: { tokens: [DEFAULT_COLLECT_TOKEN] } },
+    variables: { request: { includeNative: true } },
     pollInterval: 3000,
     skip: !currentAccount?.address,
     fetchPolicy: "no-cache"
@@ -46,7 +45,7 @@ const ProModal = () => {
   };
 
   const erc20Balance =
-    balance?.accountBalances[0].__typename === "Erc20Amount"
+    balance?.accountBalances[0].__typename === "NativeAmount"
       ? Number(balance.accountBalances[0].value).toFixed(2)
       : 0;
 
@@ -71,8 +70,7 @@ const ProModal = () => {
     setIsSubmitting(true);
 
     const tipping: TippingAmountInput = {
-      currency: DEFAULT_COLLECT_TOKEN,
-      value: PRO_SUBSCRIPTION_AMOUNT.toString()
+      native: PRO_SUBSCRIPTION_AMOUNT.toString()
     };
 
     return executeTipAction({
@@ -153,13 +151,12 @@ const ProModal = () => {
           disabled={isSubmitting}
           loading={isSubmitting}
         >
-          Subscribe for {PRO_SUBSCRIPTION_AMOUNT} WGHO/month
+          Subscribe for {PRO_SUBSCRIPTION_AMOUNT} {NATIVE_TOKEN_SYMBOL}/month
         </Button>
       ) : (
         <TransferFundButton
           className="w-full"
-          token={DEFAULT_TOKEN}
-          label={`Transfer ${PRO_SUBSCRIPTION_AMOUNT} WGHO to your account`}
+          label={`Transfer ${PRO_SUBSCRIPTION_AMOUNT} ${NATIVE_TOKEN_SYMBOL} to your account`}
           outline
         />
       )}

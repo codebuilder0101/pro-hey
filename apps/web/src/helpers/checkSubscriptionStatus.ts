@@ -1,7 +1,7 @@
 import {
+  NATIVE_TOKEN_SYMBOL,
   SUBSCRIPTION_AMOUNT,
-  SUBSCRIPTION_DURATION_DAYS,
-  WRAPPED_NATIVE_TOKEN_SYMBOL
+  SUBSCRIPTION_DURATION_DAYS
 } from "@hey/data/constants";
 import type { PlatformFeesFragment } from "@hey/indexer";
 
@@ -19,9 +19,9 @@ const checkSubscriptionStatus = (
     ? new Date(lastSubscription.date)
     : null;
   const tipAmountUsd = Number.parseFloat(
-    lastSubscription?.amount?.value || "0"
+    lastSubscription?.tipAmount?.value || "0"
   );
-  const assetSymbol = lastSubscription?.amount?.asset?.symbol;
+  const assetSymbol = lastSubscription?.tipAmount?.asset?.symbol;
 
   const daysSinceTip = lastSubscriptionDate
     ? (Date.now() - lastSubscriptionDate.getTime()) / (1000 * 60 * 60 * 24)
@@ -30,7 +30,7 @@ const checkSubscriptionStatus = (
   const hasSubscribed =
     daysSinceTip <= SUBSCRIPTION_DURATION_DAYS &&
     tipAmountUsd >= SUBSCRIPTION_AMOUNT &&
-    assetSymbol === WRAPPED_NATIVE_TOKEN_SYMBOL;
+    assetSymbol === NATIVE_TOKEN_SYMBOL;
 
   const expiresAt =
     hasSubscribed && lastSubscriptionDate
