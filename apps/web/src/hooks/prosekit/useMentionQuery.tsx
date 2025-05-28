@@ -1,3 +1,4 @@
+import hasSubscribed from "@/helpers/hasSubscribed";
 import getAccount from "@hey/helpers/getAccount";
 import getAvatar from "@hey/helpers/getAvatar";
 import { AccountsOrderBy, useAccountsLazyQuery } from "@hey/indexer";
@@ -11,6 +12,7 @@ export type MentionAccount = {
   username: string;
   name: string;
   picture: string;
+  subscribed: boolean;
 };
 
 const useMentionQuery = (query: string): MentionAccount[] => {
@@ -46,7 +48,8 @@ const useMentionQuery = (query: string): MentionAccount[] => {
             displayUsername: getAccount(account).usernameWithPrefix,
             username: getAccount(account).username,
             name: getAccount(account).name,
-            picture: getAvatar(account)
+            picture: getAvatar(account),
+            subscribed: hasSubscribed(account)
           })
         );
 
