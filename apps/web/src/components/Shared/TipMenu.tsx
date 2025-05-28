@@ -213,6 +213,7 @@ const TipMenu = ({ closePopover, post, account }: TipMenuProps) => {
         <div>
           <Input
             className="no-spinner"
+            min={0}
             max={1000}
             onChange={onOtherAmount}
             placeholder="300"
