@@ -1,6 +1,5 @@
 import AccountPreview from "@/components/Shared/Account/AccountPreview";
 import { Image } from "@/components/Shared/UI";
-import hasSubscribed from "@/helpers/hasSubscribed";
 import stopEventPropagation from "@/helpers/stopEventPropagation";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import getAccount from "@hey/helpers/getAccount";
@@ -51,7 +50,7 @@ export const NotificationAccountName = ({
         onClick={stopEventPropagation}
       >
         <span>{getAccount(account).name}</span>
-        {hasSubscribed(account) && (
+        {account.hasSubscribed && (
           <CheckBadgeIcon className="size-4 text-brand-500" />
         )}
       </AccountLink>

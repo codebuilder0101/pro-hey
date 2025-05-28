@@ -1,7 +1,6 @@
 import { Image } from "@/components/Shared/UI";
 import cn from "@/helpers/cn";
 import getMentions from "@/helpers/getMentions";
-import hasSubscribed from "@/helpers/hasSubscribed";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import getAccount from "@hey/helpers/getAccount";
 import getAvatar from "@hey/helpers/getAvatar";
@@ -57,7 +56,7 @@ const SingleAccount = ({
         )}
       >
         <div className="truncate font-semibold">{getAccount(account).name}</div>
-        {(isVerified || hasSubscribed(account)) && (
+        {(isVerified || account.hasSubscribed) && (
           <CheckBadgeIcon className="size-4 text-brand-500" />
         )}
       </div>

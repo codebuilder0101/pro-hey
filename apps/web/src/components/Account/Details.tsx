@@ -6,7 +6,6 @@ import formatDate from "@/helpers/datetime/formatDate";
 import getAccountAttribute from "@/helpers/getAccountAttribute";
 import getFavicon from "@/helpers/getFavicon";
 import getMentions from "@/helpers/getMentions";
-import hasSubscribed from "@/helpers/hasSubscribed";
 import { useTheme } from "@/hooks/useTheme";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { CalendarIcon, MapPinIcon } from "@heroicons/react/24/outline";
@@ -103,7 +102,7 @@ const Details = ({
       <div className="space-y-1 py-2">
         <div className="flex items-center gap-1.5">
           <H3 className="truncate">{getAccount(account).name}</H3>
-          {hasSubscribed(account) && (
+          {account.hasSubscribed && (
             <Tooltip content="Verified" placement="right">
               <CheckBadgeIcon className="size-5 text-brand-500" />
             </Tooltip>

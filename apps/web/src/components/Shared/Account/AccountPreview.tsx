@@ -1,6 +1,5 @@
 import { Card, Image } from "@/components/Shared/UI";
 import getMentions from "@/helpers/getMentions";
-import hasSubscribed from "@/helpers/hasSubscribed";
 import nFormatter from "@/helpers/nFormatter";
 import truncateByWords from "@/helpers/truncateByWords";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
@@ -88,7 +87,7 @@ const AccountPreview = ({
       <div>
         <div className="flex max-w-sm items-center gap-1 truncate">
           <div>{getAccount(account).name}</div>
-          {hasSubscribed(account) && (
+          {account.hasSubscribed && (
             <CheckBadgeIcon className="size-4 text-brand-500" />
           )}
         </div>

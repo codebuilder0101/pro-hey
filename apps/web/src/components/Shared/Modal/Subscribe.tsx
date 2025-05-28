@@ -1,7 +1,6 @@
 import { Button, Image, Spinner, Tooltip } from "@/components/Shared/UI";
 import errorToast from "@/helpers/errorToast";
 import getTokenImage from "@/helpers/getTokenImage";
-import checkHasSubscribed from "@/helpers/hasSubscribed";
 import usePollTransactionStatus from "@/hooks/usePollTransactionStatus";
 import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
@@ -84,7 +83,7 @@ const Subscribe = () => {
     });
   };
 
-  const hasSubscribed = checkHasSubscribed(currentAccount as AccountFragment);
+  const hasSubscribed = currentAccount?.hasSubscribed;
 
   return (
     <div className="mx-5 my-10 flex flex-col items-center gap-y-8">
