@@ -9,12 +9,13 @@ import {
   DEFAULT_COLLECT_TOKEN,
   STATIC_IMAGES_URL,
   SUBSCRIPTION_AMOUNT,
+  SUBSCRIPTION_GROUP,
   WRAPPED_NATIVE_TOKEN_SYMBOL
 } from "@hey/data/constants";
 import {
   type AccountFragment,
   useAccountBalancesQuery,
-  useCreateUsernameMutation
+  useJoinGroupMutation
 } from "@hey/indexer";
 import { useState } from "react";
 import TransferFundButton from "../Account/Fund/FundButton";
@@ -49,10 +50,10 @@ const Subscribe = () => {
 
   const canSubscribe = Number(erc20Balance) >= SUBSCRIPTION_AMOUNT;
 
-  const [createUsername] = useCreateUsernameMutation({
-    onCompleted: async ({ createUsername }) => {
+  const [joinGroup] = useJoinGroupMutation({
+    onCompleted: async ({ joinGroup }) => {
       return await handleTransactionLifecycle({
-        transactionData: createUsername,
+        transactionData: joinGroup,
         onCompleted,
         onError
       });
@@ -60,26 +61,11 @@ const Subscribe = () => {
     onError
   });
 
-  const handleSubscribe = () => {
+  const handleSubscribe = async () => {
     setIsSubmitting(true);
 
-    return createUsername({
-      variables: {
-        request: {
-          autoAssign: true,
-          username: {
-            localName: `${currentAccount?.address}${new Date()
-              .toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit"
-              })
-              .replaceAll("/", "")
-              .toLowerCase()}`,
-            namespace: "0x242861e7FA8704043035CD09F3d8798B1B1a1552"
-          }
-        }
-      }
+    return await joinGroup({
+      variables: { request: { group: SUBSCRIPTION_GROUP } }
     });
   };
 
