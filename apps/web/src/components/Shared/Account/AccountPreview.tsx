@@ -1,7 +1,9 @@
 import { Card, Image } from "@/components/Shared/UI";
 import getMentions from "@/helpers/getMentions";
+import hasSubscribed from "@/helpers/hasSubscribed";
 import nFormatter from "@/helpers/nFormatter";
 import truncateByWords from "@/helpers/truncateByWords";
+import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import getAccount from "@hey/helpers/getAccount";
 import getAvatar from "@hey/helpers/getAvatar";
 import { type AccountStats, useFullAccountLazyQuery } from "@hey/indexer";
@@ -84,7 +86,12 @@ const AccountPreview = ({
 
     const UserName = () => (
       <div>
-        <div className="max-w-sm truncate">{getAccount(account).name}</div>
+        <div className="flex max-w-sm items-center gap-1 truncate">
+          <div>{getAccount(account).name}</div>
+          {hasSubscribed(account) && (
+            <CheckBadgeIcon className="size-4 text-brand-500" />
+          )}
+        </div>
         <span>
           <Slug
             className="text-sm"
