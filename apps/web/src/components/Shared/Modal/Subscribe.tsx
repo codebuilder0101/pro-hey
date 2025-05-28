@@ -1,10 +1,9 @@
-import { Button, Image, Spinner } from "@/components/Shared/UI";
+import { Button, Image, Spinner, Tooltip } from "@/components/Shared/UI";
 import errorToast from "@/helpers/errorToast";
+import getTokenImage from "@/helpers/getTokenImage";
 import usePollTransactionStatus from "@/hooks/usePollTransactionStatus";
 import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
-import { signOut } from "@/store/persisted/useAuthStore";
-import { usePreferencesStore } from "@/store/persisted/usePreferencesStore";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import {
   DEFAULT_COLLECT_TOKEN,
@@ -23,20 +22,9 @@ import SingleAccount from "../Account/SingleAccount";
 
 const Subscribe = () => {
   const { currentAccount } = useAccountStore();
-  const { resetPreferences } = usePreferencesStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleTransactionLifecycle = useTransactionLifecycle();
   const pollTransactionStatus = usePollTransactionStatus();
-
-  const handleLogout = async () => {
-    try {
-      resetPreferences();
-      signOut();
-      location.reload();
-    } catch (error) {
-      errorToast(error);
-    }
-  };
 
   const { data: balance, loading: balanceLoading } = useAccountBalancesQuery({
     variables: { request: { tokens: [DEFAULT_COLLECT_TOKEN] } },
@@ -99,14 +87,24 @@ const Subscribe = () => {
     <div className="mx-5 my-10 flex flex-col items-center gap-y-8">
       <Image
         src={`${STATIC_IMAGES_URL}/pro.png`}
-        alt="Subscribe"
-        width={112}
-        className="w-28"
+        alt="Pro"
+        width={128}
+        className="w-32"
       />
-      <div className="max-w-md text-center text-gray-500 text-sm">
-        Subscribe to Hey to access the platform. A subscription is required to
-        use any features and helps us keep building and improving the experience
-        for everyone.
+      <div className="max-w-md text-center text-gray-500">
+        Get started with Hey Pro for{" "}
+        <b className="inline-flex items-center gap-x-1">
+          {SUBSCRIPTION_AMOUNT}{" "}
+          <Tooltip content={WRAPPED_NATIVE_TOKEN_SYMBOL} placement="top">
+            <img
+              src={getTokenImage(WRAPPED_NATIVE_TOKEN_SYMBOL)}
+              alt={WRAPPED_NATIVE_TOKEN_SYMBOL}
+              className="size-5"
+            />
+          </Tooltip>
+          /year
+        </b>
+        .
       </div>
       <SingleAccount
         account={currentAccount as AccountFragment}
@@ -124,7 +122,7 @@ const Subscribe = () => {
         <div className="flex items-center gap-x-1.5">
           <CheckCircleIcon className="size-5" />
           <span className="text-sm">
-            Unlock all Hey features - no limits, no fuss
+            Unlock exclusive Hey features - no limits, no fuss
           </span>
         </div>
         <div className="flex items-center gap-x-1.5">
@@ -147,7 +145,7 @@ const Subscribe = () => {
           disabled={isSubmitting}
           loading={isSubmitting}
         >
-          Subscribe for {SUBSCRIPTION_AMOUNT} {WRAPPED_NATIVE_TOKEN_SYMBOL}/year
+          Subscribe for ${SUBSCRIPTION_AMOUNT}/year
         </Button>
       ) : (
         <TransferFundButton
@@ -161,10 +159,7 @@ const Subscribe = () => {
         />
       )}
       <div className="-mt-1 text-center text-gray-500 text-xs">
-        <button className="underline" type="button" onClick={handleLogout}>
-          Logout
-        </button>{" "}
-        and try with different account
+        One-time payment. Manual renewal required next year.
       </div>
     </div>
   );
