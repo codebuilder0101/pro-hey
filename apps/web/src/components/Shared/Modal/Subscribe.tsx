@@ -1,6 +1,7 @@
 import { Button, Image, Spinner, Tooltip } from "@/components/Shared/UI";
 import errorToast from "@/helpers/errorToast";
 import getTokenImage from "@/helpers/getTokenImage";
+import checkHasSubscribed from "@/helpers/hasSubscribed";
 import usePollTransactionStatus from "@/hooks/usePollTransactionStatus";
 import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
@@ -83,6 +84,8 @@ const Subscribe = () => {
     });
   };
 
+  const hasSubscribed = checkHasSubscribed(currentAccount as AccountFragment);
+
   return (
     <div className="mx-5 my-10 flex flex-col items-center gap-y-8">
       <Image
@@ -92,19 +95,27 @@ const Subscribe = () => {
         className="w-32"
       />
       <div className="max-w-md text-center text-gray-500">
-        Get started with Hey Pro for{" "}
-        <b className="inline-flex items-center gap-x-1">
-          {SUBSCRIPTION_AMOUNT}{" "}
-          <Tooltip content={WRAPPED_NATIVE_TOKEN_SYMBOL} placement="top">
-            <img
-              src={getTokenImage(WRAPPED_NATIVE_TOKEN_SYMBOL)}
-              alt={WRAPPED_NATIVE_TOKEN_SYMBOL}
-              className="size-5"
-            />
-          </Tooltip>
-          /year
-        </b>
-        .
+        {hasSubscribed ? (
+          <div className="text-gray-500">
+            Thanks for being a valuable <b>Hey Pro</b> member!
+          </div>
+        ) : (
+          <>
+            Get started with Hey Pro for{" "}
+            <b className="inline-flex items-center gap-x-1">
+              {SUBSCRIPTION_AMOUNT}{" "}
+              <Tooltip content={WRAPPED_NATIVE_TOKEN_SYMBOL} placement="top">
+                <img
+                  src={getTokenImage(WRAPPED_NATIVE_TOKEN_SYMBOL)}
+                  alt={WRAPPED_NATIVE_TOKEN_SYMBOL}
+                  className="size-5"
+                />
+              </Tooltip>
+              /year
+            </b>
+            .
+          </>
+        )}
       </div>
       <SingleAccount
         account={currentAccount as AccountFragment}
@@ -112,55 +123,59 @@ const Subscribe = () => {
         showUserPreview={false}
         isVerified
       />
-      <div className="flex flex-col items-center gap-y-2 text-gray-500">
-        <div className="flex items-center gap-x-1.5">
-          <CheckCircleIcon className="size-5" />
-          <span className="text-sm">
-            Get a badge that highlights your subscription
-          </span>
-        </div>
-        <div className="flex items-center gap-x-1.5">
-          <CheckCircleIcon className="size-5" />
-          <span className="text-sm">
-            Unlock exclusive Hey features - no limits, no fuss
-          </span>
-        </div>
-        <div className="flex items-center gap-x-1.5">
-          <CheckCircleIcon className="size-5" />
-          <span className="text-sm">
-            Fuel the growth of the Hey team and platform
-          </span>
-        </div>
-      </div>
-      {balanceLoading ? (
-        <Button
-          className="w-sm"
-          disabled
-          icon={<Spinner className="my-1" size="xs" />}
-        />
-      ) : canSubscribe ? (
-        <Button
-          className="w-sm"
-          onClick={handleSubscribe}
-          disabled={isSubmitting}
-          loading={isSubmitting}
-        >
-          Subscribe for ${SUBSCRIPTION_AMOUNT}/year
-        </Button>
-      ) : (
-        <TransferFundButton
-          className="w-sm"
-          label={`Transfer ${SUBSCRIPTION_AMOUNT} ${WRAPPED_NATIVE_TOKEN_SYMBOL} to your account`}
-          token={{
-            contractAddress: DEFAULT_COLLECT_TOKEN,
-            symbol: WRAPPED_NATIVE_TOKEN_SYMBOL
-          }}
-          outline
-        />
+      {hasSubscribed ? null : (
+        <>
+          <div className="flex flex-col items-center gap-y-2 text-gray-500">
+            <div className="flex items-center gap-x-1.5">
+              <CheckCircleIcon className="size-5" />
+              <span className="text-sm">
+                Get a badge that highlights your subscription
+              </span>
+            </div>
+            <div className="flex items-center gap-x-1.5">
+              <CheckCircleIcon className="size-5" />
+              <span className="text-sm">
+                Unlock exclusive Hey features - no limits, no fuss
+              </span>
+            </div>
+            <div className="flex items-center gap-x-1.5">
+              <CheckCircleIcon className="size-5" />
+              <span className="text-sm">
+                Fuel the growth of the Hey team and platform
+              </span>
+            </div>
+          </div>
+          {balanceLoading ? (
+            <Button
+              className="w-sm"
+              disabled
+              icon={<Spinner className="my-1" size="xs" />}
+            />
+          ) : canSubscribe ? (
+            <Button
+              className="w-sm"
+              onClick={handleSubscribe}
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            >
+              Subscribe for ${SUBSCRIPTION_AMOUNT}/year
+            </Button>
+          ) : (
+            <TransferFundButton
+              className="w-sm"
+              label={`Transfer ${SUBSCRIPTION_AMOUNT} ${WRAPPED_NATIVE_TOKEN_SYMBOL} to your account`}
+              token={{
+                contractAddress: DEFAULT_COLLECT_TOKEN,
+                symbol: WRAPPED_NATIVE_TOKEN_SYMBOL
+              }}
+              outline
+            />
+          )}
+          <div className="-mt-1 text-center text-gray-500 text-xs">
+            One-time payment. Manual renewal required next year.
+          </div>
+        </>
       )}
-      <div className="-mt-1 text-center text-gray-500 text-xs">
-        One-time payment. Manual renewal required next year.
-      </div>
     </div>
   );
 };

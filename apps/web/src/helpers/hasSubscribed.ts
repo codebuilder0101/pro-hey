@@ -6,11 +6,11 @@ const hasSubscribed = (account: AccountFragment): boolean => {
     ? new Date(account?.subscription.timestamp)
     : undefined;
 
-  const daysSinceTip = lastSubscriptionDate
+  const daysSinceSubscription = lastSubscriptionDate
     ? (Date.now() - lastSubscriptionDate.getTime()) / (1000 * 60 * 60 * 24)
     : Number.POSITIVE_INFINITY;
 
-  const hasSubscribed = daysSinceTip <= SUBSCRIPTION_DURATION_DAYS;
+  const hasSubscribed = daysSinceSubscription <= SUBSCRIPTION_DURATION_DAYS;
 
   return hasSubscribed;
 };
