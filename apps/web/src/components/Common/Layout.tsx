@@ -9,7 +9,9 @@ import { useTheme } from "@/hooks/useTheme";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { hydrateAuthTokens, signOut } from "@/store/persisted/useAuthStore";
 import { usePreferencesStore } from "@/store/persisted/usePreferencesStore";
+import { useProStore } from "@/store/persisted/useProStore";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { BANNER_IDS } from "@hey/data/constants";
 import { useMeQuery } from "@hey/indexer";
 import { useIsClient } from "@uidotdev/usehooks";
 import { useEffect } from "react";
@@ -20,6 +22,7 @@ const Layout = () => {
   const { pathname } = useLocation();
   const { theme } = useTheme();
   const { currentAccount, setCurrentAccount } = useAccountStore();
+  const { setProBannerDismissed } = useProStore();
   const { resetPreferences } = usePreferencesStore();
   const isMounted = useIsClient();
   const { accessToken } = hydrateAuthTokens();
@@ -36,8 +39,12 @@ const Layout = () => {
   };
 
   const { loading } = useMeQuery({
-    onCompleted: ({ me }) => {
+    variables: { proBannerId: BANNER_IDS.PRO },
+    onCompleted: ({ me, proBanner }) => {
       setCurrentAccount(me.loggedInAs.account);
+      if (proBanner?.__typename === "Post") {
+        setProBannerDismissed(proBanner.operations?.dismissed ?? false);
+      }
     },
     onError,
     skip: !accessToken
