@@ -177,13 +177,13 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
 
       setPostContentError("");
 
-      const processedPostContent =
-        postContent.length > 0 ? postContent : undefined;
-      const title = hasAudio
-        ? audioPost.title
-        : `${getTitlePrefix()} by ${getAccount(currentAccount).usernameWithPrefix}`;
+      const baseMetadata = {
+        content: postContent.length > 0 ? postContent : undefined,
+        title: hasAudio
+          ? audioPost.title
+          : `${getTitlePrefix()} by ${getAccount(currentAccount).usernameWithPrefix}`
+      };
 
-      const baseMetadata = { content: processedPostContent, title };
       const metadata = getMetadata({ baseMetadata });
       const contentUri = await uploadMetadata(metadata);
 
