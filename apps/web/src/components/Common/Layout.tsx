@@ -5,12 +5,10 @@ import GlobalShortcuts from "@/components/Shared/GlobalShortcuts";
 import Navbar from "@/components/Shared/Navbar";
 import BottomNavigation from "@/components/Shared/Navbar/BottomNavigation";
 import { Spinner } from "@/components/Shared/UI";
-import hasSubscribed from "@/helpers/hasSubscribed";
 import { useTheme } from "@/hooks/useTheme";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { hydrateAuthTokens, signOut } from "@/store/persisted/useAuthStore";
 import { usePreferencesStore } from "@/store/persisted/usePreferencesStore";
-import { useSubscriptionStore } from "@/store/persisted/useSubscriptionStore";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { useMeQuery } from "@hey/indexer";
 import { useIsClient } from "@uidotdev/usehooks";
@@ -22,7 +20,6 @@ const Layout = () => {
   const { pathname } = useLocation();
   const { theme } = useTheme();
   const { currentAccount, setCurrentAccount } = useAccountStore();
-  const { setHasSubscribed } = useSubscriptionStore();
   const { resetPreferences } = usePreferencesStore();
   const isMounted = useIsClient();
   const { accessToken } = hydrateAuthTokens();
@@ -41,7 +38,6 @@ const Layout = () => {
   const { loading } = useMeQuery({
     onCompleted: ({ me }) => {
       setCurrentAccount(me.loggedInAs.account);
-      setHasSubscribed(hasSubscribed(me.loggedInAs.account));
     },
     onError,
     skip: !accessToken

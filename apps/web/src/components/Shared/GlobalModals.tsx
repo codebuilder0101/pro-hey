@@ -41,7 +41,6 @@ const GlobalModals = () => {
     setShowSuperFollowModal,
     superFollowingAccount
   } = useSuperFollowModalStore();
-  // const { hasSubscribed } = useSubscriptionStore();
 
   const { screen: signupScreen } = useSignupStore();
 
@@ -55,6 +54,7 @@ const GlobalModals = () => {
   return (
     <>
       {currentAccount ? (
+        // <Modal show={!hasSubscribed(currentAccount)} size="md">
         <Modal show={false} size="md">
           <Subscribe />
         </Modal>
