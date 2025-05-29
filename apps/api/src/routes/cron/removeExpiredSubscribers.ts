@@ -1,36 +1,60 @@
+import { SUBSCRIPTION_GROUP } from "@hey/data/constants";
 import { Errors } from "@hey/data/errors";
+import type { Eip712TransactionRequest } from "@hey/indexer";
+import { RemoveGroupMembersDocument } from "@hey/indexer";
+import apolloClient from "@hey/indexer/apollo/client";
 import type { Context } from "hono";
+import getBuilderAccessToken from "src/utils/getBuilderAccessToken";
 import lensPg from "src/utils/lensPg";
-import syncAddressesToGuild from "src/utils/syncAddressesToGuild";
+import signer from "src/utils/signer";
+import { sendEip712Transaction } from "viem/zksync";
 
-// Sync accounts that has current subscriber status
+const sponsoredTransactionData = (raw: Eip712TransactionRequest) => {
+  return {
+    data: raw.data,
+    gas: BigInt(raw.gasLimit),
+    maxFeePerGas: BigInt(raw.maxFeePerGas),
+    maxPriorityFeePerGas: BigInt(raw.maxPriorityFeePerGas),
+    nonce: raw.nonce,
+    paymaster: raw.customData.paymasterParams?.paymaster,
+    paymasterInput: raw.customData.paymasterParams?.paymasterInput,
+    to: raw.to,
+    value: BigInt(raw.value)
+  };
+};
+
 const removeExpiredSubscribers = async (ctx: Context) => {
   try {
     const accounts = await lensPg.query(
       `
-        SELECT DISTINCT a.owned_by
-        FROM post.action_executed e
-        JOIN account.known_smart_wallet a
-          ON e.account = a.address
-        WHERE e.post_id = '\\x001c62d4107cdb7d7508146ca1aa6b289d6bb5d41adb6455df747153334669ba'
-          AND e.timestamp >= NOW() - INTERVAL '30 days'
-          AND e.type = 'TippingPostAction'
-          AND e.decoded_params->>'value' = '0x29a2241af62c0000'
-          AND e.decoded_params->>'currency' = '0x6bdc36e20d267ff0dd6097799f82e78907105e2f';
-      `
+        SELECT account
+        FROM "group"."member"
+        WHERE "group"::TEXT LIKE $1
+        LIMIT 20;
+      `,
+      [`%${SUBSCRIPTION_GROUP.replace("0x", "").toLowerCase()}%`]
     );
+
+    const accessToken = await getBuilderAccessToken();
 
     const addresses = accounts.map((account) =>
-      `0x${account.owned_by.toString("hex")}`.toLowerCase()
+      `0x${account.account.toString("hex")}`.toLowerCase()
     );
 
-    const data = await syncAddressesToGuild({
-      addresses,
-      roleId: 173026,
-      requirementId: 470539
+    const { data } = await apolloClient().mutate({
+      mutation: RemoveGroupMembersDocument,
+      variables: {
+        request: { ban: false, group: SUBSCRIPTION_GROUP, accounts: addresses }
+      },
+      context: { headers: { authorization: `Bearer ${accessToken}` } }
     });
 
-    return ctx.json(data);
+    const hash = await await sendEip712Transaction(signer, {
+      account: signer.account,
+      ...sponsoredTransactionData(data.removeGroupMembers.raw)
+    });
+
+    return ctx.json({ success: true, addresses, hash });
   } catch {
     return ctx.json({ success: false, error: Errors.SomethingWentWrong }, 500);
   }

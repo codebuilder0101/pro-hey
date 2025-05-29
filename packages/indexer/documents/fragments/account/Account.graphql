@@ -19,7 +19,7 @@ fragment Account on Account {
     ...Username
   }
   hasSubscribed: isMemberOf(
-    request: { group: "0x3925AcAE1dE8f1764f7E98Ab0Ff77CadEDc73517" }
+    request: { group: "0x4BE5b4519814A57E6f9AaFC6afBB37eAEeE35aA3" }
   )
   createdAt
 }

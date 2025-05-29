@@ -22,6 +22,7 @@
     "@hey/indexer": "workspace:*",
     "@hono/node-server": "^1.14.3",
     "@hono/zod-validator": "^0.6.0",
+    "@lens-chain/sdk": "^1.0.3",
     "@lens-protocol/metadata": "^2.1.0",
     "@prisma/client": "^6.8.2",
     "cors": "^2.8.5",
