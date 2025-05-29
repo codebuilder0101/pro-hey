@@ -21,7 +21,6 @@ import { STATIC_IMAGES_URL } from "@hey/data/constants";
 import type { MouseEvent, ReactNode } from "react";
 import { Link, useLocation } from "react-router";
 import SignedAccount from "./SignedAccount";
-import Pro from "./NavItems/Pro";
 
 const navigationItems = {
   "/": {
@@ -109,7 +108,7 @@ const Navbar = () => {
       <NavItems isLoggedIn={!!currentAccount} />
       {currentAccount ? (
         <>
-          <Pro />
+          {/* <Pro /> */}
           <SignedAccount />
         </>
       ) : (
