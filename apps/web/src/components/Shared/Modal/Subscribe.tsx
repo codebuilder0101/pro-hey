@@ -129,6 +129,12 @@ const Subscribe = () => {
                 Fuel the growth of the Hey team and platform
               </span>
             </div>
+            <div className="flex items-center gap-x-1.5">
+              <CheckCircleIcon className="size-5" />
+              <span className="text-sm">
+                Exclusive NFT for founding members
+              </span>
+            </div>
           </div>
           {balanceLoading ? (
             <Button
