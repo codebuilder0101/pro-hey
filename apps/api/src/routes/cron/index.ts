@@ -1,9 +1,9 @@
 import { Hono } from "hono";
 import secretMiddleware from "src/middlewares/secretMiddleware";
+import syncFollowersStandingToGuild from "./guild/syncFollowersStandingToGuild";
+import syncHQScoreAccountsToGuild from "./guild/syncHQScoreAccountsToGuild";
+import syncSubscribersToGuild from "./guild/syncSubscribersToGuild";
 import removeExpiredSubscribers from "./removeExpiredSubscribers";
-import syncFollowersStandingToGuild from "./syncFollowersStandingToGuild";
-import syncHQScoreAccountsToGuild from "./syncHQScoreAccountsToGuild";
-import syncSubscribersToGuild from "./syncSubscribersToGuild";
 
 const app = new Hono();
 

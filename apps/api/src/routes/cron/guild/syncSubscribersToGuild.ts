@@ -1,3 +1,4 @@
+import { SUBSCRIPTION_GROUP } from "@hey/data/constants";
 import { Errors } from "@hey/data/errors";
 import type { Context } from "hono";
 import lensPg from "src/utils/lensPg";
@@ -8,20 +9,15 @@ const syncSubscribersToGuild = async (ctx: Context) => {
   try {
     const accounts = await lensPg.query(
       `
-        SELECT DISTINCT a.owned_by
-        FROM post.action_executed e
-        JOIN account.known_smart_wallet a
-          ON e.account = a.address
-        WHERE e.post_id = '\\x001c62d4107cdb7d7508146ca1aa6b289d6bb5d41adb6455df747153334669ba'
-          AND e.timestamp >= NOW() - INTERVAL '30 days'
-          AND e.type = 'TippingPostAction'
-          AND e.decoded_params->>'value' = '0x29a2241af62c0000'
-          AND e.decoded_params->>'currency' = '0x6bdc36e20d267ff0dd6097799f82e78907105e2f';
-      `
+        SELECT account
+        FROM "group"."member"
+        WHERE "group"::TEXT LIKE $1;
+      `,
+      [`%${SUBSCRIPTION_GROUP.replace("0x", "").toLowerCase()}%`]
     );
 
     const addresses = accounts.map((account) =>
-      `0x${account.owned_by.toString("hex")}`.toLowerCase()
+      `0x${account.account.toString("hex")}`.toLowerCase()
     );
 
     const data = await syncAddressesToGuild({
