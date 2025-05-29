@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Sync Subscribers to Guild
         run: |
-          curl -X GET "https://api.hey.xyz/guild/syncSubscribers?secret=${{ secrets.SHARED_SECRET }}"
+          curl -X GET "https://api.hey.xyz/cron/syncSubscribersToGuild?secret=${{ secrets.SHARED_SECRET }}"
 
   sync-hq-score-guild:
     name: Sync HQ Score Accounts to Guild
@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Sync HQ Score Accounts to Guild
         run: |
-          curl -X GET "https://api.hey.xyz/guild/syncHQScoreAccounts?secret=${{ secrets.SHARED_SECRET }}"
+          curl -X GET "https://api.hey.xyz/cron/syncHQScoreAccountsToGuild?secret=${{ secrets.SHARED_SECRET }}"
 
   sync-followers-standing-guild:
     name: Sync Followers Standing Accounts to Guild
@@ -28,4 +28,4 @@ jobs:
     steps:
       - name: Sync Followers Standing Accounts to Guild
         run: |
-          curl -X GET "https://api.hey.xyz/guild/syncFollowersStanding?secret=${{ secrets.SHARED_SECRET }}"
+          curl -X GET "https://api.hey.xyz/cron/syncFollowersStandingToGuild?secret=${{ secrets.SHARED_SECRET }}"
