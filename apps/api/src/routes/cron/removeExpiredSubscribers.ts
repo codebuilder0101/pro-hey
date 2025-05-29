@@ -16,6 +16,7 @@ const removeExpiredSubscribers = async (ctx: Context) => {
         SELECT account
         FROM "group"."member"
         WHERE "group"::TEXT LIKE $1
+        AND timestamp < NOW() - INTERVAL '365 days'
         LIMIT 50;
       `,
       [`%${SUBSCRIPTION_GROUP.replace("0x", "").toLowerCase()}%`]
