@@ -1,13 +1,9 @@
 import { SUBSCRIPTION_GROUP } from "@hey/data/constants";
 import { Errors } from "@hey/data/errors";
-import sponsoredTransactionData from "@hey/helpers/sponsoredTransactionData";
-import { RemoveGroupMembersDocument } from "@hey/indexer";
-import apolloClient from "@hey/indexer/apollo/client";
 import type { Context } from "hono";
-import getBuilderAccessToken from "src/utils/getBuilderAccessToken";
 import lensPg from "src/utils/lensPg";
 import signer from "src/utils/signer";
-import { sendEip712Transaction } from "viem/zksync";
+import ABI from "./ABI";
 
 const removeExpiredSubscribers = async (ctx: Context) => {
   try {
@@ -17,7 +13,7 @@ const removeExpiredSubscribers = async (ctx: Context) => {
         FROM "group"."member"
         WHERE "group"::TEXT LIKE $1
         AND timestamp < NOW() - INTERVAL '365 days'
-        LIMIT 50;
+        LIMIT 1000;
       `,
       [`%${SUBSCRIPTION_GROUP.replace("0x", "").toLowerCase()}%`]
     );
@@ -30,23 +26,22 @@ const removeExpiredSubscribers = async (ctx: Context) => {
       return ctx.json({ success: true, message: "No expired subscribers" });
     }
 
-    const accessToken = await getBuilderAccessToken();
+    const membersToRemove = addresses.map((addr) => ({
+      account: addr,
+      customParams: [],
+      ruleProcessingParams: []
+    }));
 
-    const { data } = await apolloClient().mutate({
-      mutation: RemoveGroupMembersDocument,
-      variables: {
-        request: { ban: false, group: SUBSCRIPTION_GROUP, accounts: addresses }
-      },
-      context: { headers: { authorization: `Bearer ${accessToken}` } }
-    });
-
-    const hash = await sendEip712Transaction(signer, {
-      account: signer.account,
-      ...sponsoredTransactionData(data.removeGroupMembers.raw)
+    const hash = await signer.writeContract({
+      abi: ABI,
+      address: SUBSCRIPTION_GROUP,
+      functionName: "removeMembers",
+      args: [membersToRemove, []]
     });
 
     return ctx.json({ success: true, addresses, hash });
-  } catch {
+  } catch (error) {
+    console.log(error);
     return ctx.json({ success: false, error: Errors.SomethingWentWrong }, 500);
   }
 };
