@@ -7,7 +7,6 @@ import getAccountAttribute from "@/helpers/getAccountAttribute";
 import getFavicon from "@/helpers/getFavicon";
 import getMentions from "@/helpers/getMentions";
 import { useTheme } from "@/hooks/useTheme";
-import { useProModalStore } from "@/store/non-persisted/modal/useProModalStore";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { CalendarIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
@@ -42,7 +41,7 @@ const Details = ({
 }: DetailsProps) => {
   const navigate = useNavigate();
   const { currentAccount } = useAccountStore();
-  const { setShowProModal } = useProModalStore();
+  // const { setShowProModal } = useProModalStore();
   const [showLightBox, setShowLightBox] = useState<boolean>(false);
   const { theme } = useTheme();
 
