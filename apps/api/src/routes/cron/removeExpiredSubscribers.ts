@@ -1,6 +1,6 @@
 import { SUBSCRIPTION_GROUP } from "@hey/data/constants";
 import { Errors } from "@hey/data/errors";
-import type { Eip712TransactionRequest } from "@hey/indexer";
+import sponsoredTransactionData from "@hey/helpers/sponsoredTransactionData";
 import { RemoveGroupMembersDocument } from "@hey/indexer";
 import apolloClient from "@hey/indexer/apollo/client";
 import type { Context } from "hono";
@@ -8,20 +8,6 @@ import getBuilderAccessToken from "src/utils/getBuilderAccessToken";
 import lensPg from "src/utils/lensPg";
 import signer from "src/utils/signer";
 import { sendEip712Transaction } from "viem/zksync";
-
-const sponsoredTransactionData = (raw: Eip712TransactionRequest) => {
-  return {
-    data: raw.data,
-    gas: BigInt(raw.gasLimit),
-    maxFeePerGas: BigInt(raw.maxFeePerGas),
-    maxPriorityFeePerGas: BigInt(raw.maxPriorityFeePerGas),
-    nonce: raw.nonce,
-    paymaster: raw.customData.paymasterParams?.paymaster,
-    paymasterInput: raw.customData.paymasterParams?.paymasterInput,
-    to: raw.to,
-    value: BigInt(raw.value)
-  };
-};
 
 const removeExpiredSubscribers = async (ctx: Context) => {
   try {
@@ -49,7 +35,7 @@ const removeExpiredSubscribers = async (ctx: Context) => {
       context: { headers: { authorization: `Bearer ${accessToken}` } }
     });
 
-    const hash = await await sendEip712Transaction(signer, {
+    const hash = await sendEip712Transaction(signer, {
       account: signer.account,
       ...sponsoredTransactionData(data.removeGroupMembers.raw)
     });
