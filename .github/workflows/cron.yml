@@ -1,4 +1,4 @@
-name: Five Minutes Cron
+name: Cron Jobs
 
 on:
   schedule:
@@ -29,3 +29,11 @@ jobs:
       - name: Sync Followers Standing Accounts to Guild
         run: |
           curl -X GET "https://api.hey.xyz/cron/syncFollowersStandingToGuild?secret=${{ secrets.SHARED_SECRET }}"
+
+  remove-expired-subscribers:
+    name: Remove Expired Pro Subscribers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove Expired Pro Subscribers
+        run: |
+          curl -X GET "https://api.hey.xyz/cron/removeExpiredSubscribers?secret=${{ secrets.SHARED_SECRET }}"

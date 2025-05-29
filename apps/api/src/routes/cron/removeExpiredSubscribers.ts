@@ -16,16 +16,20 @@ const removeExpiredSubscribers = async (ctx: Context) => {
         SELECT account
         FROM "group"."member"
         WHERE "group"::TEXT LIKE $1
-        LIMIT 20;
+        LIMIT 50;
       `,
       [`%${SUBSCRIPTION_GROUP.replace("0x", "").toLowerCase()}%`]
     );
 
-    const accessToken = await getBuilderAccessToken();
-
     const addresses = accounts.map((account) =>
       `0x${account.account.toString("hex")}`.toLowerCase()
     );
+
+    if (addresses.length === 0) {
+      return ctx.json({ success: true, message: "No expired subscribers" });
+    }
+
+    const accessToken = await getBuilderAccessToken();
 
     const { data } = await apolloClient().mutate({
       mutation: RemoveGroupMembersDocument,
