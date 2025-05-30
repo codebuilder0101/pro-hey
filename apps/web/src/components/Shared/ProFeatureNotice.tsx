@@ -13,14 +13,14 @@ const ProFeatureNotice = ({ feature, className }: ProFeatureNoticeProps) => {
   return (
     <div
       className={cn(
-        "flex items-center gap-x-2 text-gray-500 text-sm",
+        "flex items-center gap-x-2 font-semibold text-gray-500 text-sm",
         className
       )}
     >
       <SparklesIcon className="size-4" />
       <span>
         <button
-          className="font-bold underline"
+          className="underline"
           onClick={() => toast.success("Coming soon")}
           type="button"
         >

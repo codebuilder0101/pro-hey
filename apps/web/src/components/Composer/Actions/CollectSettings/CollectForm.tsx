@@ -83,12 +83,16 @@ const CollectForm = ({ setShowModal }: CollectFormProps) => {
             transition={{ duration: 0.2, ease: EXPANSION_EASE }}
           >
             <AmountConfig setCollectType={setCollectType} />
-            <SplitConfig
-              isRecipientsDuplicated={validationChecks.isRecipientsDuplicated}
-              setCollectType={setCollectType}
-            />
             {currentAccount?.hasSubscribed ? (
               <>
+                {collectAction.payToCollect?.erc20?.value && (
+                  <SplitConfig
+                    isRecipientsDuplicated={
+                      validationChecks.isRecipientsDuplicated
+                    }
+                    setCollectType={setCollectType}
+                  />
+                )}
                 <CollectLimitConfig setCollectType={setCollectType} />
                 <TimeLimitConfig setCollectType={setCollectType} />
                 <FollowersConfig setCollectType={setCollectType} />
