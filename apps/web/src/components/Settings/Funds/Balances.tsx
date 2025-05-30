@@ -51,6 +51,7 @@ const Balances = () => {
           <TopUpButton
             size="sm"
             outline
+            label="Top-up"
             token={
               currency
                 ? { contractAddress: currency, symbol: symbol }
