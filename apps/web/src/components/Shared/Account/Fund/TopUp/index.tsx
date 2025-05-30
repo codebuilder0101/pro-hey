@@ -46,8 +46,8 @@ const TopUp = () => {
           {tokenBalance} {token?.symbol ?? NATIVE_TOKEN_SYMBOL}
         </div>
         <div className="text-gray-500 text-sm dark:text-gray-200">
-          {token?.symbol ?? NATIVE_TOKEN_SYMBOL} enables you to do various
-          Hey-specific actions
+          Top-up your Lens account with{" "}
+          <b>{token?.symbol ?? NATIVE_TOKEN_SYMBOL}</b>
         </div>
       </div>
       <Transfer token={token} />
