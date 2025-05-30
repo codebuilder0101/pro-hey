@@ -7,7 +7,7 @@ import { NATIVE_TOKEN_SYMBOL } from "@hey/data/constants";
 import { useAccountBalancesQuery } from "@hey/indexer";
 import Transfer from "./Transfer";
 
-const TransferFund = () => {
+const TopUp = () => {
   const { currentAccount } = useAccountStore();
   const { token } = useFundModalStore();
   const { data: balance, loading } = useAccountBalancesQuery({
@@ -55,4 +55,4 @@ const TransferFund = () => {
   );
 };
 
-export default TransferFund;
+export default TopUp;

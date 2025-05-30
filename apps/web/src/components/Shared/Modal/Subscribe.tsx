@@ -18,7 +18,7 @@ import {
   useJoinGroupMutation
 } from "@hey/indexer";
 import { useState } from "react";
-import TransferFundButton from "../Account/Fund/FundButton";
+import TopUpButton from "../Account/Fund/TopUp/Button";
 import SingleAccount from "../Account/SingleAccount";
 
 const Subscribe = () => {
@@ -152,9 +152,9 @@ const Subscribe = () => {
               Subscribe for ${SUBSCRIPTION_AMOUNT}/year
             </Button>
           ) : (
-            <TransferFundButton
+            <TopUpButton
               className="w-sm"
-              label={`Transfer ${SUBSCRIPTION_AMOUNT} ${WRAPPED_NATIVE_TOKEN_SYMBOL} to your account`}
+              label={`Top-up ${SUBSCRIPTION_AMOUNT} ${WRAPPED_NATIVE_TOKEN_SYMBOL} to your account`}
               token={{
                 contractAddress: DEFAULT_COLLECT_TOKEN,
                 symbol: WRAPPED_NATIVE_TOKEN_SYMBOL
