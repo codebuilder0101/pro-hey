@@ -37,27 +37,16 @@ const SwitchAccounts = () => {
         hiddenFilter: ManagedAccountsVisibility.NoneHidden
       }
     },
-    skip: address !== currentAccount?.owner
+    skip: !address
   });
   const [switchAccount] = useSwitchAccountMutation();
 
-  if (address !== currentAccount?.owner) {
+  if (!address) {
     return (
       <WarningMessage
         className="m-5"
-        title={address ? "Wrong wallet connected" : "No wallet connected"}
-        message={
-          <div>
-            <div>
-              {address
-                ? "Please switch to the correct wallet"
-                : "Please connect your wallet to switch accounts"}
-            </div>
-            {address ? (
-              <span className="font-bold font-mono text-[10px]">{address}</span>
-            ) : null}
-          </div>
-        }
+        title="No wallet connected"
+        message="Connect your wallet to switch accounts"
       />
     );
   }
