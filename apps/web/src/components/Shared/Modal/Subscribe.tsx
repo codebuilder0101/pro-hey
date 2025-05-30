@@ -111,29 +111,27 @@ const Subscribe = () => {
       {hasSubscribed ? null : (
         <>
           <div className="flex flex-col items-center gap-y-2 text-gray-500">
-            <div className="flex items-center gap-x-1.5">
-              <CheckCircleIcon className="size-5" />
+            <div className="flex items-center gap-x-1">
+              <CheckCircleIcon className="size-4.5" />
               <span className="text-sm">
                 Get a badge that highlights your subscription
               </span>
             </div>
-            <div className="flex items-center gap-x-1.5">
-              <CheckCircleIcon className="size-5" />
+            <div className="flex items-center gap-x-1">
+              <CheckCircleIcon className="size-4.5" />
               <span className="text-sm">
                 Unlock exclusive Hey features - no limits, no fuss
               </span>
             </div>
-            <div className="flex items-center gap-x-1.5">
-              <CheckCircleIcon className="size-5" />
+            <div className="flex items-center gap-x-1">
+              <CheckCircleIcon className="size-4.5" />
               <span className="text-sm">
                 Fuel the growth of the Hey team and platform
               </span>
             </div>
-            <div className="flex items-center gap-x-1.5">
-              <CheckCircleIcon className="size-5" />
-              <span className="text-sm">
-                Exclusive NFT for founding members
-              </span>
+            <div className="flex items-center gap-x-1">
+              <CheckCircleIcon className="size-4.5" />
+              <span className="text-sm">Exclusive NFT for early members</span>
             </div>
           </div>
           {balanceLoading ? (
