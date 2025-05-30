@@ -1,17 +1,10 @@
-import {
-  ErrorMessage,
-  Image,
-  Spinner,
-  WarningMessage
-} from "@/components/Shared/UI";
+import { ErrorMessage, Spinner, WarningMessage } from "@/components/Shared/UI";
 import cn from "@/helpers/cn";
 import errorToast from "@/helpers/errorToast";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { signIn, signOut } from "@/store/persisted/useAuthStore";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { Errors } from "@hey/data/errors";
-import getAccount from "@hey/helpers/getAccount";
-import getAvatar from "@hey/helpers/getAvatar";
 import {
   ManagedAccountsVisibility,
   useAccountsAvailableQuery,
@@ -20,6 +13,7 @@ import {
 import { useState } from "react";
 import { useAccount } from "wagmi";
 import Loader from "../Loader";
+import SmallSingleAccount from "./SmallSingleAccount";
 
 const SwitchAccounts = () => {
   const { currentAccount } = useAccountStore();
@@ -112,24 +106,14 @@ const SwitchAccounts = () => {
           }}
           type="button"
         >
-          <span className="flex items-center space-x-2">
-            <Image
-              alt={accountAvailable.account.address}
-              className="size-6 rounded-full border border-gray-200 dark:border-gray-700"
-              height={20}
-              src={getAvatar(accountAvailable.account)}
-              width={20}
-            />
-            <div
-              className={cn(
-                currentAccount?.address === accountAvailable.account.address &&
-                  "font-bold",
-                "truncate"
-              )}
-            >
-              {getAccount(accountAvailable.account).usernameWithPrefix}
-            </div>
-          </span>
+          <div
+            className={cn(
+              currentAccount?.address === accountAvailable.account.address &&
+                "font-bold"
+            )}
+          >
+            <SmallSingleAccount account={accountAvailable.account} />
+          </div>
           {isSubmitting &&
           accountAvailable.account.address === loggingInAccountId ? (
             <Spinner size="xs" />
