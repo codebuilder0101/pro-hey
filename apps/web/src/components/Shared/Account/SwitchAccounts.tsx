@@ -1,4 +1,9 @@
-import { ErrorMessage, Image, Spinner } from "@/components/Shared/UI";
+import {
+  ErrorMessage,
+  Image,
+  Spinner,
+  WarningMessage
+} from "@/components/Shared/UI";
 import cn from "@/helpers/cn";
 import errorToast from "@/helpers/errorToast";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
@@ -13,6 +18,7 @@ import {
   useSwitchAccountMutation
 } from "@hey/indexer";
 import { useState } from "react";
+import { useAccount } from "wagmi";
 import Loader from "../Loader";
 
 const SwitchAccounts = () => {
@@ -21,6 +27,7 @@ const SwitchAccounts = () => {
   const [loggingInAccountId, setLoggingInAccountId] = useState<null | string>(
     null
   );
+  const { address } = useAccount();
 
   const onError = (error?: any) => {
     setIsSubmitting(false);
@@ -30,14 +37,36 @@ const SwitchAccounts = () => {
 
   const { data, error, loading } = useAccountsAvailableQuery({
     variables: {
-      lastLoggedInAccountRequest: { address: currentAccount?.owner },
+      lastLoggedInAccountRequest: { address: address },
       accountsAvailableRequest: {
-        managedBy: currentAccount?.owner,
+        managedBy: address,
         hiddenFilter: ManagedAccountsVisibility.NoneHidden
       }
-    }
+    },
+    skip: address !== currentAccount?.owner
   });
   const [switchAccount] = useSwitchAccountMutation();
+
+  if (address !== currentAccount?.owner) {
+    return (
+      <WarningMessage
+        className="m-5"
+        title={address ? "Wrong wallet connected" : "No wallet connected"}
+        message={
+          <div>
+            <div>
+              {address
+                ? "Please switch to the correct wallet"
+                : "Please connect your wallet to switch accounts"}
+            </div>
+            {address ? (
+              <span className="font-bold font-mono text-[10px]">{address}</span>
+            ) : null}
+          </div>
+        }
+      />
+    );
+  }
 
   if (loading) {
     return <Loader className="my-5" message="Loading Accounts" />;
