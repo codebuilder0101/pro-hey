@@ -1,5 +1,6 @@
 import cn from "@/helpers/cn";
 import { SparklesIcon } from "@heroicons/react/24/outline";
+import { toast } from "sonner";
 
 interface ProFeatureNoticeProps {
   feature: string;
@@ -20,7 +21,7 @@ const ProFeatureNotice = ({ feature, className }: ProFeatureNoticeProps) => {
       <span>
         <button
           className="font-bold underline"
-          // onClick={() => setShowProModal(true)}
+          onClick={() => toast.success("Coming soon")}
           type="button"
         >
           Upgrade to Pro
