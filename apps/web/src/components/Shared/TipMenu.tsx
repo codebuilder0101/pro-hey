@@ -132,7 +132,7 @@ const TipMenu = ({ closePopover, post, account }: TipMenuProps) => {
     setIsSubmitting(true);
 
     const tipping: TippingAmountInput = {
-      // 7.62 is a calculated value based on the referral pool of 20% and the lens fee of 1.5%
+      // 7.62 is a calculated value based on the referral pool of 20% and the Lens fee of 1.5%
       referrals: [{ address: HEY_TREASURY, percent: 7.62 }],
       native: cryptoRate.toString()
     };
