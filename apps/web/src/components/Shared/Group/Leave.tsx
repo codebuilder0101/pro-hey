@@ -8,11 +8,10 @@ import { toast } from "sonner";
 
 interface LeaveProps {
   group: GroupFragment;
-  setJoined: (joined: boolean) => void;
   small: boolean;
 }
 
-const Leave = ({ group, setJoined, small }: LeaveProps) => {
+const Leave = ({ group, small }: LeaveProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { cache } = useApolloClient();
   const handleTransactionLifecycle = useTransactionLifecycle();
@@ -31,7 +30,6 @@ const Leave = ({ group, setJoined, small }: LeaveProps) => {
   const onCompleted = () => {
     updateCache();
     setIsSubmitting(false);
-    setJoined(false);
     toast.success("Left group");
   };
 

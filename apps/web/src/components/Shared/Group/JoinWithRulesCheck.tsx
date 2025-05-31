@@ -9,15 +9,10 @@ import Join from "./Join";
 
 interface JoinWithRulesCheckProps {
   group: GroupFragment;
-  setJoined: (joined: boolean) => void;
   small: boolean;
 }
 
-const JoinWithRulesCheck = ({
-  group,
-  setJoined,
-  small
-}: JoinWithRulesCheckProps) => {
+const JoinWithRulesCheck = ({ group, small }: JoinWithRulesCheckProps) => {
   const { setShowSuperJoinModal } = useSuperJoinModalStore();
   const { assetAddress: requiredSimplePayment } = getSimplePaymentDetails(
     group.rules as GroupRules
@@ -42,8 +37,8 @@ const JoinWithRulesCheck = ({
   return (
     <Join
       group={group}
-      setJoined={setJoined}
       small={small}
+      shouldRequestMembership={requiresMembershipApproval}
       title={requiresMembershipApproval ? "Request to join" : "Join"}
     />
   );

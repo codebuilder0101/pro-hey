@@ -84,7 +84,8 @@ const SuperJoin = () => {
             <Join
               className="w-full"
               group={superJoiningGroup as Group}
-              setJoined={() => setShowSuperJoinModal(false, superJoiningGroup)}
+              onSuccess={() => setShowSuperJoinModal(false, superJoiningGroup)}
+              shouldRequestMembership={requiresMembershipApproval}
               small={false}
               title={
                 requiresMembershipApproval ? "Request to join" : "Super Join"

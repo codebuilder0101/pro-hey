@@ -2,39 +2,49 @@ import { Button } from "@/components/Shared/UI";
 import errorToast from "@/helpers/errorToast";
 import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
 import { useApolloClient } from "@apollo/client";
-import { type GroupFragment, useJoinGroupMutation } from "@hey/indexer";
+import {
+  type GroupFragment,
+  type LoggedInGroupOperationsFragment,
+  useJoinGroupMutation,
+  useRequestGroupMembershipMutation
+} from "@hey/indexer";
 import { useState } from "react";
 import { toast } from "sonner";
 
 interface JoinProps {
   group: GroupFragment;
-  setJoined: (joined: boolean) => void;
   small: boolean;
+  shouldRequestMembership?: boolean;
   className?: string;
   title?: string;
+  onSuccess?: () => void;
 }
 
 const Join = ({
   group,
-  setJoined,
   small,
+  shouldRequestMembership = false,
   className = "",
-  title = "Join"
+  title = "Join",
+  onSuccess
 }: JoinProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { cache } = useApolloClient();
   const handleTransactionLifecycle = useTransactionLifecycle();
   const updateCache = () => {
     cache.modify({
-      fields: { operations: () => true },
-      id: cache.identify(group)
+      fields: {
+        isMember: () => !shouldRequestMembership,
+        hasRequestedMembership: () => shouldRequestMembership
+      },
+      id: cache.identify(group.operations as LoggedInGroupOperationsFragment)
     });
   };
 
   const onCompleted = () => {
     updateCache();
     setIsSubmitting(false);
-    setJoined(true);
+    onSuccess?.();
     toast.success("Joined group");
   };
 
@@ -62,8 +72,31 @@ const Join = ({
     onError
   });
 
+  const [requestGroupMembership] = useRequestGroupMembershipMutation({
+    onCompleted: async ({ requestGroupMembership }) => {
+      if (
+        requestGroupMembership.__typename === "RequestGroupMembershipResponse"
+      ) {
+        return onCompleted();
+      }
+
+      return await handleTransactionLifecycle({
+        transactionData: joinGroup,
+        onCompleted,
+        onError
+      });
+    },
+    onError
+  });
+
   const handleJoin = async () => {
     setIsSubmitting(true);
+
+    if (shouldRequestMembership) {
+      return await requestGroupMembership({
+        variables: { request: { group: group.address } }
+      });
+    }
 
     return await joinGroup({
       variables: { request: { group: group.address } }

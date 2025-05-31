@@ -1,7 +1,7 @@
 import stopEventPropagation from "@/helpers/stopEventPropagation";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import type { GroupFragment } from "@hey/indexer";
-import { useEffect, useState } from "react";
+import {} from "react";
 import JoinWithRulesCheck from "./JoinWithRulesCheck";
 import Leave from "./Leave";
 
@@ -19,11 +19,6 @@ const JoinLeaveButton = ({
   small = false
 }: JoinLeaveButtonProps) => {
   const { currentAccount } = useAccountStore();
-  const [joined, setJoined] = useState(group.operations?.isMember);
-
-  useEffect(() => {
-    setJoined(group.operations?.isMember);
-  }, [group.operations?.isMember]);
 
   if (currentAccount?.address === group.owner) {
     return null;
@@ -32,16 +27,12 @@ const JoinLeaveButton = ({
   return (
     <div className="contents" onClick={stopEventPropagation}>
       {!hideJoinButton &&
-        (joined ? null : (
-          <JoinWithRulesCheck
-            group={group}
-            setJoined={setJoined}
-            small={small}
-          />
+        (group.operations?.isMember ? null : (
+          <JoinWithRulesCheck group={group} small={small} />
         ))}
       {!hideLeaveButton &&
-        (joined ? (
-          <Leave group={group} setJoined={setJoined} small={small} />
+        (group.operations?.isMember ? (
+          <Leave group={group} small={small} />
         ) : null)}
     </div>
   );
