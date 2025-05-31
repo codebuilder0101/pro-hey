@@ -12,7 +12,6 @@ export { default as Image } from "./Image";
 export { default as Input } from "./Input";
 export { default as LightBox } from "./LightBox";
 export { default as Modal } from "./Modal";
-export { default as NumberedStat } from "./NumberedStat";
 export { default as RangeSlider } from "./RangeSlider";
 export { default as Select } from "./Select";
 export { default as SettingsHelper } from "./SettingsHelper";

@@ -11,7 +11,6 @@ export const LENS_NETWORK = process.env.NEXT_PUBLIC_LENS_NETWORK || "mainnet";
 export const LENS_API_URL = getEnvConfig().lensApiEndpoint;
 export const DEFAULT_COLLECT_TOKEN = getEnvConfig().defaultCollectToken;
 export const HEY_APP = getEnvConfig().appAddress;
-export const HEY_SPONSOR = getEnvConfig().sponsorAddress;
 export const HEY_TREASURY = "0x03Ba34f6Ea1496fa316873CF8350A3f7eaD317EF";
 export const HEY_API_PRODUCTION_URL = "https://api.hey.xyz";
 export const HEY_API_URL = IS_PRODUCTION
@@ -38,7 +37,6 @@ export const LENS_MEDIA_SNAPSHOT_URL = "https://ik.imagekit.io/lens";
 export const DEFAULT_OG = `${STATIC_IMAGES_URL}/og/cover.png`;
 export const DEFAULT_AVATAR = `${STATIC_IMAGES_URL}/default.png`;
 export const PLACEHOLDER_IMAGE = `${STATIC_IMAGES_URL}/placeholder.webp`;
-export const DEVELOPER_PORTAL_URL = "https://developer.lens.xyz/sponsorship";
 export const BLOCK_EXPLORER_URL = IS_MAINNET
   ? "https://lenscan.io"
   : "https://testnet.lenscan.io";

@@ -1,9 +1,9 @@
 import Custom404 from "@/components/Shared/404";
 import { PageLayout } from "@/components/Shared/PageLayout";
+import { Card } from "@/components/Shared/UI";
 import isFeatureEnabled from "@/helpers/isFeatureEnabled";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { Features } from "@hey/data/features";
-import Sponsorship from "./Sponsorship";
 
 const StaffOverview = () => {
   const { currentAccount } = useAccountStore();
@@ -15,7 +15,7 @@ const StaffOverview = () => {
 
   return (
     <PageLayout title="Staff Tools">
-      <Sponsorship />
+      <Card className="p-5">WIP</Card>
     </PageLayout>
   );
 };
