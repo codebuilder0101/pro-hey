@@ -1,9 +1,7 @@
 import cn from "@/helpers/cn";
-import isFeatureEnabled from "@/helpers/isFeatureEnabled";
 import { useMobileDrawerModalStore } from "@/store/non-persisted/modal/useMobileDrawerModalStore";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Features } from "@hey/data/features";
 import type { AccountFragment } from "@hey/indexer";
 import { Link } from "react-router";
 import AccountLink from "../Account/AccountLink";
@@ -21,7 +19,6 @@ import YourAccount from "./NavItems/YourAccount";
 const MobileDrawerMenu = () => {
   const { currentAccount } = useAccountStore();
   const { setShowMobileDrawer } = useMobileDrawerModalStore();
-  const isStaff = isFeatureEnabled(Features.Staff);
 
   const handleCloseDrawer = () => {
     setShowMobileDrawer(false);
@@ -69,7 +66,7 @@ const MobileDrawerMenu = () => {
             <Link to="/bookmarks" onClick={handleCloseDrawer}>
               <Bookmarks className={cn(itemClass, "px-4")} />
             </Link>
-            {isStaff ? (
+            {currentAccount?.isStaff ? (
               <Link to="/staff" onClick={handleCloseDrawer}>
                 <StaffTools className={cn(itemClass, "px-4")} />
               </Link>

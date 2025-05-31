@@ -1,9 +1,7 @@
 import { Image } from "@/components/Shared/UI";
 import cn from "@/helpers/cn";
-import isFeatureEnabled from "@/helpers/isFeatureEnabled";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { Features } from "@hey/data/features";
 import getAvatar from "@hey/helpers/getAvatar";
 import type { AccountFragment } from "@hey/indexer";
 import { Link } from "react-router";
@@ -18,7 +16,6 @@ import YourAccount from "./NavItems/YourAccount";
 
 const SignedAccount = () => {
   const { currentAccount } = useAccountStore();
-  const isStaff = isFeatureEnabled(Features.Staff);
 
   const Avatar = () => (
     <Image
@@ -57,7 +54,7 @@ const SignedAccount = () => {
           >
             <Settings />
           </MenuItem>
-          {isStaff ? (
+          {currentAccount?.isStaff ? (
             <MenuItem
               as={Link}
               className={({ focus }: { focus: boolean }) =>

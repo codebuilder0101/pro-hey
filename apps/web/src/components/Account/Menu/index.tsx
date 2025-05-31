@@ -1,10 +1,8 @@
 import MenuTransition from "@/components/Shared/MenuTransition";
-import isFeatureEnabled from "@/helpers/isFeatureEnabled";
 import stopEventPropagation from "@/helpers/stopEventPropagation";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { Menu, MenuButton, MenuItems } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { Features } from "@hey/data/features";
 import type { AccountFragment } from "@hey/indexer";
 import { Fragment } from "react";
 import Block from "./Block";
@@ -19,7 +17,6 @@ interface AccountMenuProps {
 
 const AccountMenu = ({ account }: AccountMenuProps) => {
   const { currentAccount } = useAccountStore();
-  const isStaff = isFeatureEnabled(Features.Staff);
 
   return (
     <Menu as="div" className="relative">
@@ -47,7 +44,7 @@ const AccountMenu = ({ account }: AccountMenuProps) => {
               <Report account={account} />
             </>
           ) : null}
-          {isStaff ? <StaffTool account={account} /> : null}
+          {currentAccount?.isStaff ? <StaffTool account={account} /> : null}
         </MenuItems>
       </MenuTransition>
     </Menu>

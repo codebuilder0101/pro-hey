@@ -1,15 +1,12 @@
 import Custom404 from "@/components/Shared/404";
 import { PageLayout } from "@/components/Shared/PageLayout";
 import { Card } from "@/components/Shared/UI";
-import isFeatureEnabled from "@/helpers/isFeatureEnabled";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
-import { Features } from "@hey/data/features";
 
 const StaffOverview = () => {
   const { currentAccount } = useAccountStore();
-  const isStaff = isFeatureEnabled(Features.Staff);
 
-  if (!currentAccount || !isStaff) {
+  if (!currentAccount || !currentAccount.isStaff) {
     return <Custom404 />;
   }
 
