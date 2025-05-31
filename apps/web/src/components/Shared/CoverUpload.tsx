@@ -4,7 +4,7 @@ import uploadCroppedImage, { readFile } from "@/helpers/accountPictureUtils";
 import getCroppedImg from "@/helpers/cropUtils";
 import errorToast from "@/helpers/errorToast";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { COVER, STATIC_IMAGES_URL } from "@hey/data/constants";
+import { STATIC_IMAGES_URL, TRANSFORMS } from "@hey/data/constants";
 import { Errors } from "@hey/data/errors";
 import imageKit from "@hey/helpers/imageKit";
 import sanitizeDStorageUrl from "@hey/helpers/sanitizeDStorageUrl";
@@ -72,7 +72,7 @@ const CoverUpload = ({ src, setSrc }: CoverUploadProps) => {
 
   const pictureUrl = pictureSrc || `${STATIC_IMAGES_URL}/patterns/2.svg`;
   const renderPictureUrl = pictureUrl
-    ? imageKit(sanitizeDStorageUrl(pictureUrl), COVER)
+    ? imageKit(sanitizeDStorageUrl(pictureUrl), TRANSFORMS.COVER)
     : "";
 
   return (

@@ -1,4 +1,4 @@
-import { AVATAR_BIG, STATIC_IMAGES_URL } from "@hey/data/constants";
+import { STATIC_IMAGES_URL, TRANSFORMS } from "@hey/data/constants";
 import getAccount from "@hey/helpers/getAccount";
 import getAvatar from "@hey/helpers/getAvatar";
 import getPostData from "@hey/helpers/getPostData";
@@ -57,11 +57,11 @@ const getPost = async (ctx: Context) => {
           <meta property="og:site_name" content="Hey" />
           <meta property="og:url" content="https://hey.xyz/posts/${post.slug}" />
           <meta property="og:logo" content="${STATIC_IMAGES_URL}/app-icon/0.png" />
-          <meta property="og:image" content="${getAvatar(author, AVATAR_BIG)}" />
+          <meta property="og:image" content="${getAvatar(author, TRANSFORMS.AVATAR_BIG)}" />
           <meta name="twitter:card" content="summary" />
           <meta name="twitter:title" content="${title}" />
           <meta name="twitter:description" content="${description}" />
-          <meta property="twitter:image" content="${getAvatar(author, AVATAR_BIG)}" />
+          <meta property="twitter:image" content="${getAvatar(author, TRANSFORMS.AVATAR_BIG)}" />
           <meta name="twitter:site" content="@heydotxyz" />
           <link rel="canonical" href="https://hey.xyz/posts/${post.slug}" />
         </head>

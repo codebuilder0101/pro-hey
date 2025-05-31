@@ -3,7 +3,7 @@ import Slug from "@/components/Shared/Slug";
 import { Image } from "@/components/Shared/UI";
 import formatRelativeOrAbsolute from "@/helpers/datetime/formatRelativeOrAbsolute";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
-import { AVATAR_TINY } from "@hey/data/constants";
+import { TRANSFORMS } from "@hey/data/constants";
 import getAccount from "@hey/helpers/getAccount";
 import getAvatar from "@hey/helpers/getAvatar";
 import type {
@@ -72,7 +72,7 @@ const PostAccount = ({ account, group, post, timestamp }: PostAccountProps) => {
           to={`/g/${group.address}`}
         >
           <Image
-            src={getAvatar(group, AVATAR_TINY)}
+            src={getAvatar(group, TRANSFORMS.AVATAR_TINY)}
             alt={group.metadata.name}
             className="size-4 rounded"
           />

@@ -1,8 +1,11 @@
-import { AVATAR_SMALL, DEFAULT_AVATAR } from "@hey/data/constants";
+import { DEFAULT_AVATAR, TRANSFORMS } from "@hey/data/constants";
 import imageKit from "./imageKit";
 import sanitizeDStorageUrl from "./sanitizeDStorageUrl";
 
-const getAvatar = (entity: any, namedTransform = AVATAR_SMALL): string => {
+const getAvatar = (
+  entity: any,
+  namedTransform = TRANSFORMS.AVATAR_SMALL
+): string => {
   if (!entity) {
     return DEFAULT_AVATAR;
   }

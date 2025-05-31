@@ -3,7 +3,7 @@ import cn from "@/helpers/cn";
 import errorToast from "@/helpers/errorToast";
 import { uploadFileToIPFS } from "@/helpers/uploadToIPFS";
 import { PhotoIcon } from "@heroicons/react/24/outline";
-import { ATTACHMENT } from "@hey/data/constants";
+import { TRANSFORMS } from "@hey/data/constants";
 import imageKit from "@hey/helpers/imageKit";
 import sanitizeDStorageUrl from "@hey/helpers/sanitizeDStorageUrl";
 import type { ChangeEvent, Ref } from "react";
@@ -57,7 +57,11 @@ const CoverImage = ({
             currentTarget.src = cover ? sanitizeDStorageUrl(cover) : cover;
           }}
           ref={imageRef}
-          src={cover ? imageKit(sanitizeDStorageUrl(cover), ATTACHMENT) : cover}
+          src={
+            cover
+              ? imageKit(sanitizeDStorageUrl(cover), TRANSFORMS.ATTACHMENT)
+              : cover
+          }
         />
       </button>
       {isNew && (

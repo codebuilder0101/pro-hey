@@ -10,11 +10,7 @@ import { useTheme } from "@/hooks/useTheme";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { CalendarIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
-import {
-  AVATAR_BIG,
-  EXPANDED_AVATAR,
-  STATIC_IMAGES_URL
-} from "@hey/data/constants";
+import { STATIC_IMAGES_URL, TRANSFORMS } from "@hey/data/constants";
 import getAccount from "@hey/helpers/getAccount";
 import getAvatar from "@hey/helpers/getAvatar";
 import type { AccountFragment } from "@hey/indexer";
@@ -80,13 +76,13 @@ const Details = ({
             className="size-20 cursor-pointer rounded-full bg-gray-200 ring-3 ring-gray-50 sm:size-36 dark:bg-gray-700 dark:ring-black"
             height={128}
             onClick={() => setShowLightBox(true)}
-            src={getAvatar(account, AVATAR_BIG)}
+            src={getAvatar(account, TRANSFORMS.AVATAR_BIG)}
             width={128}
           />
           <LightBox
             onClose={() => setShowLightBox(false)}
             show={showLightBox}
-            images={[getAvatar(account, EXPANDED_AVATAR)]}
+            images={[getAvatar(account, TRANSFORMS.EXPANDED_AVATAR)]}
           />
         </div>
         <div className="flex items-center gap-x-2">

@@ -1,4 +1,8 @@
-import { BRAND_COLOR, COVER, STATIC_IMAGES_URL } from "@hey/data/constants";
+import {
+  BRAND_COLOR,
+  STATIC_IMAGES_URL,
+  TRANSFORMS
+} from "@hey/data/constants";
 import imageKit from "@hey/helpers/imageKit";
 import sanitizeDStorageUrl from "@hey/helpers/sanitizeDStorageUrl";
 
@@ -10,7 +14,7 @@ const Cover = ({ cover }: CoverProps) => {
   const isDefaultCover = cover.includes(STATIC_IMAGES_URL);
   const backgroundImage = isDefaultCover
     ? `${STATIC_IMAGES_URL}/patterns/2.svg`
-    : imageKit(sanitizeDStorageUrl(cover), COVER);
+    : imageKit(sanitizeDStorageUrl(cover), TRANSFORMS.COVER);
 
   const backgroundStyles = {
     backgroundColor: BRAND_COLOR,

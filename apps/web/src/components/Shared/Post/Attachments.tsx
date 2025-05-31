@@ -1,7 +1,7 @@
 import { Image, LightBox } from "@/components/Shared/UI";
 import cn from "@/helpers/cn";
 import stopEventPropagation from "@/helpers/stopEventPropagation";
-import { ATTACHMENT } from "@hey/data/constants";
+import { TRANSFORMS } from "@hey/data/constants";
 import imageKit from "@hey/helpers/imageKit";
 import type { MetadataAsset } from "@hey/types/misc";
 import { getSrc } from "@livepeer/react/external";
@@ -56,7 +56,7 @@ const Attachments = ({ asset, attachments }: AttachmentsProps) => {
 
   const ImageComponent = ({ uri, index }: { uri: string; index: number }) => (
     <Image
-      alt={imageKit(uri, ATTACHMENT)}
+      alt={imageKit(uri, TRANSFORMS.ATTACHMENT)}
       className="max-h-[300px] cursor-pointer rounded-lg border border-gray-200 bg-gray-100 object-cover md:max-h-[500px] dark:border-gray-700 dark:bg-gray-800"
       height={1000}
       loading="lazy"
@@ -65,7 +65,7 @@ const Attachments = ({ asset, attachments }: AttachmentsProps) => {
         setShowLightBox(true);
       }}
       onError={({ currentTarget }) => (currentTarget.src = uri)}
-      src={imageKit(uri, ATTACHMENT)}
+      src={imageKit(uri, TRANSFORMS.ATTACHMENT)}
       width={1000}
     />
   );

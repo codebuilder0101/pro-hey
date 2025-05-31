@@ -1,7 +1,7 @@
 import FollowersYouKnow from "@/components/Shared/Modal/FollowersYouKnow";
 import { Modal, StackedAvatars } from "@/components/Shared/UI";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
-import { AVATAR_TINY } from "@hey/data/constants";
+import { TRANSFORMS } from "@hey/data/constants";
 import getAccount from "@hey/helpers/getAccount";
 import getAvatar from "@hey/helpers/getAvatar";
 import { type Follower, useFollowersYouKnowQuery } from "@hey/indexer";
@@ -60,7 +60,7 @@ const FollowersYouKnowOverview = ({
     >
       <StackedAvatars
         avatars={accounts.map((account) =>
-          getAvatar(account.follower, AVATAR_TINY)
+          getAvatar(account.follower, TRANSFORMS.AVATAR_TINY)
         )}
         limit={3}
       />

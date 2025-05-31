@@ -1,4 +1,4 @@
-import { AVATAR_BIG, STATIC_IMAGES_URL } from "@hey/data/constants";
+import { STATIC_IMAGES_URL, TRANSFORMS } from "@hey/data/constants";
 import { default as getAccountData } from "@hey/helpers/getAccount";
 import getAvatar from "@hey/helpers/getAvatar";
 import { AccountDocument } from "@hey/indexer";
@@ -33,7 +33,7 @@ const getAccount = async (ctx: Context) => {
     const { name, link, usernameWithPrefix } = getAccountData(account);
     const title = `${name} (${usernameWithPrefix}) on Hey`;
     const description = (account?.metadata?.bio || title).slice(0, 155);
-    const avatar = getAvatar(account, AVATAR_BIG);
+    const avatar = getAvatar(account, TRANSFORMS.AVATAR_BIG);
 
     const jsonLd = {
       "@context": "https://schema.org",

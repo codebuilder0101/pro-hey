@@ -1,4 +1,4 @@
-import { AVATAR_BIG, STATIC_IMAGES_URL } from "@hey/data/constants";
+import { STATIC_IMAGES_URL, TRANSFORMS } from "@hey/data/constants";
 import getAvatar from "@hey/helpers/getAvatar";
 import { GroupDocument, type GroupFragment } from "@hey/indexer";
 import apolloClient from "@hey/indexer/apollo/client";
@@ -32,7 +32,7 @@ const getGroup = async (ctx: Context) => {
     const name = group.metadata?.name || "Group";
     const title = `${name} on Hey`;
     const description = (group?.metadata?.description || title).slice(0, 155);
-    const avatar = getAvatar(group, AVATAR_BIG);
+    const avatar = getAvatar(group, TRANSFORMS.AVATAR_BIG);
 
     const jsonLd = {
       "@context": "https://schema.org",

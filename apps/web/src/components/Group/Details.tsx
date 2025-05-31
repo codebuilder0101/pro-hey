@@ -3,7 +3,7 @@ import Markup from "@/components/Shared/Markup";
 import { Button, H3, Image, LightBox } from "@/components/Shared/UI";
 import getMentions from "@/helpers/getMentions";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
-import { AVATAR_BIG, EXPANDED_AVATAR } from "@hey/data/constants";
+import { TRANSFORMS } from "@hey/data/constants";
 import getAvatar from "@hey/helpers/getAvatar";
 import type { GroupFragment } from "@hey/indexer";
 import { useState } from "react";
@@ -28,13 +28,13 @@ const Details = ({ group }: DetailsProps) => {
             className="size-32 cursor-pointer rounded-xl bg-gray-200 ring-3 ring-gray-50 sm:size-36 dark:bg-gray-700 dark:ring-black"
             height={128}
             onClick={() => setShowLightBox(true)}
-            src={getAvatar(group, AVATAR_BIG)}
+            src={getAvatar(group, TRANSFORMS.AVATAR_BIG)}
             width={128}
           />
           <LightBox
             onClose={() => setShowLightBox(false)}
             show={showLightBox}
-            images={[getAvatar(group, EXPANDED_AVATAR)]}
+            images={[getAvatar(group, TRANSFORMS.EXPANDED_AVATAR)]}
           />
         </div>
         {currentAccount?.address === group.owner ? (

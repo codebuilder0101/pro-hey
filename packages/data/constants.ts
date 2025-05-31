@@ -54,20 +54,22 @@ export const EVER_BUCKET = "heyverse";
 export const GIPHY_KEY = "yNwCXMKkiBrxyyFduF56xCbSuJJM8cMd"; // Read only safe key
 export const LIVEPEER_KEY = process.env.LIVEPEER_KEY;
 
-// Named transforms for ImageKit
-export const AVATAR_BIG = "tr:w-350,h-350";
-export const AVATAR_SMALL = "tr:w-100,h-100";
-export const AVATAR_TINY = "tr:w-50,h-50";
-export const EXPANDED_AVATAR = "tr:w-1000,h-1000";
-export const COVER = "tr:w-1350,h-350";
-export const ATTACHMENT = "tr:w-1000";
-
 export const LENS_NAMESPACE = "lens/";
 export const NATIVE_TOKEN_SYMBOL = IS_MAINNET ? "GHO" : "GRASS";
 export const WRAPPED_NATIVE_TOKEN_SYMBOL = IS_MAINNET ? "WGHO" : "WGRASS";
 
 export const MAX_IMAGE_UPLOAD = 8;
 
-export const BANNER_IDS = {
-  PRO: "108325599858337195593675454288445399104045325554183036578573525280972584660299"
-};
+// Named transforms for ImageKit
+export enum TRANSFORMS {
+  AVATAR_BIG = "tr:w-350,h-350",
+  AVATAR_SMALL = "tr:w-100,h-100",
+  AVATAR_TINY = "tr:w-50,h-50",
+  EXPANDED_AVATAR = "tr:w-1000,h-1000",
+  COVER = "tr:w-1350,h-350",
+  ATTACHMENT = "tr:w-1000"
+}
+
+export enum BANNER_IDS {
+  PRO = "108325599858337195593675454288445399104045325554183036578573525280972584660299"
+}
