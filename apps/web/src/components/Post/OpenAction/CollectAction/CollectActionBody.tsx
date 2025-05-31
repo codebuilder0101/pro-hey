@@ -154,7 +154,7 @@ const CollectActionBody = ({
                   <div className="flex items-start justify-between space-x-10">
                     <div>Hey</div>
                     <b>
-                      {(amount * 0.015).toFixed(2)} {currency} (1.5%)
+                      ~{(amount * 0.025).toFixed(2)} {currency} (2.5%)
                     </b>
                   </div>
                 </div>
