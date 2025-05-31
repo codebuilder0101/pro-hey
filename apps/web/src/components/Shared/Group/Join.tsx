@@ -45,7 +45,7 @@ const Join = ({
     updateCache();
     setIsSubmitting(false);
     onSuccess?.();
-    toast.success("Joined group");
+    toast.success(shouldRequestMembership ? "Request sent" : "Joined group");
   };
 
   const onError = (error: any) => {

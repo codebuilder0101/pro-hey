@@ -1,7 +1,7 @@
 import stopEventPropagation from "@/helpers/stopEventPropagation";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import type { GroupFragment } from "@hey/indexer";
-import {} from "react";
+import CancelGroupMembershipRequest from "./CancelGroupMembershipRequest";
 import JoinWithRulesCheck from "./JoinWithRulesCheck";
 import Leave from "./Leave";
 
@@ -27,12 +27,15 @@ const JoinLeaveButton = ({
   return (
     <div className="contents" onClick={stopEventPropagation}>
       {!hideJoinButton &&
-        (group.operations?.isMember ? null : (
+        (group.operations?.isMember ||
+        group.operations?.hasRequestedMembership ? null : (
           <JoinWithRulesCheck group={group} small={small} />
         ))}
       {!hideLeaveButton &&
         (group.operations?.isMember ? (
           <Leave group={group} small={small} />
+        ) : group.operations?.hasRequestedMembership ? (
+          <CancelGroupMembershipRequest group={group} small={small} />
         ) : null)}
     </div>
   );
