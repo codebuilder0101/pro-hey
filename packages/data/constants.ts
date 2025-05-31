@@ -51,7 +51,7 @@ export const EVER_REGION = "4EVERLAND";
 export const EVER_BUCKET = "heyverse";
 
 // Tokens / Keys
-export const GIPHY_KEY = "yNwCXMKkiBrxyyFduF56xCbSuJJM8cMd";
+export const GIPHY_KEY = "yNwCXMKkiBrxyyFduF56xCbSuJJM8cMd"; // Read only safe key
 export const LIVEPEER_KEY = process.env.LIVEPEER_KEY;
 
 // Named transforms for ImageKit
