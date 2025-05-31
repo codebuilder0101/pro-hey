@@ -8,5 +8,6 @@ declare namespace NodeJS {
     EVER_ACCESS_KEY: string;
     EVER_ACCESS_SECRET: string;
     SHARED_SECRET: string;
+    LIVEPEER_KEY: string;
   }
 }

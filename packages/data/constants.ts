@@ -52,7 +52,7 @@ export const EVER_BUCKET = "heyverse";
 
 // Tokens / Keys
 export const GIPHY_KEY = "yNwCXMKkiBrxyyFduF56xCbSuJJM8cMd";
-export const LIVEPEER_KEY = "70508bf8-2e16-4594-852d-5aed798f6403";
+export const LIVEPEER_KEY = process.env.LIVEPEER_KEY;
 
 // Named transforms for ImageKit
 export const AVATAR_BIG = "tr:w-350,h-350";
