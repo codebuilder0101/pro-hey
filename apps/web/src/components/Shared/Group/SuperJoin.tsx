@@ -1,15 +1,12 @@
 import { H3, H5 } from "@/components/Shared/UI";
 import getTokenImage from "@/helpers/getTokenImage";
-import {
-  getMembershipApprovalDetails,
-  getSimplePaymentDetails
-} from "@/helpers/rules";
+import { getSimplePaymentDetails } from "@/helpers/rules";
 import { useSuperJoinModalStore } from "@/store/non-persisted/modal/useSuperJoinModalStore";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import { tokens } from "@hey/data/tokens";
 import {
-  type Group,
+  type GroupFragment,
   type GroupRules,
   useAccountBalancesQuery
 } from "@hey/indexer";
@@ -22,9 +19,6 @@ const SuperJoin = () => {
   const { currentAccount } = useAccountStore();
   const { superJoiningGroup, setShowSuperJoinModal } = useSuperJoinModalStore();
   const { assetAddress, assetSymbol, amount } = getSimplePaymentDetails(
-    superJoiningGroup?.rules as GroupRules
-  );
-  const requiresMembershipApproval = getMembershipApprovalDetails(
     superJoiningGroup?.rules as GroupRules
   );
   const enabledTokens = tokens.map((t) => t.symbol);
@@ -83,12 +77,13 @@ const SuperJoin = () => {
           hasEnoughBalance ? (
             <Join
               className="w-full"
-              group={superJoiningGroup as Group}
+              group={superJoiningGroup as GroupFragment}
               onSuccess={() => setShowSuperJoinModal(false, superJoiningGroup)}
-              shouldRequestMembership={requiresMembershipApproval}
               small={false}
               title={
-                requiresMembershipApproval ? "Request to join" : "Super Join"
+                superJoiningGroup?.membershipApprovalEnabled
+                  ? "Request to join"
+                  : "Super Join"
               }
             />
           ) : (

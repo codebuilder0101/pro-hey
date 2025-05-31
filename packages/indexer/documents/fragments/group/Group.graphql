@@ -1,6 +1,7 @@
 fragment Group on Group {
   address
   owner
+  membershipApprovalEnabled
   feed {
     address
   }

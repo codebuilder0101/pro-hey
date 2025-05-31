@@ -1,8 +1,5 @@
 import { Button } from "@/components/Shared/UI";
-import {
-  getMembershipApprovalDetails,
-  getSimplePaymentDetails
-} from "@/helpers/rules";
+import { getSimplePaymentDetails } from "@/helpers/rules";
 import { useSuperJoinModalStore } from "@/store/non-persisted/modal/useSuperJoinModalStore";
 import type { GroupFragment, GroupRules } from "@hey/indexer";
 import Join from "./Join";
@@ -15,9 +12,6 @@ interface JoinWithRulesCheckProps {
 const JoinWithRulesCheck = ({ group, small }: JoinWithRulesCheckProps) => {
   const { setShowSuperJoinModal } = useSuperJoinModalStore();
   const { assetAddress: requiredSimplePayment } = getSimplePaymentDetails(
-    group.rules as GroupRules
-  );
-  const requiresMembershipApproval = getMembershipApprovalDetails(
     group.rules as GroupRules
   );
 
@@ -38,8 +32,7 @@ const JoinWithRulesCheck = ({ group, small }: JoinWithRulesCheckProps) => {
     <Join
       group={group}
       small={small}
-      shouldRequestMembership={requiresMembershipApproval}
-      title={requiresMembershipApproval ? "Request to join" : "Join"}
+      title={group.membershipApprovalEnabled ? "Request to join" : "Join"}
     />
   );
 };

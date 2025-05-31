@@ -7,20 +7,6 @@ import type {
 import type { Address } from "viem";
 import getAnyKeyValue from "./getAnyKeyValue";
 
-const extractMembershipApproval = (rules: GroupRuleFragment[]): boolean => {
-  for (const rule of rules) {
-    if (rule.type === "MEMBERSHIP_APPROVAL") {
-      return true;
-    }
-  }
-
-  return false;
-};
-
-export const getMembershipApprovalDetails = (rules: GroupRules): boolean =>
-  extractMembershipApproval(rules.required) ||
-  extractMembershipApproval(rules.anyOf);
-
 interface AssetDetails {
   assetAddress: Address | null;
   assetSymbol: string | null;

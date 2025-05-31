@@ -4,7 +4,6 @@ import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
 import { useApolloClient } from "@apollo/client";
 import {
   type GroupFragment,
-  type LoggedInGroupOperationsFragment,
   useJoinGroupMutation,
   useRequestGroupMembershipMutation
 } from "@hey/indexer";
@@ -14,7 +13,6 @@ import { toast } from "sonner";
 interface JoinProps {
   group: GroupFragment;
   small: boolean;
-  shouldRequestMembership?: boolean;
   className?: string;
   title?: string;
   onSuccess?: () => void;
@@ -23,7 +21,6 @@ interface JoinProps {
 const Join = ({
   group,
   small,
-  shouldRequestMembership = false,
   className = "",
   title = "Join",
   onSuccess
@@ -32,12 +29,16 @@ const Join = ({
   const { cache } = useApolloClient();
   const handleTransactionLifecycle = useTransactionLifecycle();
   const updateCache = () => {
+    if (!group.operations) {
+      return;
+    }
+
     cache.modify({
       fields: {
-        isMember: () => !shouldRequestMembership,
-        hasRequestedMembership: () => shouldRequestMembership
+        isMember: () => !group.membershipApprovalEnabled,
+        hasRequestedMembership: () => group.membershipApprovalEnabled
       },
-      id: cache.identify(group.operations as LoggedInGroupOperationsFragment)
+      id: cache.identify(group.operations)
     });
   };
 
@@ -45,7 +46,9 @@ const Join = ({
     updateCache();
     setIsSubmitting(false);
     onSuccess?.();
-    toast.success(shouldRequestMembership ? "Request sent" : "Joined group");
+    toast.success(
+      group.membershipApprovalEnabled ? "Request sent" : "Joined group"
+    );
   };
 
   const onError = (error: any) => {
@@ -92,7 +95,7 @@ const Join = ({
   const handleJoin = async () => {
     setIsSubmitting(true);
 
-    if (shouldRequestMembership) {
+    if (group.membershipApprovalEnabled) {
       return await requestGroupMembership({
         variables: { request: { group: group.address } }
       });
