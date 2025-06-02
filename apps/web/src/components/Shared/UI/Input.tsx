@@ -56,9 +56,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         <div
           className={cn(
             { "!bg-gray-500/20 opacity-50": props.disabled },
-            error ? "!border-red-500" : "focus-within:ring-1",
+            { "!border-red-500": error },
             prefix ? "rounded-r-xl" : "rounded-xl",
-            "flex w-full items-center border border-gray-300 bg-white focus-within:border-gray-500 focus-within:ring-gray-400 dark:border-gray-700 dark:bg-gray-900"
+            "flex w-full items-center border border-gray-300 bg-white focus-within:border-gray-500 dark:border-gray-700 dark:bg-gray-900"
           )}
         >
           <input
