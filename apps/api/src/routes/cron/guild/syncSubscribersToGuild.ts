@@ -1,4 +1,4 @@
-import { SUBSCRIPTION_GROUP } from "@hey/data/constants";
+import { PERMISSIONS } from "@hey/data/constants";
 import { Errors } from "@hey/data/errors";
 import type { Context } from "hono";
 import lensPg from "src/utils/lensPg";
@@ -13,7 +13,7 @@ const syncSubscribersToGuild = async (ctx: Context) => {
         FROM "group"."member"
         WHERE "group"::TEXT LIKE $1;
       `,
-      [`%${SUBSCRIPTION_GROUP.replace("0x", "").toLowerCase()}%`]
+      [`%${PERMISSIONS.SUBSCRIPTION.replace("0x", "").toLowerCase()}%`]
     );
 
     const addresses = accounts.map((account) =>

@@ -7,9 +7,9 @@ import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import {
   DEFAULT_COLLECT_TOKEN,
+  PERMISSIONS,
   STATIC_IMAGES_URL,
   SUBSCRIPTION_AMOUNT,
-  SUBSCRIPTION_GROUP,
   WRAPPED_NATIVE_TOKEN_SYMBOL
 } from "@hey/data/constants";
 import {
@@ -65,7 +65,7 @@ const Subscribe = () => {
     setIsSubmitting(true);
 
     return await joinGroup({
-      variables: { request: { group: SUBSCRIPTION_GROUP } }
+      variables: { request: { group: PERMISSIONS.SUBSCRIPTION } }
     });
   };
 

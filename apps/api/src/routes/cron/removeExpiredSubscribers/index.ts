@@ -1,4 +1,4 @@
-import { SUBSCRIPTION_GROUP } from "@hey/data/constants";
+import { PERMISSIONS } from "@hey/data/constants";
 import { Errors } from "@hey/data/errors";
 import type { Context } from "hono";
 import lensPg from "src/utils/lensPg";
@@ -15,7 +15,7 @@ const removeExpiredSubscribers = async (ctx: Context) => {
         AND timestamp < NOW() - INTERVAL '365 days'
         LIMIT 1000;
       `,
-      [`%${SUBSCRIPTION_GROUP.replace("0x", "").toLowerCase()}%`]
+      [`%${PERMISSIONS.SUBSCRIPTION.replace("0x", "").toLowerCase()}%`]
     );
 
     const addresses = accounts.map((account) =>
@@ -34,7 +34,7 @@ const removeExpiredSubscribers = async (ctx: Context) => {
 
     const hash = await signer.writeContract({
       abi: ABI,
-      address: SUBSCRIPTION_GROUP,
+      address: PERMISSIONS.SUBSCRIPTION,
       functionName: "removeMembers",
       args: [membersToRemove, []]
     });
