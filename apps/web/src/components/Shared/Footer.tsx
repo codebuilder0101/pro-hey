@@ -9,7 +9,7 @@ const links = [
   { href: "/u/hey", label: "Hey" },
   { href: "https://github.com/heyverse/hey", label: "GitHub" },
   { href: "/support", label: "Support" },
-  { href: "https://hey.xyz/donate", label: "Donate" }
+  { href: "https://hey.xyz/status", label: "Status" }
 ];
 
 const Footer = () => {
