@@ -86,7 +86,7 @@ const Subscribe = () => {
           </div>
         ) : (
           <>
-            Get started with Hey Pro for{" "}
+            Join Hey Pro for for{" "}
             <b className="inline-flex items-center gap-x-1">
               {SUBSCRIPTION_AMOUNT}{" "}
               <Tooltip content={WRAPPED_NATIVE_TOKEN_SYMBOL} placement="top">
@@ -113,25 +113,21 @@ const Subscribe = () => {
           <div className="flex flex-col items-center gap-y-2 text-gray-500">
             <div className="flex items-center gap-x-1">
               <CheckCircleIcon className="size-4.5" />
-              <span className="text-sm">
-                Get a badge that highlights your subscription
-              </span>
+              <span className="text-sm">Subscription Badge</span>
             </div>
             <div className="flex items-center gap-x-1">
               <CheckCircleIcon className="size-4.5" />
               <span className="text-sm">
-                Unlock exclusive Hey features - no limits, no fuss
-              </span>
-            </div>
-            <div className="flex items-center gap-x-1">
-              <CheckCircleIcon className="size-4.5" />
-              <span className="text-sm">
-                Fuel the growth of the Hey team and platform
+                Exclusive Hey features including live streaming
               </span>
             </div>
             <div className="flex items-center gap-x-1">
               <CheckCircleIcon className="size-4.5" />
               <span className="text-sm">Exclusive NFT for early members</span>
+            </div>
+            <div className="flex items-center gap-x-1">
+              <CheckCircleIcon className="size-4.5" />
+              <span className="text-sm">Contribute to Hey's growth</span>
             </div>
           </div>
           {balanceLoading ? (

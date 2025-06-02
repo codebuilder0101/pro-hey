@@ -47,10 +47,10 @@ const ProBanner = () => {
       <div className="m-5">
         <div className="flex items-center gap-2">
           <CheckBadgeIcon className="size-5 text-brand-500" />
-          <H5>Subscribe to Hey Pro</H5>
+          <H5>Join Hey Pro</H5>
         </div>
         <div className="mb-5 text-sm">
-          Get badge and access to exclusive features.
+          Get your badge and access exclusive features.
         </div>
         <Button
           className="w-full"
