@@ -5,7 +5,6 @@ import {
   getBlockedByMeMessage,
   getBlockedMeMessage
 } from "@/helpers/getBlockedMessage";
-import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { QueueListIcon } from "@heroicons/react/24/outline";
 import { isRepost } from "@hey/helpers/postHelpers";
 import type { AnyPostFragment } from "@hey/indexer";
@@ -26,7 +25,6 @@ interface FullPostProps {
 }
 
 const FullPost = ({ hasHiddenComments, post }: FullPostProps) => {
-  const { currentAccount } = useAccountStore();
   const { setShowHiddenComments, showHiddenComments } =
     useHiddenCommentFeedStore();
 
@@ -59,7 +57,7 @@ const FullPost = ({ hasHiddenComments, post }: FullPostProps) => {
                 contentClassName="full-page-post-markup"
                 post={targetPost}
               />
-              {currentAccount?.hasSubscribed && <Translate post={targetPost} />}
+              <Translate post={targetPost} />
               <div className="my-3 flex items-center text-gray-500 text-sm dark:text-gray-200">
                 {formatDate(timestamp, "hh:mm A · MMM D, YYYY")}
                 {targetPost.app?.metadata?.name

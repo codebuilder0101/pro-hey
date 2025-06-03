@@ -35,7 +35,7 @@ const translate = async (ctx: Context) => {
     }
 
     const completion = await openRouter.chat.completions.create({
-      model: "google/gemma-3n-e4b-it:free",
+      model: "mistralai/devstral-small:free",
       messages: [
         {
           role: "user",
