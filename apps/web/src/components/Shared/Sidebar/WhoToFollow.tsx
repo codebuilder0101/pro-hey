@@ -82,13 +82,15 @@ const WhoToFollow = () => {
             <DismissRecommendedAccount account={account} />
           </div>
         ))}
-        <button
-          className="font-bold text-gray-500 dark:text-gray-200"
-          onClick={() => setShowMore(true)}
-          type="button"
-        >
-          Show more
-        </button>
+        {recommendedAccounts.length > 5 && (
+          <button
+            className="font-bold text-gray-500 dark:text-gray-200"
+            onClick={() => setShowMore(true)}
+            type="button"
+          >
+            Show more
+          </button>
+        )}
       </Card>
       <Modal
         onClose={() => setShowMore(false)}
