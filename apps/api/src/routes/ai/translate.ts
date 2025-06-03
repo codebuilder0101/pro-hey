@@ -35,7 +35,7 @@ const translate = async (ctx: Context) => {
     }
 
     const completion = await openRouter.chat.completions.create({
-      model: "shisa-ai/shisa-v2-llama3.3-70b:free",
+      model: "google/gemma-3n-e4b-it:free",
       messages: [
         {
           role: "user",
