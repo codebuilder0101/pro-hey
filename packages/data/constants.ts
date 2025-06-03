@@ -23,8 +23,7 @@ export const ADDRESS_PLACEHOLDER = "0x03Ba3...7EF";
 export const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 // Subscription
-export const SUBSCRIPTION_AMOUNT = 15;
-export const SUBSCRIPTION_DURATION_DAYS = 365;
+export const SUBSCRIPTION_AMOUNT = 20;
 
 // Application
 export const BRAND_COLOR = "#FB3A5D";
@@ -33,7 +32,6 @@ export const BRAND_COLOR = "#FB3A5D";
 export const STATIC_ASSETS_URL = "https://static.hey.xyz";
 export const STATIC_IMAGES_URL = `${STATIC_ASSETS_URL}/images`;
 export const LENS_MEDIA_SNAPSHOT_URL = "https://ik.imagekit.io/lens";
-export const DEFAULT_OG = `${STATIC_IMAGES_URL}/og/cover.png`;
 export const DEFAULT_AVATAR = `${STATIC_IMAGES_URL}/default.png`;
 export const PLACEHOLDER_IMAGE = `${STATIC_IMAGES_URL}/placeholder.webp`;
 export const BLOCK_EXPLORER_URL = IS_MAINNET
