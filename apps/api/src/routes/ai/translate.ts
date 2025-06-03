@@ -3,6 +3,7 @@ import type { Context } from "hono";
 import getDbPostId from "src/utils/getDbPostId";
 import lensPg from "src/utils/lensPg";
 import openRouter from "src/utils/openRouter";
+import { generateExtraLongExpiry, getRedis, setRedis } from "src/utils/redis";
 import { z } from "zod";
 
 const OpenAIResponseSchema = z.object({
@@ -12,6 +13,12 @@ const OpenAIResponseSchema = z.object({
 const translate = async (ctx: Context) => {
   try {
     const { post } = await ctx.req.json();
+    const cacheKey = `ai:translate:${post}`;
+    const cachedData = await getRedis(cacheKey);
+
+    if (cachedData) {
+      return ctx.json({ success: true, data: { text: cachedData } });
+    }
 
     const metadata = await lensPg.query(
       `
@@ -29,7 +36,7 @@ const translate = async (ctx: Context) => {
     }
 
     const completion = await openRouter.chat.completions.create({
-      model: "google/gemma-3n-e4b-it:free",
+      model: "shisa-ai/shisa-v2-llama3.3-70b:free",
       messages: [
         {
           role: "user",
@@ -42,6 +49,7 @@ const translate = async (ctx: Context) => {
 
     const parsed = OpenAIResponseSchema.parse(completion);
     const translatedText = parsed.choices[0].message.content;
+    await setRedis(cacheKey, translatedText, generateExtraLongExpiry());
 
     return ctx.json({ success: true, data: { text: translatedText } });
   } catch {
