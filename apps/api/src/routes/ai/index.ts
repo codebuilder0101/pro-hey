@@ -7,7 +7,7 @@ const app = new Hono();
 
 app.post(
   "/translate",
-  zValidator("json", z.object({ text: z.string() })),
+  zValidator("json", z.object({ post: z.string() })),
   translate
 );
 

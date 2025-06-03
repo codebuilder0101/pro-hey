@@ -65,6 +65,9 @@ importers:
       linkedom:
         specifier: ^0.18.10
         version: 0.18.10
+      openai:
+        specifier: ^5.0.2
+        version: 5.0.2(ws@8.18.2(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.25.49)
       pg-promise:
         specifier: ^11.13.0
         version: 11.13.0(pg-query-stream@4.8.1(pg@8.14.1))
@@ -4711,6 +4714,18 @@ packages:
 
   oniguruma-to-es@4.3.3:
     resolution: {integrity: sha512-rPiZhzC3wXwE59YQMRDodUwwT9FZ9nNBwQQfsd1wfdtlKEyCdRV0avrTcSZ5xlIvGRVPd/cx6ZN45ECmS39xvg==}
+
+  openai@5.0.2:
+    resolution: {integrity: sha512-NN7LAAImgBmd4RIe6WyRpLmwCbn+HQ1iaXeIG7K9DM3Auy/G2waKFhrDfRgaEeY0UUPnm6nohaCsqcS+zO8+2g==}
+    hasBin: true
+    peerDependencies:
+      ws: ^8.18.0
+      zod: ^3.23.8
+    peerDependenciesMeta:
+      ws:
+        optional: true
+      zod:
+        optional: true
 
   optimism@0.18.1:
     resolution: {integrity: sha512-mLXNwWPa9dgFyDqkNi54sjDyNJ9/fTI6WGBLgnXku1vdKY/jovHfZT5r+aiVeFFLOz+foPNOm5YJ4mqgld2GBQ==}
@@ -12421,6 +12436,11 @@ snapshots:
       oniguruma-parser: 0.12.1
       regex: 6.0.1
       regex-recursion: 6.0.2
+
+  openai@5.0.2(ws@8.18.2(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.25.49):
+    optionalDependencies:
+      ws: 8.18.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      zod: 3.25.49
 
   optimism@0.18.1:
     dependencies:
