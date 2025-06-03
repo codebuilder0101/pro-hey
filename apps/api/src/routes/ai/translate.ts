@@ -1,5 +1,6 @@
 import { Errors } from "@hey/data/errors";
 import type { Context } from "hono";
+import getDbPostId from "src/utils/getDbPostId";
 import lensPg from "src/utils/lensPg";
 import openRouter from "src/utils/openRouter";
 import { z } from "zod";
@@ -18,7 +19,7 @@ const translate = async (ctx: Context) => {
         FROM post.metadata
         WHERE post = $1;
       `,
-      [`\\x${post}`]
+      [getDbPostId(post)]
     );
 
     const text = metadata[0]?.content;

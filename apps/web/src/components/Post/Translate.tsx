@@ -46,11 +46,7 @@ const Translate = ({ post }: TranslateProps) => {
     return (
       <button
         className="mt-3 block font-bold text-gray-500 text-sm"
-        onClick={() =>
-          mutate({
-            post: "46c80933e2d4d868962e27321ef2540f274539d3a7937afba6b0232e618187df"
-          })
-        }
+        onClick={() => mutate({ post: targetPost.id })}
         type="button"
       >
         Translate to English
