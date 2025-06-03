@@ -42,7 +42,7 @@ const translate = async (ctx: Context) => {
     const parsed = OpenAIResponseSchema.parse(completion);
     const translatedText = parsed.choices[0].message.content;
 
-    return ctx.json({ text: translatedText });
+    return ctx.json({ success: true, data: { text: translatedText } });
   } catch {
     return ctx.json({ success: false, error: Errors.SomethingWentWrong }, 500);
   }
