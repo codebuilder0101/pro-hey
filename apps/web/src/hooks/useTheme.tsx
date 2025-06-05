@@ -1,3 +1,4 @@
+import { Localstorage } from "@hey/data/storage";
 import {
   type ReactNode,
   createContext,
@@ -20,17 +21,15 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-const THEME_KEY = "theme";
-
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<Theme>(() => {
-    const saved = localStorage.getItem(THEME_KEY);
+    const saved = localStorage.getItem(Localstorage.Theme);
     return (saved ?? "light") as Theme;
   });
 
   useEffect(() => {
     document.documentElement.setAttribute("class", theme);
-    localStorage.setItem(THEME_KEY, theme);
+    localStorage.setItem(Localstorage.Theme, theme);
   }, [theme]);
 
   const toggleTheme = useCallback(
