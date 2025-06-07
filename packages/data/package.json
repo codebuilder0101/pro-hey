@@ -4,8 +4,8 @@
   "private": true,
   "license": "AGPL-3.0",
   "scripts": {
-    "typecheck": "tsc --pretty",
-    "test": "vitest"
+    "test": "vitest",
+    "typecheck": "tsc --pretty"
   },
   "dependencies": {
     "@lens-chain/sdk": "^1.0.3"

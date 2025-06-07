@@ -1,6 +1,6 @@
 import type { Context, Next } from "hono";
 import { describe, expect, it, vi } from "vitest";
-import secretMiddleware from "../secretMiddleware";
+import secretMiddleware from "./secretMiddleware";
 
 const next: Next = vi.fn();
 

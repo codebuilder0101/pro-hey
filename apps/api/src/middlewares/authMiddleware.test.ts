@@ -1,7 +1,7 @@
 import type { Context, Next } from "hono";
 import { jwtVerify } from "jose";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import authMiddleware from "../authMiddleware";
+import authMiddleware from "./authMiddleware";
 
 vi.mock("jose", () => ({
   createRemoteJWKSet: vi.fn(() => "jwk"),

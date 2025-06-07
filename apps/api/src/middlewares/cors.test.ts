@@ -6,7 +6,7 @@ vi.mock("hono/cors", () => ({ cors: corsMock }));
 let cors: any;
 
 beforeAll(async () => {
-  ({ default: cors } = await import("../cors"));
+  ({ default: cors } = await import("./cors"));
 });
 
 describe("cors middleware", () => {

@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
-import sha256 from "../../utils/sha256";
+import sha256 from "../utils/sha256";
 
 vi.mock("hono-rate-limiter", () => ({
   rateLimiter: vi.fn((opts) => opts)
 }));
 
-import rateLimiter from "../rateLimiter";
+import rateLimiter from "./rateLimiter";
 
 const headers = new Headers({ "x-forwarded-for": "1.1.1.1" });
 

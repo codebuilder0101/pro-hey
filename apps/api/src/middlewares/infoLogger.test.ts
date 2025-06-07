@@ -1,6 +1,6 @@
 import type { Context, Next } from "hono";
 import { describe, expect, it, vi } from "vitest";
-import infoLogger from "../infoLogger";
+import infoLogger from "./infoLogger";
 
 describe("infoLogger", () => {
   it("logs formatted message", async () => {

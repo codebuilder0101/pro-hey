@@ -19,7 +19,7 @@ vi.mock("@apollo/client", async () => {
   };
 });
 
-import apolloClient from "./client";
+import { createApolloClient } from "./client";
 
 describe("apolloClient", () => {
   beforeEach(() => {
@@ -27,7 +27,7 @@ describe("apolloClient", () => {
   });
 
   it("creates client without auth link", () => {
-    const client = apolloClient() as any;
+    const client = createApolloClient() as any;
 
     expect(fromMock).toHaveBeenCalledWith([retryLink, httpLink]);
     expect(ApolloClientMock).toHaveBeenCalled();
@@ -40,7 +40,7 @@ describe("apolloClient", () => {
 
   it("creates client with auth link", () => {
     const authLink = {} as ApolloLink;
-    const client = apolloClient(authLink) as any;
+    const client = createApolloClient(authLink) as any;
 
     expect(fromMock).toHaveBeenCalledWith([authLink, retryLink, httpLink]);
     expect(ApolloClientMock).toHaveBeenCalled();
