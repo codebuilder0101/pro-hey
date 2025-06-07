@@ -9,9 +9,9 @@ import {
 } from "@/components/Shared/UI";
 import errorToast from "@/helpers/errorToast";
 import { getSimplePaymentDetails } from "@/helpers/rules";
-import usePollTransactionStatus from "@/hooks/usePollTransactionStatus";
 import usePreventScrollOnNumberInput from "@/hooks/usePreventScrollOnNumberInput";
 import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
+import useWaitForTransactionToComplete from "@/hooks/useWaitForTransactionToComplete";
 import {
   DEFAULT_COLLECT_TOKEN,
   IS_MAINNET,
@@ -35,7 +35,7 @@ const SuperJoin = ({ group }: SuperJoinProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [amount, setAmount] = useState(0);
   const handleTransactionLifecycle = useTransactionLifecycle();
-  const pollTransactionStatus = usePollTransactionStatus();
+  const waitForTransactionToComplete = useWaitForTransactionToComplete();
   const inputRef = useRef<HTMLInputElement>(null);
   usePreventScrollOnNumberInput(inputRef as RefObject<HTMLInputElement>);
 
@@ -51,8 +51,9 @@ const SuperJoin = ({ group }: SuperJoinProps) => {
     setAmount(simplePaymentAmount || 0);
   }, [simplePaymentAmount]);
 
-  const onCompleted = (hash: string) => {
-    pollTransactionStatus(hash, () => location.reload());
+  const onCompleted = async (hash: string) => {
+    await waitForTransactionToComplete(hash);
+    location.reload();
   };
 
   const onError = (error: ApolloClientError) => {

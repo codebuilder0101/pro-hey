@@ -9,9 +9,9 @@ import {
 } from "@/components/Shared/UI";
 import errorToast from "@/helpers/errorToast";
 import { getSimplePaymentDetails } from "@/helpers/rules";
-import usePollTransactionStatus from "@/hooks/usePollTransactionStatus";
 import usePreventScrollOnNumberInput from "@/hooks/usePreventScrollOnNumberInput";
 import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
+import useWaitForTransactionToComplete from "@/hooks/useWaitForTransactionToComplete";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import {
   DEFAULT_COLLECT_TOKEN,
@@ -34,7 +34,7 @@ const SuperFollow = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [amount, setAmount] = useState(0);
   const handleTransactionLifecycle = useTransactionLifecycle();
-  const pollTransactionStatus = usePollTransactionStatus();
+  const waitForTransactionToComplete = useWaitForTransactionToComplete();
   const inputRef = useRef<HTMLInputElement>(null);
   usePreventScrollOnNumberInput(inputRef as RefObject<HTMLInputElement>);
   const [getCurrentAccountDetails] = useMeLazyQuery({
@@ -54,12 +54,11 @@ const SuperFollow = () => {
     setAmount(simplePaymentAmount || 0);
   }, [simplePaymentAmount]);
 
-  const onCompleted = (hash: string) => {
-    pollTransactionStatus(hash, async () => {
-      const accountData = await getCurrentAccountDetails();
-      setCurrentAccount(accountData?.data?.me.loggedInAs.account);
-      location.reload();
-    });
+  const onCompleted = async (hash: string) => {
+    await waitForTransactionToComplete(hash);
+    const accountData = await getCurrentAccountDetails();
+    setCurrentAccount(accountData?.data?.me.loggedInAs.account);
+    location.reload();
   };
 
   const onError = (error: ApolloClientError) => {

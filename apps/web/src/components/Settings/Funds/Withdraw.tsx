@@ -1,7 +1,7 @@
 import { Button, Input, Modal } from "@/components/Shared/UI";
 import errorToast from "@/helpers/errorToast";
-import usePollTransactionStatus from "@/hooks/usePollTransactionStatus";
 import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
+import useWaitForTransactionToComplete from "@/hooks/useWaitForTransactionToComplete";
 import { useWithdrawMutation } from "@hey/indexer";
 import type { ApolloClientError } from "@hey/types/errors";
 import { useState } from "react";
@@ -19,15 +19,14 @@ const Withdraw = ({ currency, value, refetch }: WithdrawProps) => {
   const [showModal, setShowModal] = useState(false);
   const [valueToWithdraw, setValueToWithdraw] = useState(value);
   const handleTransactionLifecycle = useTransactionLifecycle();
-  const pollTransactionStatus = usePollTransactionStatus();
+  const waitForTransactionToComplete = useWaitForTransactionToComplete();
 
-  const onCompleted = (hash: string) => {
+  const onCompleted = async (hash: string) => {
     setShowModal(false);
-    pollTransactionStatus(hash, () => {
-      setIsSubmitting(false);
-      refetch();
-      toast.success("Withdrawal Successful");
-    });
+    await waitForTransactionToComplete(hash);
+    setIsSubmitting(false);
+    refetch();
+    toast.success("Withdrawal Successful");
   };
 
   const onError = (error: ApolloClientError) => {

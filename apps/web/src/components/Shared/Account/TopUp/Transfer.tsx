@@ -1,8 +1,8 @@
 import { Button, Card, Input, Spinner } from "@/components/Shared/UI";
 import errorToast from "@/helpers/errorToast";
-import usePollTransactionStatus from "@/hooks/usePollTransactionStatus";
 import usePreventScrollOnNumberInput from "@/hooks/usePreventScrollOnNumberInput";
 import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
+import useWaitForTransactionToComplete from "@/hooks/useWaitForTransactionToComplete";
 import {
   type FundingToken,
   useFundModalStore
@@ -28,7 +28,7 @@ const Transfer = ({ token }: TransferProps) => {
   usePreventScrollOnNumberInput(inputRef as RefObject<HTMLInputElement>);
   const { address } = useAccount();
   const handleTransactionLifecycle = useTransactionLifecycle();
-  const pollTransactionStatus = usePollTransactionStatus();
+  const waitForTransactionToComplete = useWaitForTransactionToComplete();
   const symbol = token?.symbol ?? NATIVE_TOKEN_SYMBOL;
 
   const { data: balance, isLoading: balanceLoading } = useBalance({
@@ -37,14 +37,13 @@ const Transfer = ({ token }: TransferProps) => {
     query: { refetchInterval: 2000 }
   });
 
-  const onCompleted = (hash: string) => {
+  const onCompleted = async (hash: string) => {
     setAmount(2);
     setOther(false);
-    pollTransactionStatus(hash, () => {
-      setIsSubmitting(false);
-      setShowFundModal(false);
-      toast.success("Transferred successfully");
-    });
+    await waitForTransactionToComplete(hash);
+    setIsSubmitting(false);
+    setShowFundModal(false);
+    toast.success("Transferred successfully");
   };
 
   const onError = (error: ApolloClientError) => {
