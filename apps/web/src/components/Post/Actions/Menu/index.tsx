@@ -11,6 +11,7 @@ import CopyPostText from "./CopyPostText";
 import Delete from "./Delete";
 import HideComment from "./HideComment";
 import NotInterested from "./NotInterested";
+import RefreshMetadata from "./RefreshMetadata";
 import Report from "./Report";
 import Share from "./Share";
 
@@ -54,7 +55,10 @@ const PostMenu = ({ post }: PostMenuProps) => {
           <CopyPostText post={post} />
           <div className="divider" />
           {currentAccount?.address === post?.author?.address ? (
-            <Delete post={post} />
+            <>
+              <RefreshMetadata post={post} />
+              <Delete post={post} />
+            </>
           ) : (
             <Report post={post} />
           )}
