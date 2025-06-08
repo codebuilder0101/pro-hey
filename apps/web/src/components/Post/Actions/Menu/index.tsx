@@ -9,9 +9,9 @@ import { Fragment } from "react";
 import Bookmark from "./Bookmark";
 import CopyPostText from "./CopyPostText";
 import Delete from "./Delete";
+import Edit from "./Edit";
 import HideComment from "./HideComment";
 import NotInterested from "./NotInterested";
-import RefreshMetadata from "./RefreshMetadata";
 import Report from "./Report";
 import Share from "./Share";
 
@@ -21,6 +21,8 @@ interface PostMenuProps {
 
 const PostMenu = ({ post }: PostMenuProps) => {
   const { currentAccount } = useAccountStore();
+  const canEdit =
+    post.operations?.canEdit.__typename === "PostOperationValidationPassed";
   const iconClassName = "w-[15px] sm:w-[18px]";
 
   return (
@@ -56,7 +58,9 @@ const PostMenu = ({ post }: PostMenuProps) => {
           <div className="divider" />
           {currentAccount?.address === post?.author?.address ? (
             <>
-              <RefreshMetadata post={post} />
+              {canEdit && currentAccount?.hasSubscribed ? (
+                <Edit post={post} />
+              ) : null}
               <Delete post={post} />
             </>
           ) : (
