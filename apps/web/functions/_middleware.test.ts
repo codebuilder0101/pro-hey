@@ -26,7 +26,6 @@ describe("onRequest middleware", () => {
   it("rewrites sitemap root", async () => {
     const fetchMock = stubFetch();
     const ctx = createContext("https://hey.xyz/sitemap.xml");
-
     const res = await onRequest(ctx as any);
 
     expect(fetchMock).toHaveBeenCalledWith(
@@ -39,7 +38,6 @@ describe("onRequest middleware", () => {
   it("rewrites sitemap paths", async () => {
     const fetchMock = stubFetch();
     const ctx = createContext("https://hey.xyz/sitemap/posts.xml");
-
     await onRequest(ctx as any);
 
     expect(fetchMock).toHaveBeenCalledWith(
@@ -51,7 +49,6 @@ describe("onRequest middleware", () => {
   it("rewrites og paths for bots", async () => {
     const fetchMock = stubFetch();
     const ctx = createContext("https://hey.xyz/posts/123", "Googlebot");
-
     await onRequest(ctx as any);
 
     expect(fetchMock).toHaveBeenCalledWith(
