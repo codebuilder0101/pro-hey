@@ -1,12 +1,6 @@
 import { hydrateAuthTokens } from "@/store/persisted/useAuthStore";
 import { HEY_API_URL } from "@hey/data/constants";
-import type {
-  AiTranslate,
-  Live,
-  Oembed,
-  Preferences,
-  STS
-} from "@hey/types/api";
+import type { Live, Oembed, Preferences, STS } from "@hey/types/api";
 
 interface ApiConfig {
   baseUrl?: string;
@@ -47,14 +41,6 @@ const fetchApi = async <T>(
 };
 
 export const hono = {
-  ai: {
-    translate: (post: string): Promise<AiTranslate> => {
-      return fetchApi<AiTranslate>("/ai/translate", {
-        method: "POST",
-        body: JSON.stringify({ post })
-      });
-    }
-  },
   live: {
     create: ({ record }: { record: boolean }): Promise<Live> => {
       return fetchApi<Live>("/live/create", {
