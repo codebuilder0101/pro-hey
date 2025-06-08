@@ -14,6 +14,7 @@ import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
 import useWaitForTransactionToComplete from "@/hooks/useWaitForTransactionToComplete";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import {
+  BANNER_IDS,
   DEFAULT_COLLECT_TOKEN,
   IS_MAINNET,
   STATIC_IMAGES_URL,
@@ -38,6 +39,7 @@ const SuperFollow = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   usePreventScrollOnNumberInput(inputRef as RefObject<HTMLInputElement>);
   const [getCurrentAccountDetails] = useMeLazyQuery({
+    variables: { proBannerId: BANNER_IDS.PRO },
     fetchPolicy: "no-cache"
   });
 

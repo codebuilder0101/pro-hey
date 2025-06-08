@@ -17,6 +17,7 @@ import uploadMetadata from "@/helpers/uploadMetadata";
 import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
 import useWaitForTransactionToComplete from "@/hooks/useWaitForTransactionToComplete";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
+import { BANNER_IDS } from "@hey/data/constants";
 import { Errors } from "@hey/data/errors";
 import { Regex } from "@hey/data/regex";
 import { useMeLazyQuery, useSetAccountMetadataMutation } from "@hey/indexer";
@@ -63,6 +64,7 @@ const PersonalizeSettingsForm = () => {
   const handleTransactionLifecycle = useTransactionLifecycle();
   const waitForTransactionToComplete = useWaitForTransactionToComplete();
   const [getCurrentAccountDetails] = useMeLazyQuery({
+    variables: { proBannerId: BANNER_IDS.PRO },
     fetchPolicy: "no-cache"
   });
 
