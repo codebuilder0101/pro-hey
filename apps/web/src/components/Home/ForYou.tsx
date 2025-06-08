@@ -1,6 +1,7 @@
 import SinglePost from "@/components/Post/SinglePost";
 import PostsShimmer from "@/components/Shared/Shimmer/PostsShimmer";
 import { Card, EmptyState, ErrorMessage } from "@/components/Shared/UI";
+import useLoadMoreOnIntersect from "@/hooks/useLoadMoreOnIntersect";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { LightBulbIcon } from "@heroicons/react/24/outline";
 import {
@@ -8,17 +9,10 @@ import {
   type PostsForYouRequest,
   usePostsForYouQuery
 } from "@hey/indexer";
-import { useIntersectionObserver } from "@uidotdev/usehooks";
-import { useEffect } from "react";
 import { WindowVirtualizer } from "virtua";
 
 const ForYou = () => {
   const { currentAccount } = useAccountStore();
-  const [ref, entry] = useIntersectionObserver({
-    threshold: 0,
-    root: null,
-    rootMargin: "0px"
-  });
 
   const request: PostsForYouRequest = {
     pageSize: PageSize.Fifty,
@@ -41,12 +35,7 @@ const ForYou = () => {
       });
     }
   };
-
-  useEffect(() => {
-    if (entry?.isIntersecting) {
-      onEndReached();
-    }
-  }, [entry?.isIntersecting]);
+  const loadMoreRef = useLoadMoreOnIntersect(onEndReached);
 
   if (loading) {
     return <PostsShimmer />;
@@ -78,7 +67,7 @@ const ForYou = () => {
         {filteredPosts.map((item) => (
           <SinglePost key={item.post.id} post={item.post} />
         ))}
-        {hasMore && <span ref={ref} />}
+        {hasMore && <span ref={loadMoreRef} />}
       </WindowVirtualizer>
     </Card>
   );

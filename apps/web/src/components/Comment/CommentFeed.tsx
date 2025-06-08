@@ -2,6 +2,7 @@ import { useHiddenCommentFeedStore } from "@/components/Post";
 import SinglePost from "@/components/Post/SinglePost";
 import PostsShimmer from "@/components/Shared/Shimmer/PostsShimmer";
 import { Card, EmptyState, ErrorMessage } from "@/components/Shared/UI";
+import useLoadMoreOnIntersect from "@/hooks/useLoadMoreOnIntersect";
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 import {
   PageSize,
@@ -12,8 +13,6 @@ import {
   type ReferencedPostFragment,
   usePostReferencesQuery
 } from "@hey/indexer";
-import { useIntersectionObserver } from "@uidotdev/usehooks";
-import { useEffect } from "react";
 import { WindowVirtualizer } from "virtua";
 
 interface CommentFeedProps {
@@ -22,11 +21,6 @@ interface CommentFeedProps {
 
 const CommentFeed = ({ postId }: CommentFeedProps) => {
   const { showHiddenComments } = useHiddenCommentFeedStore();
-  const [ref, entry] = useIntersectionObserver({
-    threshold: 0,
-    root: null,
-    rootMargin: "0px"
-  });
 
   const request: PostReferencesRequest = {
     pageSize: PageSize.Fifty,
@@ -55,12 +49,7 @@ const CommentFeed = ({ postId }: CommentFeedProps) => {
       });
     }
   };
-
-  useEffect(() => {
-    if (entry?.isIntersecting) {
-      onEndReached();
-    }
-  }, [entry?.isIntersecting]);
+  const loadMoreRef = useLoadMoreOnIntersect(onEndReached);
 
   if (loading) {
     return <PostsShimmer />;
@@ -93,7 +82,7 @@ const CommentFeed = ({ postId }: CommentFeedProps) => {
         {filteredComments.map((comment) => (
           <SinglePost key={comment.id} post={comment} showType={false} />
         ))}
-        {hasMore && <span ref={ref} />}
+        {hasMore && <span ref={loadMoreRef} />}
       </WindowVirtualizer>
     </Card>
   );

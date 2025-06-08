@@ -1,6 +1,7 @@
 import { useHiddenCommentFeedStore } from "@/components/Post";
 import SinglePost from "@/components/Post/SinglePost";
 import { Card, StackedAvatars } from "@/components/Shared/UI";
+import useLoadMoreOnIntersect from "@/hooks/useLoadMoreOnIntersect";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { TRANSFORMS } from "@hey/data/constants";
 import getAvatar from "@hey/helpers/getAvatar";
@@ -13,8 +14,7 @@ import {
   type ReferencedPostFragment,
   usePostReferencesQuery
 } from "@hey/indexer";
-import { useIntersectionObserver } from "@uidotdev/usehooks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { WindowVirtualizer } from "virtua";
 
 interface NoneRelevantFeedProps {
@@ -24,11 +24,6 @@ interface NoneRelevantFeedProps {
 const NoneRelevantFeed = ({ postId }: NoneRelevantFeedProps) => {
   const { showHiddenComments } = useHiddenCommentFeedStore();
   const [showMore, setShowMore] = useState(false);
-  const [ref, entry] = useIntersectionObserver({
-    threshold: 0,
-    root: null,
-    rootMargin: "0px"
-  });
 
   const request: PostReferencesRequest = {
     pageSize: PageSize.Fifty,
@@ -58,12 +53,7 @@ const NoneRelevantFeed = ({ postId }: NoneRelevantFeedProps) => {
       });
     }
   };
-
-  useEffect(() => {
-    if (entry?.isIntersecting) {
-      onEndReached();
-    }
-  }, [entry?.isIntersecting]);
+  const loadMoreRef = useLoadMoreOnIntersect(onEndReached);
 
   if (totalComments === 0) {
     return null;
@@ -102,7 +92,7 @@ const NoneRelevantFeed = ({ postId }: NoneRelevantFeedProps) => {
             {filteredComments.map((comment) => (
               <SinglePost key={comment.id} post={comment} showType={false} />
             ))}
-            {hasMore && <span ref={ref} />}
+            {hasMore && <span ref={loadMoreRef} />}
           </WindowVirtualizer>
         </Card>
       ) : null}
