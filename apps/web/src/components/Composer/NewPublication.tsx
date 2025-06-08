@@ -61,6 +61,7 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
     editingPost,
     quotedPost,
     setPostContent,
+    setEditingPost,
     setQuotedPost
   } = usePostStore();
 
@@ -106,7 +107,8 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
     setShowLiveVideoEditor(false);
     resetLiveVideoConfig();
     setAttachments([]);
-    setQuotedPost();
+    setQuotedPost(undefined);
+    setEditingPost(undefined);
     setVideoThumbnail(DEFAULT_VIDEO_THUMBNAIL);
     setAudioPost(DEFAULT_AUDIO_POST);
     setLicense(null);
@@ -263,8 +265,8 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
             showEmojiPicker={showEmojiPicker}
           />
           <Gif setGifAttachment={(gif: IGif) => setGifAttachment(gif)} />
-          <CollectSettings />
-          {!isComment && <LivestreamSettings />}
+          {editingPost ? null : <CollectSettings />}
+          {!isComment && !editingPost ? <LivestreamSettings /> : null}
           {/* <GroupSettings /> */}
         </div>
         <div className="mt-2 ml-auto sm:mt-0">

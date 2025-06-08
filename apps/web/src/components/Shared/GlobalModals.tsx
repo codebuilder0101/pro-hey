@@ -10,6 +10,7 @@ import { useReportPostModalStore } from "@/store/non-persisted/modal/useReportPo
 import { useSuperFollowModalStore } from "@/store/non-persisted/modal/useSuperFollowModalStore";
 import { useSuperJoinModalStore } from "@/store/non-persisted/modal/useSuperJoinModalStore";
 import { useSwitchAccountModalStore } from "@/store/non-persisted/modal/useSwitchAccountModalStore";
+import { usePostAttachmentStore } from "@/store/non-persisted/post/usePostAttachmentStore";
 import { usePostStore } from "@/store/non-persisted/post/usePostStore";
 import SuperFollow from "./Account/SuperFollow";
 import SwitchAccounts from "./Account/SwitchAccounts";
@@ -24,7 +25,9 @@ const GlobalModals = () => {
   const { setShowSwitchAccountModal, showSwitchAccountModal } =
     useSwitchAccountModalStore();
   const { showNewPostModal, setShowNewPostModal } = useNewPostModalStore();
-  const { editingPost } = usePostStore();
+  const { editingPost, setEditingPost, setQuotedPost, setPostContent } =
+    usePostStore();
+  const { setAttachments } = usePostAttachmentStore((state) => state);
   const { authModalType, showAuthModal, setShowAuthModal } =
     useAuthModalStore();
   const {
@@ -85,7 +88,13 @@ const GlobalModals = () => {
         <Auth />
       </Modal>
       <Modal
-        onClose={() => setShowNewPostModal(false)}
+        onClose={() => {
+          setShowNewPostModal(false);
+          setPostContent("");
+          setEditingPost(undefined);
+          setQuotedPost(undefined);
+          setAttachments([]);
+        }}
         show={showNewPostModal}
         size="md"
         title={editingPost ? "Edit post" : "Create post"}
