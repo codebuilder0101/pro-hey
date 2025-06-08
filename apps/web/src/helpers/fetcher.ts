@@ -2,10 +2,12 @@ import { hydrateAuthTokens } from "@/store/persisted/useAuthStore";
 import { HEY_API_URL } from "@hey/data/constants";
 import type {
   AiTranslate,
+  CompleteUpload,
+  InitUpload,
   Live,
   Oembed,
   Preferences,
-  STS
+  UploadPart
 } from "@hey/types/api";
 
 interface ApiConfig {
@@ -24,13 +26,15 @@ const fetchApi = async <T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> => {
+  const headers: HeadersInit = {
+    "X-Access-Token": hydrateAuthTokens().accessToken || "",
+    ...config.headers,
+    ...(options.headers || {})
+  };
   const response = await fetch(`${config.baseUrl}${endpoint}`, {
     ...options,
     credentials: "include",
-    headers: {
-      ...{ "X-Access-Token": hydrateAuthTokens().accessToken || "" },
-      ...config.headers
-    }
+    headers
   });
 
   if (!response.ok) {
@@ -63,14 +67,47 @@ export const hono = {
       });
     }
   },
-  metadata: {
-    sts: (): Promise<STS> => {
-      return fetchApi<STS>("/metadata/sts", { method: "GET" });
-    }
-  },
   oembed: {
     get: (url: string): Promise<Oembed> => {
       return fetchApi<Oembed>(`/oembed/get?url=${url}`, { method: "GET" });
+    }
+  },
+  upload: {
+    init: (
+      key: string,
+      contentType: string | undefined
+    ): Promise<InitUpload> => {
+      return fetchApi<InitUpload>("/upload/init", {
+        method: "POST",
+        body: JSON.stringify({ key, contentType })
+      });
+    },
+    part: (
+      uploadId: string,
+      key: string,
+      partNumber: number,
+      chunk: Blob
+    ): Promise<UploadPart> => {
+      return fetchApi<UploadPart>("/upload/part", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/octet-stream",
+          "Upload-Id": uploadId,
+          Key: key,
+          "Part-Number": partNumber.toString()
+        },
+        body: chunk
+      });
+    },
+    complete: (
+      uploadId: string,
+      key: string,
+      parts: Array<{ partNumber: number; etag: string }>
+    ): Promise<CompleteUpload> => {
+      return fetchApi<CompleteUpload>("/upload/complete", {
+        method: "POST",
+        body: JSON.stringify({ uploadId, key, parts })
+      });
     }
   },
   preferences: {
