@@ -2,8 +2,15 @@ import { DEFAULT_AVATAR, TRANSFORMS } from "@hey/data/constants";
 import imageKit from "./imageKit";
 import sanitizeDStorageUrl from "./sanitizeDStorageUrl";
 
+interface EntityWithAvatar {
+  metadata?: {
+    picture?: string | null;
+    icon?: string | null;
+  } | null;
+}
+
 const getAvatar = (
-  entity: any,
+  entity: EntityWithAvatar | null | undefined,
   namedTransform = TRANSFORMS.AVATAR_SMALL
 ): string => {
   if (!entity) {
