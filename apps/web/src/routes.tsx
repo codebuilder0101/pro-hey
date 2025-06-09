@@ -28,8 +28,6 @@ import PreferencesSettings from "@/components/Settings/Preferences";
 import SessionsSettings from "@/components/Settings/Sessions";
 import UsernameSettings from "@/components/Settings/Username";
 import Custom404 from "@/components/Shared/404";
-import StaffAccountOverview from "@/components/Staff/Account";
-import StaffOverview from "@/components/Staff/Overview";
 import { BrowserRouter, Route, Routes as RouterRoutes } from "react-router";
 
 const Routes = () => {
@@ -75,10 +73,6 @@ const Routes = () => {
             <Route path="preferences" element={<PreferencesSettings />} />
             <Route path="sessions" element={<SessionsSettings />} />
             <Route path="username" element={<UsernameSettings />} />
-          </Route>
-          <Route path="staff">
-            <Route index element={<StaffOverview />} />
-            <Route path="account/:address" element={<StaffAccountOverview />} />
           </Route>
           <Route path="support" element={<Support />} />
           <Route path="terms" element={<Terms />} />

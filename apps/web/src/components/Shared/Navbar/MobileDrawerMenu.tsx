@@ -10,7 +10,6 @@ import Bookmarks from "./NavItems/Bookmarks";
 import Groups from "./NavItems/Groups";
 import Logout from "./NavItems/Logout";
 import Settings from "./NavItems/Settings";
-import StaffTools from "./NavItems/StaffTools";
 import Support from "./NavItems/Support";
 import SwitchAccount from "./NavItems/SwitchAccount";
 import ThemeSwitch from "./NavItems/ThemeSwitch";
@@ -66,11 +65,6 @@ const MobileDrawerMenu = () => {
             <Link to="/bookmarks" onClick={handleCloseDrawer}>
               <Bookmarks className={cn(itemClass, "px-4")} />
             </Link>
-            {currentAccount?.isStaff ? (
-              <Link to="/staff" onClick={handleCloseDrawer}>
-                <StaffTools className={cn(itemClass, "px-4")} />
-              </Link>
-            ) : null}
             <ThemeSwitch
               className={cn(itemClass, "px-4")}
               onClick={handleCloseDrawer}

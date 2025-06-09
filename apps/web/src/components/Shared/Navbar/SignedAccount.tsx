@@ -9,7 +9,6 @@ import AccountLink from "../Account/AccountLink";
 import MenuTransition from "../MenuTransition";
 import Logout from "./NavItems/Logout";
 import Settings from "./NavItems/Settings";
-import StaffTools from "./NavItems/StaffTools";
 import SwitchAccount from "./NavItems/SwitchAccount";
 import ThemeSwitch from "./NavItems/ThemeSwitch";
 import YourAccount from "./NavItems/YourAccount";
@@ -54,17 +53,6 @@ const SignedAccount = () => {
           >
             <Settings />
           </MenuItem>
-          {currentAccount?.isStaff ? (
-            <MenuItem
-              as={Link}
-              className={({ focus }: { focus: boolean }) =>
-                cn({ "dropdown-active": focus }, "menu-item")
-              }
-              to="/staff"
-            >
-              <StaffTools />
-            </MenuItem>
-          ) : null}
           <div className="divider" />
           <MenuItem
             as="div"

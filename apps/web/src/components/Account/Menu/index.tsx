@@ -9,7 +9,6 @@ import Block from "./Block";
 import CopyLink from "./CopyLink";
 import Mute from "./Mute";
 import Report from "./Report";
-import StaffTool from "./StaffTool";
 
 interface AccountMenuProps {
   account: AccountFragment;
@@ -44,7 +43,6 @@ const AccountMenu = ({ account }: AccountMenuProps) => {
               <Report account={account} />
             </>
           ) : null}
-          {currentAccount?.isStaff ? <StaffTool account={account} /> : null}
         </MenuItems>
       </MenuTransition>
     </Menu>
