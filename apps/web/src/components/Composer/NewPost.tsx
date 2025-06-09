@@ -13,7 +13,6 @@ interface NewPostProps {
 const NewPost = ({ feed }: NewPostProps) => {
   const [searchParams] = useSearchParams();
   const text = searchParams.get("text");
-  const hashtags = searchParams.get("hashtags");
   const url = searchParams.get("url");
   const via = searchParams.get("via");
 
@@ -27,23 +26,11 @@ const NewPost = ({ feed }: NewPostProps) => {
 
   useEffect(() => {
     if (text) {
-      let processedHashtags: string | undefined;
-
-      if (hashtags) {
-        processedHashtags = (hashtags as string)
-          .split(",")
-          .map((tag) => `#${tag} `)
-          .join("");
-      }
-
-      const content = `${text}${
-        processedHashtags ? ` ${processedHashtags} ` : ""
-      }${url ? `\n\n${url}` : ""}${via ? `\n\nvia @${via}` : ""}`;
-
+      const content = `${text}${url ? `\n\n${url}` : ""}${via ? `\n\nvia @${via}` : ""}`;
       handleOpenComposer();
       setPostContent(content);
     }
-  }, [text, hashtags, url, via]);
+  }, [text, url, via]);
 
   if (showComposer) {
     return <NewPublication feed={feed} />;

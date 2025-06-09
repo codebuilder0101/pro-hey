@@ -14,8 +14,7 @@ const plugins = [
   [stripMarkdown, { keep: ["strong", "emphasis", "list", "listItem"] }],
   remarkBreaks,
   linkifyRegex(Regex.url),
-  linkifyRegex(Regex.mention),
-  linkifyRegex(Regex.hashtag)
+  linkifyRegex(Regex.mention)
 ];
 
 interface MarkupProps {
@@ -30,10 +29,7 @@ const Markup = ({ children, className = "", mentions = [] }: MarkupProps) => {
   }
 
   const components = {
-    a: (props: any) => {
-      console.log(props.title);
-      return <MarkupLink mentions={mentions} title={props.title} />;
-    },
+    a: (props: any) => <MarkupLink mentions={mentions} title={props.title} />,
     code: Code
   };
 

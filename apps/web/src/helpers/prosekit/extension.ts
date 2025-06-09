@@ -1,10 +1,8 @@
 import { LENS_NAMESPACE } from "@hey/data/constants";
-import { Regex } from "@hey/data/regex";
 import {
   defineBaseCommands,
   defineBaseKeymap,
   defineHistory,
-  defineMarkSpec,
   defineNodeSpec,
   union
 } from "prosekit/core";
@@ -12,7 +10,6 @@ import { defineBold } from "prosekit/extensions/bold";
 import { defineDoc } from "prosekit/extensions/doc";
 import { defineItalic } from "prosekit/extensions/italic";
 import { defineLinkMarkRule, defineLinkSpec } from "prosekit/extensions/link";
-import { defineMarkRule } from "prosekit/extensions/mark-rule";
 import type { MentionAttrs } from "prosekit/extensions/mention";
 import { defineMentionCommands } from "prosekit/extensions/mention";
 import { defineModClickPrevention } from "prosekit/extensions/mod-click-prevention";
@@ -20,19 +17,6 @@ import { defineParagraph } from "prosekit/extensions/paragraph";
 import { definePlaceholder } from "prosekit/extensions/placeholder";
 import { defineText } from "prosekit/extensions/text";
 import { defineVirtualSelection } from "prosekit/extensions/virtual-selection";
-
-const defineHashtag = () => {
-  return union([
-    defineMarkSpec({
-      name: "hashtag" as const,
-      toDOM: () => ["span", { "data-hashtag": "" }, 0]
-    }),
-    defineMarkRule({
-      regex: Regex.hashtag,
-      type: "hashtag"
-    })
-  ]);
-};
 
 const defineAutoLink = () => {
   return union([defineLinkSpec(), defineLinkMarkRule()]);
@@ -98,7 +82,6 @@ export const defineEditorExtension = () => {
     defineBold(),
     defineAutoLink(),
     defineVirtualSelection(),
-    defineHashtag(),
     defineMention(),
     defineModClickPrevention(),
     definePlaceholder({ placeholder: "What's new?!", strategy: "doc" })

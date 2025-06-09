@@ -13,7 +13,6 @@ const EDITOR_MENTION = "([\\dA-Za-z]\\w*)"; // This will start searching for men
 export const Regex = {
   evmAddress: /^(0x)?[\da-f]{40}$/i,
   username: /^[\dA-Za-z]\w{1,25}$/g,
-  hashtag: /(#\w*[A-Za-z]\w*)/g,
   // Match string like @lens/someone.
   mention: new RegExp(
     `${MATCH_BEHIND}@${MENTION_NAMESPACE}${MENTION_BODY}`,

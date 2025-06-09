@@ -29,12 +29,6 @@ describe("Regex", () => {
     expect(newRegex(Regex.username).test("a".repeat(27))).toBe(false);
   });
 
-  it("matches hashtags", () => {
-    expect(newRegex(Regex.hashtag).test("#hello")).toBe(true);
-    expect(newRegex(Regex.hashtag).test("#hello_world")).toBe(true);
-    expect(newRegex(Regex.hashtag).test("#123")).toBe(false);
-  });
-
   it("detects mentions", () => {
     expect(newRegex(Regex.mention).test("@lens/user")).toBe(true);
     expect(newRegex(Regex.mention).test("say @lens/user")).toBe(true);

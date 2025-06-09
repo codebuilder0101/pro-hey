@@ -104,7 +104,6 @@
     }
 
     & a,
-    span[data-hashtag],
     span[data-mention="account"] {
       @apply text-brand-500;
     }
