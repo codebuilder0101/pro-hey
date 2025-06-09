@@ -5,6 +5,7 @@ import authContext from "./context/authContext";
 import cors from "./middlewares/cors";
 import infoLogger from "./middlewares/infoLogger";
 import cronRouter from "./routes/cron";
+import jumperRouter from "./routes/jumper";
 import lensRouter from "./routes/lens";
 import liveRouter from "./routes/live";
 import metadataRouter from "./routes/metadata";
@@ -31,6 +32,7 @@ app.route("/oembed", oembedRouter);
 app.route("/preferences", preferencesRouter);
 app.route("/sitemap", sitemapRouter);
 app.route("/og", ogRouter);
+app.route("/jumper", jumperRouter);
 
 serve({ fetch: app.fetch, port: 4784 }, (info) => {
   console.info(`Server running on port ${info.port}`);
