@@ -37,7 +37,7 @@ const Categories = ({ setSearchText }: CategoriesProps) => {
     <div className="grid w-full grid-cols-2 gap-1 overflow-y-auto">
       {categories?.map((category: Category) => (
         <button
-          className="relative flex outline-none"
+          className="relative flex outline-hidden"
           key={category.name_encoded}
           onClick={() => setSearchText(category.name)}
           type="button"

@@ -20,7 +20,7 @@ const Tabs = ({ tabs, active, setActive, layoutId, className }: TabsProps) => {
         {tabs.map((tab) => (
           <motion.li
             layout
-            className="relative cursor-pointer px-3 py-1.5 text-sm outline-none transition-colors"
+            className="relative cursor-pointer px-3 py-1.5 text-sm outline-hidden transition-colors"
             tabIndex={0}
             key={tab.type}
             onClick={() => setActive(tab.type)}
