@@ -23,7 +23,8 @@ describe("Regex", () => {
   it("validates usernames", () => {
     expect(newRegex(Regex.username).test("user_1")).toBe(true);
     expect(newRegex(Regex.username).test("1user")).toBe(true);
-    expect(newRegex(Regex.username).test("ab")).toBe(false);
+    expect(newRegex(Regex.username).test("ab")).toBe(true);
+    expect(newRegex(Regex.username).test("a")).toBe(false);
     expect(newRegex(Regex.username).test("_abcde")).toBe(false);
     expect(newRegex(Regex.username).test("a".repeat(27))).toBe(false);
   });

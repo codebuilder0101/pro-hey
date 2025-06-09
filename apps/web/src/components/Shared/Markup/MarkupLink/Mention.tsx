@@ -43,22 +43,24 @@ const Mention = ({ mentions, title }: MarkupLinkProps) => {
       : "";
   };
 
-  return canShowUserPreview(username) ? (
-    <Link
-      className="outline-hidden focus:underline"
-      to={`/u/${getNameFromMention(username)}`}
-      onClick={stopEventPropagation}
-    >
-      <AccountPreview
-        username={getNameFromMention(username)}
-        address={getAddressFromMention(username)}
+  if (canShowUserPreview(username)) {
+    return (
+      <Link
+        className="outline-hidden focus:underline"
+        to={`/u/${getNameFromMention(username)}`}
+        onClick={stopEventPropagation}
       >
-        <Slug prefix="@" slug={getNameFromMention(username)} useBrandColor />
-      </AccountPreview>
-    </Link>
-  ) : (
-    <Slug prefix="@" slug={getNameFromMention(username)} useBrandColor />
-  );
+        <AccountPreview
+          username={getNameFromMention(username)}
+          address={getAddressFromMention(username)}
+        >
+          <Slug prefix="@" slug={getNameFromMention(username)} useBrandColor />
+        </AccountPreview>
+      </Link>
+    );
+  }
+
+  return <Slug prefix="@" slug={getNameFromMention(username)} useBrandColor />;
 };
 
 export default Mention;

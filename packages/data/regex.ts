@@ -7,12 +7,12 @@ const RESTRICTED_SYMBOLS = "☑️✓✔✅";
 const MATCH_BEHIND = regexLookbehindAvailable ? "(?<=^|\\s)" : "";
 
 const MENTION_NAMESPACE = "\\w+\\/";
-const MENTION_BODY = "([\\dA-Za-z]\\w{2,25})";
+const MENTION_BODY = "([\\dA-Za-z]\\w{1,25})";
 const EDITOR_MENTION = "([\\dA-Za-z]\\w*)"; // This will start searching for mentions after the first character
 
 export const Regex = {
   evmAddress: /^(0x)?[\da-f]{40}$/i,
-  username: /^[\dA-Za-z]\w{2,25}$/g,
+  username: /^[\dA-Za-z]\w{1,25}$/g,
   hashtag: /(#\w*[A-Za-z]\w*)/g,
   // Match string like @lens/someone.
   mention: new RegExp(

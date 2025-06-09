@@ -31,6 +31,7 @@ const Markup = ({ children, className = "", mentions = [] }: MarkupProps) => {
 
   const components = {
     a: (props: any) => {
+      console.log(props.title);
       return <MarkupLink mentions={mentions} title={props.title} />;
     },
     code: Code
