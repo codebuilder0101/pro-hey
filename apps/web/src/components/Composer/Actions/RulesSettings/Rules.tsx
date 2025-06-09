@@ -29,8 +29,12 @@ const Rules = ({ setShowModal }: RulesProps) => {
 
   return (
     <>
-      <ProFeatureNotice className="m-5" feature="post rules settings" />
-      <div className="divider" />
+      {currentAccount?.hasSubscribed ? null : (
+        <>
+          <ProFeatureNotice className="m-5" feature="post rules settings" />
+          <div className="divider" />
+        </>
+      )}
       <div className="m-5 space-y-5">
         <ToggleWithHelper
           heading={
