@@ -7,7 +7,6 @@ import remarkBreaks from "remark-breaks";
 // @ts-expect-error
 import linkifyRegex from "remark-linkify-regex";
 import stripMarkdown from "strip-markdown";
-import Code from "./Code";
 import MarkupLink from "./MarkupLink";
 
 const plugins = [
@@ -29,8 +28,7 @@ const Markup = ({ children, className = "", mentions = [] }: MarkupProps) => {
   }
 
   const components = {
-    a: (props: any) => <MarkupLink mentions={mentions} title={props.title} />,
-    code: Code
+    a: (props: any) => <MarkupLink mentions={mentions} title={props.title} />
   };
 
   return (
