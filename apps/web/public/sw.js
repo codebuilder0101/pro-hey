@@ -3,26 +3,30 @@ self.addEventListener("install", () => {
 });
 
 self.addEventListener("activate", async () => {
-  // Unregister the service worker
   await self.registration.unregister();
 
-  // Delete all caches
-  const keys = await caches.keys();
-  await Promise.all(keys.map((key) => caches.delete(key)));
+  const cacheKeys = await caches.keys();
+  const deleteResults = await Promise.all(
+    cacheKeys.map(async (key) => {
+      const success = await caches.delete(key);
+      return { key, success };
+    })
+  );
 
-  // Call backend to log cache clear
+  const deletedCount = deleteResults.filter((r) => r.success).length;
+
+  // Send log to backend
   fetch("https://api.hey.xyz/echo", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       timestamp: Date.now(),
-      userAgent: self.navigator?.userAgent || "unknown"
+      userAgent: navigator.userAgent,
+      deletedCount,
+      deleteResults // array of { key, success }
     })
-  }).catch(() => {
-    // avoid blocking even if the request fails
-  });
+  }).catch(() => {});
 
-  // Reload all clients
   const clientsList = await clients.matchAll({ type: "window" });
   for (const client of clientsList) {
     client.navigate(client.url);
