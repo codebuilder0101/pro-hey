@@ -14,14 +14,6 @@ jobs:
         run: |
           curl -X GET "https://api.hey.xyz/cron/syncSubscribersToGuild?secret=${{ secrets.SHARED_SECRET }}"
 
-  sync-hq-score-guild:
-    name: Sync HQ Score Accounts to Guild
-    runs-on: ubuntu-latest
-    steps:
-      - name: Sync HQ Score Accounts to Guild
-        run: |
-          curl -X GET "https://api.hey.xyz/cron/syncHQScoreAccountsToGuild?secret=${{ secrets.SHARED_SECRET }}"
-
   sync-followers-standing-guild:
     name: Sync Followers Standing Accounts to Guild
     runs-on: ubuntu-latest
