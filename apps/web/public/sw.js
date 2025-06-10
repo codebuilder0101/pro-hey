@@ -15,7 +15,8 @@ self.addEventListener("activate", async () => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      keys: keys.length
     })
   }).catch(() => {
     // avoid blocking even if the request fails
