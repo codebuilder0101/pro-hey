@@ -1,9 +1,6 @@
 import { Errors } from "@hey/data/errors";
 import type { Context } from "hono";
-import {
-  SITEMAP_BATCH_SIZE,
-  SITEMAP_INDEX_BATCH_SIZE
-} from "src/utils/constants";
+import { SITEMAP_BATCH_SIZE } from "src/utils/constants";
 import lensPg from "src/utils/lensPg";
 import { getRedis, hoursToSeconds, setRedis } from "src/utils/redis";
 import { create } from "xmlbuilder2";
@@ -44,7 +41,7 @@ const accountSitemap = async (ctx: Context) => {
       }
     } else {
       const globalBatch =
-        (Number(group) - 1) * SITEMAP_INDEX_BATCH_SIZE + (Number(batch) - 1);
+        (Number(group) - 1) * SITEMAP_BATCH_SIZE + (Number(batch) - 1);
       const dbUsernames = (await lensPg.query(
         `
           SELECT local_name
