@@ -3,5 +3,3 @@ export const LENS_ENDPOINT = {
   Testnet: "https://api.testnet.lens.xyz/graphql",
   Staging: "https://api.staging.lens.xyz/graphql"
 } as const;
-
-export type LensEndpoint = (typeof LENS_ENDPOINT)[keyof typeof LENS_ENDPOINT];
