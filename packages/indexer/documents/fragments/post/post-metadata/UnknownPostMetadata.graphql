@@ -1,3 +1,0 @@
-fragment UnknownPostMetadata on UnknownPostMetadata {
-  raw
-}
