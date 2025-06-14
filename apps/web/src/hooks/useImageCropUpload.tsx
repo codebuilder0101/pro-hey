@@ -4,7 +4,7 @@ import errorToast from "@/helpers/errorToast";
 import {
   DEFAULT_AVATAR,
   STATIC_IMAGES_URL,
-  type Transform
+  type TRANSFORMS
 } from "@hey/data/constants";
 import { ERRORS } from "@hey/data/errors";
 import imageKit from "@hey/helpers/imageKit";
@@ -19,7 +19,7 @@ interface UseImageCropUploadProps {
   src: string;
   setSrc: (src: string) => void;
   aspect: number;
-  transform: Transform;
+  transform: (typeof TRANSFORMS)[keyof typeof TRANSFORMS];
   label: "avatar" | "cover";
 }
 

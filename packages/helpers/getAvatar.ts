@@ -1,8 +1,4 @@
-import {
-  DEFAULT_AVATAR,
-  TRANSFORMS,
-  type Transform
-} from "@hey/data/constants";
+import { DEFAULT_AVATAR, TRANSFORMS } from "@hey/data/constants";
 import imageKit from "./imageKit";
 import sanitizeDStorageUrl from "./sanitizeDStorageUrl";
 
@@ -15,7 +11,7 @@ interface EntityWithAvatar {
 
 const getAvatar = (
   entity: EntityWithAvatar | null | undefined,
-  namedTransform: Transform = TRANSFORMS.AVATAR_SMALL
+  namedTransform: (typeof TRANSFORMS)[keyof typeof TRANSFORMS] = TRANSFORMS.AVATAR_SMALL
 ): string => {
   if (!entity) {
     return DEFAULT_AVATAR;

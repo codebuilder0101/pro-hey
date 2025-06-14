@@ -66,17 +66,11 @@ export const TRANSFORMS = {
   ATTACHMENT: "tr:w-1000"
 } as const;
 
-export type Transform = (typeof TRANSFORMS)[keyof typeof TRANSFORMS];
-
 export const BANNER_IDS = {
   PRO: "108325599858337195593675454288445399104045325554183036578573525280972584660299"
 } as const;
-
-export type BannerId = (typeof BANNER_IDS)[keyof typeof BANNER_IDS];
 
 export const PERMISSIONS = {
   SUBSCRIPTION: "0x4BE5b4519814A57E6f9AaFC6afBB37eAEeE35aA3",
   STAFF: "0xA7f2835e54998c6d7d4A0126eC0ebE91b5E43c69"
 } as const;
-
-export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
