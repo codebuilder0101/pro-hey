@@ -158,6 +158,7 @@ const Subscribe = () => {
                 contractAddress: DEFAULT_COLLECT_TOKEN,
                 symbol: WRAPPED_NATIVE_TOKEN_SYMBOL
               }}
+              amountToTopUp={SUBSCRIPTION_AMOUNT - Number(tokenBalance)}
               outline
             />
           )}

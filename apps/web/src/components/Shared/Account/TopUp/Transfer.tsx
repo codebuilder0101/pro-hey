@@ -26,11 +26,11 @@ interface TransferProps {
 }
 
 const Transfer = ({ token }: TransferProps) => {
-  const { setShowFundModal } = useFundModalStore();
+  const { setShowFundModal, amountToTopUp } = useFundModalStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [txHash, setTxHash] = useState<Hex | null>(null);
-  const [amount, setAmount] = useState(1);
-  const [other, setOther] = useState(false);
+  const [amount, setAmount] = useState(amountToTopUp ?? 1);
+  const [other, setOther] = useState(!!amountToTopUp);
   const inputRef = useRef<HTMLInputElement>(null);
   usePreventScrollOnNumberInput(inputRef as RefObject<HTMLInputElement>);
   const { address } = useAccount();
@@ -56,7 +56,7 @@ const Transfer = ({ token }: TransferProps) => {
     setOther(false);
     setIsSubmitting(false);
     setTxHash(null);
-    setShowFundModal(false);
+    setShowFundModal({ showFundModal: false });
     toast.success("Transferred successfully");
   };
 

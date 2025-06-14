@@ -102,7 +102,7 @@ const GlobalModals = () => {
         <NewPublication className="!rounded-b-xl !rounded-t-none border-none" />
       </Modal>
       <Modal
-        onClose={() => setShowFundModal(false)}
+        onClose={() => setShowFundModal({ showFundModal: false })}
         show={showFundModal}
         title="Top-up your account"
       >

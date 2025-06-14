@@ -10,6 +10,7 @@ interface TopUpButtonProps {
   className?: string;
   token?: FundingToken;
   label?: string;
+  amountToTopUp?: number;
 }
 
 const TopUpButton = ({
@@ -17,7 +18,8 @@ const TopUpButton = ({
   outline = false,
   className = "",
   token,
-  label = "Top-up your account"
+  label = "Top-up your account",
+  amountToTopUp
 }: TopUpButtonProps) => {
   const { setShowFundModal } = useFundModalStore();
 
@@ -25,7 +27,9 @@ const TopUpButton = ({
     <Button
       aria-label={label}
       className={className}
-      onClick={() => setShowFundModal(true, token)}
+      onClick={() =>
+        setShowFundModal({ showFundModal: true, token, amountToTopUp })
+      }
       size={size}
       outline={outline}
     >

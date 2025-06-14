@@ -7,17 +7,29 @@ export interface FundingToken {
   symbol: string;
 }
 
+interface TopUpAmount {
+  showFundModal: boolean;
+  token?: FundingToken;
+  amountToTopUp?: number;
+}
+
 interface State {
   showFundModal: boolean;
   token?: FundingToken;
-  setShowFundModal: (showFundModal: boolean, token?: FundingToken) => void;
+  amountToTopUp?: number;
+  setShowFundModal: ({
+    showFundModal,
+    token,
+    amountToTopUp
+  }: TopUpAmount) => void;
 }
 
 const store = create<State>((set) => ({
   showFundModal: false,
   token: undefined,
-  setShowFundModal: (showFundModal, token) =>
-    set(() => ({ showFundModal, token }))
+  amountToTopUp: undefined,
+  setShowFundModal: ({ showFundModal, token, amountToTopUp }) =>
+    set(() => ({ showFundModal, token, amountToTopUp }))
 }));
 
 export const useFundModalStore = createTrackedSelector(store);
