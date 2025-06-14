@@ -8472,13 +8472,6 @@ export type CollectActionQuery = { __typename?: 'Query', post?: { __typename?: '
         & PostAction_UnknownPostAction_Fragment
       )> } } | null };
 
-export type FeedQueryVariables = Exact<{
-  request: FeedRequest;
-}>;
-
-
-export type FeedQuery = { __typename?: 'Query', feed?: { __typename?: 'Feed', address: any } | null };
-
 export type HiddenCommentsQueryVariables = Exact<{
   request: PostReferencesRequest;
 }>;
@@ -9395,22 +9388,6 @@ export function useCollectActionSuspenseQuery(baseOptions?: Apollo.SkipToken | A
 export type CollectActionQueryHookResult = ReturnType<typeof useCollectActionQuery>;
 export type CollectActionLazyQueryHookResult = ReturnType<typeof useCollectActionLazyQuery>;
 export type CollectActionSuspenseQueryHookResult = ReturnType<typeof useCollectActionSuspenseQuery>;
-export const FeedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Feed"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"request"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FeedRequest"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"feed"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"request"},"value":{"kind":"Variable","name":{"kind":"Name","value":"request"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]} as unknown as DocumentNode;
-export function useFeedQuery(baseOptions: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables> & ({ variables: FeedQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
-      }
-export function useFeedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FeedQuery, FeedQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
-        }
-export function useFeedSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
-        }
-export type FeedQueryHookResult = ReturnType<typeof useFeedQuery>;
-export type FeedLazyQueryHookResult = ReturnType<typeof useFeedLazyQuery>;
-export type FeedSuspenseQueryHookResult = ReturnType<typeof useFeedSuspenseQuery>;
 export const HiddenCommentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"HiddenComments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"request"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PostReferencesRequest"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"postReferences"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"request"},"value":{"kind":"Variable","name":{"kind":"Name","value":"request"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}}]}}]}}]} as unknown as DocumentNode;
 export function useHiddenCommentsQuery(baseOptions: Apollo.QueryHookOptions<HiddenCommentsQuery, HiddenCommentsQueryVariables> & ({ variables: HiddenCommentsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
