@@ -96,6 +96,9 @@ const SuperFollow = () => {
             <TopUpButton
               className="w-full"
               token={{ contractAddress: assetAddress, symbol: assetSymbol }}
+              amountToTopUp={
+                Math.ceil((amount - Number(tokenBalance)) * 20) / 20
+              }
             />
           )
         ) : (

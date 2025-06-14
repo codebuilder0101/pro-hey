@@ -239,7 +239,10 @@ const TipMenu = ({ closePopover, post, account }: TipMenuProps) => {
           <b>Tip ${amount}</b>
         </Button>
       ) : (
-        <TopUpButton className="w-full" />
+        <TopUpButton
+          className="w-full"
+          amountToTopUp={Math.ceil((amount - Number(nativeBalance)) * 20) / 20}
+        />
       )}
     </div>
   );

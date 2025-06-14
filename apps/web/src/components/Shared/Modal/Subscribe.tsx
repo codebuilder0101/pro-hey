@@ -158,7 +158,10 @@ const Subscribe = () => {
                 contractAddress: DEFAULT_COLLECT_TOKEN,
                 symbol: WRAPPED_NATIVE_TOKEN_SYMBOL
               }}
-              amountToTopUp={SUBSCRIPTION_AMOUNT - Number(tokenBalance)}
+              amountToTopUp={
+                Math.ceil((SUBSCRIPTION_AMOUNT - Number(tokenBalance)) * 20) /
+                20
+              }
               outline
             />
           )}
