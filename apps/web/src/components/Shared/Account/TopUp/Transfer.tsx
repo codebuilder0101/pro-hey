@@ -2,7 +2,6 @@ import { Button, Card, Input, Spinner } from "@/components/Shared/UI";
 import errorToast from "@/helpers/errorToast";
 import usePreventScrollOnNumberInput from "@/hooks/usePreventScrollOnNumberInput";
 import useTransactionLifecycle from "@/hooks/useTransactionLifecycle";
-import useWaitForTransactionToComplete from "@/hooks/useWaitForTransactionToComplete";
 import {
   type FundingToken,
   useFundModalStore
@@ -11,9 +10,16 @@ import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 import { NATIVE_TOKEN_SYMBOL, NULL_ADDRESS } from "@hey/data/constants";
 import { useBalancesBulkQuery, useDepositMutation } from "@hey/indexer";
 import type { ApolloClientError } from "@hey/types/errors";
-import { type ChangeEvent, type RefObject, useRef, useState } from "react";
+import {
+  type ChangeEvent,
+  type RefObject,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import { toast } from "sonner";
-import { useAccount } from "wagmi";
+import type { Hex } from "viem";
+import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 
 interface TransferProps {
   token?: FundingToken;
@@ -22,13 +28,13 @@ interface TransferProps {
 const Transfer = ({ token }: TransferProps) => {
   const { setShowFundModal } = useFundModalStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [txHash, setTxHash] = useState<Hex | null>(null);
   const [amount, setAmount] = useState(1);
   const [other, setOther] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   usePreventScrollOnNumberInput(inputRef as RefObject<HTMLInputElement>);
   const { address } = useAccount();
   const handleTransactionLifecycle = useTransactionLifecycle();
-  const waitForTransactionToComplete = useWaitForTransactionToComplete();
   const symbol = token?.symbol ?? NATIVE_TOKEN_SYMBOL;
 
   const { data: balance, loading: balanceLoading } = useBalancesBulkQuery({
@@ -45,11 +51,11 @@ const Transfer = ({ token }: TransferProps) => {
     fetchPolicy: "no-cache"
   });
 
-  const onCompleted = async (hash: string) => {
+  const onCompleted = async () => {
     setAmount(2);
     setOther(false);
-    await waitForTransactionToComplete(hash);
     setIsSubmitting(false);
+    setTxHash(null);
     setShowFundModal(false);
     toast.success("Transferred successfully");
   };
@@ -59,6 +65,17 @@ const Transfer = ({ token }: TransferProps) => {
     errorToast(error);
   };
 
+  const { data: transactionReceipt } = useWaitForTransactionReceipt({
+    hash: txHash as Hex,
+    query: { enabled: Boolean(txHash) }
+  });
+
+  useEffect(() => {
+    if (transactionReceipt?.status === "success") {
+      onCompleted();
+    }
+  }, [transactionReceipt]);
+
   const [deposit] = useDepositMutation({
     onCompleted: async ({ deposit }) => {
       if (deposit.__typename === "InsufficientFunds") {
@@ -67,7 +84,7 @@ const Transfer = ({ token }: TransferProps) => {
 
       return await handleTransactionLifecycle({
         transactionData: deposit,
-        onCompleted,
+        onCompleted: (hash) => setTxHash(hash as Hex),
         onError
       });
     },
