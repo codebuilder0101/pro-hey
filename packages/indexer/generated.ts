@@ -4154,6 +4154,7 @@ export enum PostReferenceType {
 }
 
 export type PostReferencesRequest = {
+  authors?: InputMaybe<Array<Scalars['EvmAddress']['input']>>;
   cursor?: InputMaybe<Scalars['Cursor']['input']>;
   pageSize?: PageSize;
   referenceTypes: Array<PostReferenceType>;
