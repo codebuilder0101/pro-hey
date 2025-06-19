@@ -4,32 +4,32 @@ import { SITEMAP_CACHE_DAYS } from "src/utils/constants";
 import { getRedis, hoursToSeconds, setRedis } from "src/utils/redis";
 
 interface SitemapHelperOptions {
-	ctx: Context;
-	cacheKey: string;
-	buildXml: () => Promise<string>;
+  ctx: Context;
+  cacheKey: string;
+  buildXml: () => Promise<string>;
 }
 
 const generateSitemap = async ({
-	ctx,
-	cacheKey,
-	buildXml,
+  ctx,
+  cacheKey,
+  buildXml
 }: SitemapHelperOptions) => {
-	try {
-		const cached = await getRedis(cacheKey);
-		if (cached) {
-			ctx.header("Content-Type", "application/xml");
-			return ctx.body(cached);
-		}
+  try {
+    const cached = await getRedis(cacheKey);
+    if (cached) {
+      ctx.header("Content-Type", "application/xml");
+      return ctx.body(cached);
+    }
 
-		const xml = await buildXml();
+    const xml = await buildXml();
 
-		await setRedis(cacheKey, xml, hoursToSeconds(SITEMAP_CACHE_DAYS * 24));
+    await setRedis(cacheKey, xml, hoursToSeconds(SITEMAP_CACHE_DAYS * 24));
 
-		ctx.header("Content-Type", "application/xml");
-		return ctx.body(xml);
-	} catch {
-		return ctx.body(ERRORS.SomethingWentWrong);
-	}
+    ctx.header("Content-Type", "application/xml");
+    return ctx.body(xml);
+  } catch {
+    return ctx.body(ERRORS.SomethingWentWrong);
+  }
 };
 
 export default generateSitemap;
