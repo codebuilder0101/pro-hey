@@ -88,7 +88,7 @@ const NoneRelevantFeed = ({ postId }: NoneRelevantFeedProps) => {
         <PostFeed
           items={filteredComments}
           hasMore={hasMore}
-          onEndReached={handleEndReached}
+          handleEndReached={handleEndReached}
           emptyIcon={null}
           emptyMessage=""
           errorTitle="Failed to load comments"

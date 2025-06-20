@@ -42,7 +42,7 @@ const GroupFeed = ({ feed }: GroupFeedProps) => {
       loading={loading}
       error={error}
       hasMore={hasMore}
-      onEndReached={handleEndReached}
+      handleEndReached={handleEndReached}
       emptyIcon={<ChatBubbleBottomCenterIcon className="size-8" />}
       emptyMessage="Group has no posts yet!"
       errorTitle="Failed to load group feed"

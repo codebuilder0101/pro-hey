@@ -45,7 +45,7 @@ const Highlights = () => {
       loading={loading}
       error={error}
       hasMore={hasMore}
-      onEndReached={handleEndReached}
+      handleEndReached={handleEndReached}
       emptyIcon={<LightBulbIcon className="size-8" />}
       emptyMessage="No posts yet!"
       errorTitle="Failed to load highlights"

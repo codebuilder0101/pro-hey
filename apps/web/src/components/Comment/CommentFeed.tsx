@@ -61,7 +61,7 @@ const CommentFeed = ({ postId }: CommentFeedProps) => {
       loading={loading}
       error={error}
       hasMore={hasMore}
-      onEndReached={handleEndReached}
+      handleEndReached={handleEndReached}
       emptyIcon={<ChatBubbleLeftIcon className="size-8" />}
       emptyMessage="Be the first one to comment!"
       errorTitle="Failed to load comment feed"

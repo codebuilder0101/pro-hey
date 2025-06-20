@@ -39,7 +39,7 @@ const BookmarksFeed = ({ focus }: BookmarksFeedProps) => {
       loading={loading}
       error={error}
       hasMore={hasMore}
-      onEndReached={handleEndReached}
+      handleEndReached={handleEndReached}
       emptyIcon={<BookmarkIcon className="size-8" />}
       emptyMessage="No bookmarks yet!"
       errorTitle="Failed to load bookmark feed"

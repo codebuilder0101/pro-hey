@@ -9,7 +9,7 @@ interface PostFeedProps<T extends { id: string }> {
   loading?: boolean;
   error?: unknown;
   hasMore?: boolean;
-  onEndReached: () => Promise<void>;
+  handleEndReached: () => Promise<void>;
   emptyIcon: ReactNode;
   emptyMessage: ReactNode;
   errorTitle: string;
@@ -21,13 +21,13 @@ const PostFeed = <T extends { id: string }>({
   loading = false,
   error,
   hasMore,
-  onEndReached,
+  handleEndReached,
   emptyIcon,
   emptyMessage,
   errorTitle,
   renderItem
 }: PostFeedProps<T>) => {
-  const loadMoreRef = useLoadMoreOnIntersect(onEndReached);
+  const loadMoreRef = useLoadMoreOnIntersect(handleEndReached);
 
   if (loading) {
     return <PostsShimmer />;
