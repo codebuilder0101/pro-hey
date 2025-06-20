@@ -45,7 +45,6 @@ This repository follows coding and collaboration conventions summarized from `.c
 
 Make sure to run all the following commands before committing:
 
-- pnpm test
 - pnpm biome:check
 - pnpm typecheck
 - pnpm build
