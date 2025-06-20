@@ -49,3 +49,9 @@ Make sure to run all the following commands before committing:
 - pnpm biome:check
 - pnpm typecheck
 - pnpm build
+
+## PR Instructions
+
+- Use conventional commit for title
+- Example: feat: allow provided config object to extend other configs
+- Make sure not to cross 50 chars
