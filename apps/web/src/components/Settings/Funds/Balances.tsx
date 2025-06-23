@@ -83,20 +83,31 @@ const Balances = () => {
 
   return (
     <div className="m-5 space-y-7">
-      {data?.balancesBulk.map((balance, index) => (
-        <div key={index}>
-          {balance.__typename === "NativeAmount" && (
-            <TokenBalance symbol={NATIVE_TOKEN_SYMBOL} value={balance.value} />
-          )}
-          {balance.__typename === "Erc20Amount" && (
-            <TokenBalance
-              currency={balance.asset.contract.address}
-              symbol={balance.asset.symbol}
-              value={balance.value}
-            />
-          )}
-        </div>
-      ))}
+      {data?.balancesBulk.map((balance) => {
+        if (!("asset" in balance)) {
+          return null;
+        }
+
+        const address = balance.asset.contract.address;
+
+        return (
+          <div key={address}>
+            {balance.__typename === "NativeAmount" && (
+              <TokenBalance
+                symbol={NATIVE_TOKEN_SYMBOL}
+                value={balance.value}
+              />
+            )}
+            {balance.__typename === "Erc20Amount" && (
+              <TokenBalance
+                currency={balance.asset.contract.address}
+                symbol={balance.asset.symbol}
+                value={balance.value}
+              />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

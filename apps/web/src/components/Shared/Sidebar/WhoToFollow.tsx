@@ -33,14 +33,16 @@ const WhoToFollow = () => {
     return (
       <Card className="space-y-4 p-5">
         <Title />
-        {Array.from({ length: 5 }).map((_, index) => (
-          <div className="flex items-center gap-x-3" key={index}>
-            <div className="w-full">
-              <SingleAccountShimmer showFollowUnfollowButton />
+        {Array.from({ length: 5 }, (_, index) => `placeholder-${index}`).map(
+          (id) => (
+            <div className="flex items-center gap-x-3" key={id}>
+              <div className="w-full">
+                <SingleAccountShimmer showFollowUnfollowButton />
+              </div>
+              <XMarkIcon className="size-4 text-gray-500" />
             </div>
-            <XMarkIcon className="size-4 text-gray-500" />
-          </div>
-        ))}
+          )
+        )}
         <div className="pt-2 pb-1">
           <Skeleton className="h-3 w-5/12 rounded-full" />
         </div>

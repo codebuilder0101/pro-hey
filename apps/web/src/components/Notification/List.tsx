@@ -108,7 +108,11 @@ const List = ({ feedType }: ListProps) => {
   return (
     <Card className="virtual-divider-list-window">
       <WindowVirtualizer>
-        {notifications.map((notification, index) => {
+        {notifications.map((notification) => {
+          if (!("id" in notification)) {
+            return null;
+          }
+
           const Component =
             notificationComponentMap[
               notification.__typename as keyof typeof notificationComponentMap
@@ -119,7 +123,7 @@ const List = ({ feedType }: ListProps) => {
               className={cn({
                 "p-5": notification.__typename !== "FollowNotification"
               })}
-              key={index}
+              key={notification.id}
             >
               {Component && <Component notification={notification as never} />}
             </div>
