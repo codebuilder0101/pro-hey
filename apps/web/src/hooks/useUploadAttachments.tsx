@@ -15,7 +15,7 @@ const useUploadAttachments = () => {
     removeAttachments,
     setIsUploading,
     updateAttachments
-  } = usePostAttachmentStore((state) => state);
+  } = usePostAttachmentStore();
 
 
   const handleUploadAttachments = useCallback(
