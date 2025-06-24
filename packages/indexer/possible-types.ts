@@ -134,6 +134,12 @@ const result: PossibleTypesResultData = {
       "SponsoredTransactionRequest",
       "TransactionWillFail"
     ],
+    CreateAccountResult: [
+      "CreateAccountResponse",
+      "SelfFundedTransactionRequest",
+      "SponsoredTransactionRequest",
+      "TransactionWillFail"
+    ],
     CreateAccountWithUsernameResult: [
       "CreateAccountResponse",
       "NamespaceOperationValidationFailed",
@@ -510,7 +516,6 @@ const result: PossibleTypesResultData = {
       "TransactionWillFail",
       "UnfollowResponse"
     ],
-    UnverifiedCredentialsResult: ["AuthenticationTokens", "ForbiddenError"],
     UnwrapTokensResult: [
       "InsufficientFunds",
       "SelfFundedTransactionRequest",

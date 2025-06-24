@@ -917,6 +917,12 @@ export type BuilderChallengeRequest = {
   address: Scalars['EvmAddress']['input'];
 };
 
+export type CanCreateUsernameRequest = {
+  localName: Scalars['String']['input'];
+  namespace?: Scalars['EvmAddress']['input'];
+  rulesSubject?: RulesSubject;
+};
+
 export type CanCreateUsernameResult = NamespaceOperationValidationFailed | NamespaceOperationValidationPassed | NamespaceOperationValidationUnknown | UsernameTaken;
 
 export type CanFollowRequest = {
@@ -999,16 +1005,26 @@ export enum ContentWarning {
   Spoiler = 'SPOILER'
 }
 
+export type CreateAccountRequest = {
+  enableSignless?: Scalars['Boolean']['input'];
+  managers?: Array<Scalars['EvmAddress']['input']>;
+  metadataUri: Scalars['URI']['input'];
+  owner?: InputMaybe<Scalars['EvmAddress']['input']>;
+};
+
 export type CreateAccountResponse = {
   __typename?: 'CreateAccountResponse';
   hash: Scalars['TxHash']['output'];
 };
+
+export type CreateAccountResult = CreateAccountResponse | SelfFundedTransactionRequest | SponsoredTransactionRequest | TransactionWillFail;
 
 export type CreateAccountWithUsernameRequest = {
   accountManager?: InputMaybe<Array<Scalars['EvmAddress']['input']>>;
   assignUsernameRuleProcessingParams?: InputMaybe<Array<NamespaceRulesProcessingParams>>;
   createUsernameRuleProcessingParams?: InputMaybe<Array<NamespaceRulesProcessingParams>>;
   enableSignless?: Scalars['Boolean']['input'];
+  managers?: InputMaybe<Array<Scalars['EvmAddress']['input']>>;
   metadataUri: Scalars['URI']['input'];
   owner?: InputMaybe<Scalars['EvmAddress']['input']>;
   username: UsernameInput;
@@ -1182,10 +1198,10 @@ export type CreateUsernameNamespaceRequest = {
 export type CreateUsernameNamespaceResult = CreateNamespaceResponse | SelfFundedTransactionRequest | TransactionWillFail;
 
 export type CreateUsernameRequest = {
-  account?: InputMaybe<Scalars['EvmAddress']['input']>;
   assignAccountNamespaceRulesProcessingParams?: InputMaybe<Array<NamespaceRulesProcessingParams>>;
-  autoAssign?: InputMaybe<Scalars['Boolean']['input']>;
+  autoAssign?: Scalars['Boolean']['input'];
   createUsernameRulesProcessingParams?: InputMaybe<Array<CreateUsernameRulesProcessingParams>>;
+  rulesSubject?: RulesSubject;
   unassignUsernameNamespaceRulesProcessingParams?: InputMaybe<Array<NamespaceRulesProcessingParams>>;
   username: UsernameInput;
 };
@@ -2268,10 +2284,6 @@ export type IsFollowingMeRequest = {
   graph: Scalars['EvmAddress']['input'];
 };
 
-export type IssueUnverifiedCredentialsRequest = {
-  signer: Scalars['EvmAddress']['input'];
-};
-
 export type JoinGroupRequest = {
   group: Scalars['EvmAddress']['input'];
   rulesProcessingParams?: InputMaybe<Array<GroupRulesProcessingParams>>;
@@ -2747,6 +2759,7 @@ export type Mutation = {
   challenge: AuthenticationChallenge;
   configureAccountAction: ConfigureAccountActionResult;
   configurePostAction: ConfigurePostActionResult;
+  createAccount: CreateAccountResult;
   createAccountWithUsername: CreateAccountWithUsernameResult;
   createApp: CreateAppResult;
   createFeed: CreateFeedResult;
@@ -2771,7 +2784,6 @@ export type Mutation = {
   generateNewAppServerApiKey: Scalars['ServerAPIKey']['output'];
   hideManagedAccount: Scalars['Void']['output'];
   hideReply: Scalars['Void']['output'];
-  issueUnverifiedCredentials: UnverifiedCredentialsResult;
   joinGroup: JoinGroupResult;
   leaveGroup: LeaveGroupResult;
   legacyRolloverRefresh: RefreshResult;
@@ -2934,6 +2946,11 @@ export type MutationConfigurePostActionArgs = {
 };
 
 
+export type MutationCreateAccountArgs = {
+  request: CreateAccountRequest;
+};
+
+
 export type MutationCreateAccountWithUsernameArgs = {
   request: CreateAccountWithUsernameRequest;
 };
@@ -3046,11 +3063,6 @@ export type MutationHideManagedAccountArgs = {
 
 export type MutationHideReplyArgs = {
   request: HideReplyRequest;
-};
-
-
-export type MutationIssueUnverifiedCredentialsArgs = {
-  request: IssueUnverifiedCredentialsRequest;
 };
 
 
@@ -4586,7 +4598,7 @@ export type QueryBalancesBulkArgs = {
 
 
 export type QueryCanCreateUsernameArgs = {
-  request: UsernameInput;
+  request: CanCreateUsernameRequest;
 };
 
 
@@ -5033,6 +5045,11 @@ export type RolloverRefreshRequest = {
   app: Scalars['EvmAddress']['input'];
   refreshToken: Scalars['LegacyRefreshToken']['input'];
 };
+
+export enum RulesSubject {
+  Account = 'ACCOUNT',
+  Signer = 'SIGNER'
+}
 
 export enum SelfFundedFallbackReason {
   CannotSponsor = 'CANNOT_SPONSOR',
@@ -6493,8 +6510,6 @@ export type UnknownRuleProcessingParams = {
   params?: InputMaybe<Array<AnyKeyValueInput>>;
 };
 
-export type UnverifiedCredentialsResult = AuthenticationTokens | ForbiddenError;
-
 export type UnwrapTokensRequest = {
   amount: Scalars['BigDecimal']['input'];
 };
@@ -6675,8 +6690,10 @@ export type UsernameNamespaceStats = {
 };
 
 export type UsernamePricePerLengthNamespaceRuleConfig = {
-  cost: Erc20AmountInput;
+  cost?: InputMaybe<Erc20AmountInput>;
   costOverrides?: InputMaybe<Array<LengthAmountPair>>;
+  erc20?: InputMaybe<Erc20AmountInput>;
+  native?: InputMaybe<Scalars['BigDecimal']['input']>;
   recipient: Scalars['EvmAddress']['input'];
   referralShare?: Scalars['Float']['input'];
 };
