@@ -81,6 +81,14 @@ To run the application in development mode:
 pnpm dev
 ```
 
+## Code Generation
+
+Run code generation to generate Prisma client and GraphQL types across all workspaces:
+
+```bash
+pnpm codegen
+```
+
 ## Build and Test
 
 ### Build the Application
