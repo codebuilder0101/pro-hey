@@ -42,6 +42,7 @@ import {
   usePostVideoStore
 } from "@/store/non-persisted/post/usePostVideoStore";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
+import GroupFeedSelector from "./Actions/GroupFeedSelector";
 import { Editor, useEditorContext, withEditorContext } from "./Editor";
 import LinkPreviews from "./LinkPreviews";
 
@@ -95,6 +96,7 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
   const [postContentError, setPostContentError] = useState("");
+  const [selectedFeed, setSelectedFeed] = useState<string>(feed || "");
 
   const editor = useEditorContext();
   const getMetadata = usePostMetadata();
@@ -118,6 +120,7 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
     setAudioPost(DEFAULT_AUDIO_POST);
     setLicense(null);
     resetCollectSettings();
+    setSelectedFeed(feed || "");
     setShowNewPostModal(false);
   };
 
@@ -140,6 +143,10 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
     onCompleted,
     onError
   });
+
+  useEffect(() => {
+    setSelectedFeed(feed || "");
+  }, [feed]);
 
   useEffect(() => {
     setPostContentError("");
@@ -215,7 +222,7 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
         variables: {
           request: {
             contentUri,
-            ...(feed && { feed }),
+            ...((feed || selectedFeed) && { feed: feed || selectedFeed }),
             ...(isComment && { commentOn: { post: post?.id } }),
             ...(isQuote && { quoteOf: { post: quotedPost?.id } }),
             ...(collectAction.enabled && {
@@ -277,7 +284,17 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
             <>
               <CollectSettings />
               <RulesSettings />
-              {isComment ? null : <LivestreamSettings />}
+              {isComment ? null : (
+                <>
+                  <LivestreamSettings />
+                  {feed ? null : (
+                    <GroupFeedSelector
+                      onChange={setSelectedFeed}
+                      selected={selectedFeed}
+                    />
+                  )}
+                </>
+              )}
             </>
           )}
         </div>
