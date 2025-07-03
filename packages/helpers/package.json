@@ -4,8 +4,8 @@
   "private": true,
   "license": "AGPL-3.0",
   "scripts": {
-    "typecheck": "tsc --pretty",
-    "test": "vitest run"
+    "test": "vitest run",
+    "typecheck": "tsc --pretty"
   },
   "dependencies": {
     "@hey/data": "workspace:*",
