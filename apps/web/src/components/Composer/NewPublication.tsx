@@ -287,7 +287,7 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
               {isComment ? null : (
                 <>
                   <LivestreamSettings />
-                  {feed ? null : (
+                  {!currentAccount?.isStaff && feed ? null : (
                     <GroupFeedSelector
                       onChange={setSelectedFeed}
                       selected={selectedFeed}
