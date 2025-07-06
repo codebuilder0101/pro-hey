@@ -2523,12 +2523,14 @@ export type MediaAudio = {
   cover?: Maybe<Scalars['URI']['output']>;
   credits?: Maybe<Scalars['String']['output']>;
   duration?: Maybe<Scalars['Int']['output']>;
+  durationSeconds?: Maybe<Scalars['Float']['output']>;
   genre?: Maybe<Scalars['String']['output']>;
   item: Scalars['URI']['output'];
   kind?: Maybe<MediaAudioKind>;
   license?: Maybe<MetadataLicenseType>;
   lyrics?: Maybe<Scalars['URI']['output']>;
   recordLabel?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
   type: MediaAudioType;
 };
 
@@ -2610,9 +2612,12 @@ export type MediaVideo = {
   attributes: Array<MetadataAttribute>;
   cover?: Maybe<Scalars['URI']['output']>;
   duration?: Maybe<Scalars['Int']['output']>;
+  durationSeconds?: Maybe<Scalars['Float']['output']>;
+  height?: Maybe<Scalars['Int']['output']>;
   item: Scalars['URI']['output'];
   license?: Maybe<MetadataLicenseType>;
   type: MediaVideoType;
+  width?: Maybe<Scalars['Int']['output']>;
 };
 
 
