@@ -8,7 +8,6 @@ const accountsSitemapIndex = async (ctx: Context) =>
   generateSitemap({
     buildXml: async () => {
       const totalBatches = await getTotalAccountBatches();
-
       const totalGroups = Math.ceil(totalBatches / SITEMAP_BATCH_SIZE);
 
       const sitemapIndex = create({ encoding: "UTF-8", version: "1.0" }).ele(

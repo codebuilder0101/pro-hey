@@ -15,9 +15,9 @@ const getTotalAccountBatches = async (): Promise<number> => {
 
   const usernames = (await lensPg.query(
     `
-    SELECT CEIL(COUNT(*) / $1) AS count
-    FROM account.username_assigned;
-  `,
+      SELECT CEIL(COUNT(*) / $1) AS count
+      FROM account.username_assigned;
+    `,
     [SITEMAP_BATCH_SIZE]
   )) as Array<{ count: number }>;
 

@@ -18,7 +18,6 @@ const accountsGroupSitemap = async (ctx: Context) => {
   return generateSitemap({
     buildXml: async () => {
       const totalBatches = await getTotalAccountBatches();
-
       const startBatch = (group - 1) * SITEMAP_BATCH_SIZE;
       const endBatch = Math.min(startBatch + SITEMAP_BATCH_SIZE, totalBatches);
 
