@@ -26,6 +26,7 @@ const getGroup = async (ctx: Context) => {
           <head>
             <meta charSet="utf-8" />
             <meta name="viewport" content="width=device-width" />
+            <meta http-equiv="content-language" content="en-US" />
             <title>${escTitle}</title>
             <meta name="description" content="${escDescription}" />
             <meta property="og:title" content="${escTitle}" />
