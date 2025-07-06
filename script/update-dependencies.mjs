@@ -28,7 +28,7 @@ const branchName = format(
   pad(now.getHours()),
   pad(now.getMinutes())
 );
-const commitMessage = "chore: Update dependencies across all packages";
+const commitMessage = "chore: update dependencies across all packages";
 
 exec(`git checkout -b ${branchName}`);
 exec("pnpm update --interactive --recursive --latest");
