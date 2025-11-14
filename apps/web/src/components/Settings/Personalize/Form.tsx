@@ -1,4 +1,3 @@
-import { MeVariables } from "@hey/data/constants";
 import { ERRORS } from "@hey/data/errors";
 import { Regex } from "@hey/data/regex";
 import { useMeLazyQuery, useSetAccountMetadataMutation } from "@hey/indexer";
@@ -57,8 +56,7 @@ const PersonalizeSettingsForm = () => {
   const handleTransactionLifecycle = useTransactionLifecycle();
   const waitForTransactionToComplete = useWaitForTransactionToComplete();
   const [getCurrentAccountDetails] = useMeLazyQuery({
-    fetchPolicy: "no-cache",
-    variables: MeVariables
+    fetchPolicy: "no-cache"
   });
 
   const onCompleted = async (hash: string) => {

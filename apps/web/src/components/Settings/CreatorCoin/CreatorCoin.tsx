@@ -1,4 +1,4 @@
-import { MeVariables, ZORA_API_KEY } from "@hey/data/constants";
+import { ZORA_API_KEY } from "@hey/data/constants";
 import { Regex } from "@hey/data/regex";
 import { useMeLazyQuery, useSetAccountMetadataMutation } from "@hey/indexer";
 import type { ApolloClientError } from "@hey/types/errors";
@@ -47,8 +47,7 @@ const CreatorCoin = () => {
   const handleTransactionLifecycle = useTransactionLifecycle();
   const waitForTransactionToComplete = useWaitForTransactionToComplete();
   const [getCurrentAccountDetails] = useMeLazyQuery({
-    fetchPolicy: "no-cache",
-    variables: MeVariables
+    fetchPolicy: "no-cache"
   });
 
   const onCompleted = async (hash: string) => {

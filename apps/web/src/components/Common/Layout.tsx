@@ -1,5 +1,4 @@
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import { MeVariables } from "@hey/data/constants";
 import { useMeQuery } from "@hey/indexer";
 import { useIsClient } from "@uidotdev/usehooks";
 import { memo, useCallback, useEffect } from "react";
@@ -15,16 +14,12 @@ import reloadAllTabs from "@/helpers/reloadAllTabs";
 import { useTheme } from "@/hooks/useTheme";
 import { useAccountStore } from "@/store/persisted/useAccountStore";
 import { hydrateAuthTokens, signOut } from "@/store/persisted/useAuthStore";
-import { useBetaStore } from "@/store/persisted/useBetaStore";
-import { useProStore } from "@/store/persisted/useProStore";
 import ReloadTabsWatcher from "./ReloadTabsWatcher";
 
 const Layout = () => {
   const { pathname } = useLocation();
   const { theme } = useTheme();
   const { currentAccount, setCurrentAccount } = useAccountStore();
-  const { setProBannerDismissed } = useProStore();
-  const { setBetaBannerDismissed } = useBetaStore();
   const isMounted = useIsClient();
   const { accessToken } = hydrateAuthTokens();
 
@@ -38,18 +33,11 @@ const Layout = () => {
   }, []);
 
   const { loading } = useMeQuery({
-    onCompleted: ({ me, proBanner, betaBanner }) => {
+    onCompleted: ({ me }) => {
       setCurrentAccount(me.loggedInAs.account);
-      if (proBanner?.__typename === "Post") {
-        setProBannerDismissed(proBanner.operations?.dismissed ?? false);
-      }
-      if (betaBanner?.__typename === "Post") {
-        setBetaBannerDismissed(betaBanner.operations?.dismissed ?? false);
-      }
     },
     onError,
-    skip: !accessToken,
-    variables: MeVariables
+    skip: !accessToken
   });
 
   const accountLoading = !currentAccount && loading;

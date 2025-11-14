@@ -1,6 +1,5 @@
 import {
   DEFAULT_COLLECT_TOKEN,
-  MeVariables,
   STATIC_IMAGES_URL,
   WRAPPED_NATIVE_TOKEN_SYMBOL
 } from "@hey/data/constants";
@@ -44,8 +43,7 @@ const SuperFollow = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   usePreventScrollOnNumberInput(inputRef as RefObject<HTMLInputElement>);
   const [getCurrentAccountDetails] = useMeLazyQuery({
-    fetchPolicy: "no-cache",
-    variables: MeVariables
+    fetchPolicy: "no-cache"
   });
 
   const account = currentAccount as AccountFragment;
