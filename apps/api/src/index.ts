@@ -6,7 +6,6 @@ import { Hono } from "hono";
 import authContext from "./context/authContext";
 import cors from "./middlewares/cors";
 import ensRouter from "./routes/ens";
-import metadataRouter from "./routes/metadata";
 import ping from "./routes/ping";
 
 const log = withPrefix("[API]");
@@ -17,7 +16,6 @@ app.use(cors);
 app.use(authContext);
 
 app.get("/ping", ping);
-app.route("/metadata", metadataRouter);
 app.route("/ens", ensRouter);
 
 app.notFound((ctx) =>

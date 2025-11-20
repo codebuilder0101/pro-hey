@@ -4,7 +4,6 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 const dependenciesToChunk = {
-  aws: ["@aws-sdk/client-s3", "@aws-sdk/lib-storage"],
   editor: [
     "react-markdown",
     "unified",
