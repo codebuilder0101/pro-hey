@@ -5,7 +5,6 @@ export const LENS_API_URL = "https://api.lens.xyz/graphql";
 export const DEFAULT_COLLECT_TOKEN = CONTRACTS.defaultToken;
 export const HEY_APP = CONTRACTS.app;
 export const HEY_TREASURY = "0x03Ba34f6Ea1496fa316873CF8350A3f7eaD317EF";
-export const HEY_API_URL = "https://api.hey.xyz";
 export const ADDRESS_PLACEHOLDER = "0x03Ba3...7EF";
 
 // Subscription
@@ -26,9 +25,6 @@ export const BASE_RPC_URL = "https://base.llamarpc.com";
 // Storage
 export const STORAGE_NODE_URL = "https://api.grove.storage";
 export const IPFS_GATEWAY = "https://gw.ipfs-lens.dev/ipfs";
-export const EVER_API = "https://endpoint.4everland.co";
-export const EVER_REGION = "4EVERLAND";
-export const EVER_BUCKET = "heyverse";
 
 // Tokens / Keys
 export const WALLETCONNECT_PROJECT_ID = "cd542acc70c2b548030f9901a52e70c8";

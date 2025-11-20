@@ -59,8 +59,6 @@ The example environment files define the following variables:
 #### API (`apps/api/.env.example`)
 
 - `PRIVATE_KEY` – Private key used to sign Lens requests.
-- `EVER_ACCESS_KEY` – Access key for 4EVERLAND storage.
-- `EVER_ACCESS_SECRET` – Secret key for 4EVERLAND storage.
 - `SHARED_SECRET` – Token for internal API authorization.
 
 ### Start the Development Server
