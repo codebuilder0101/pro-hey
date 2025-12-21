@@ -1,0 +1,49 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    env:
+      MACHINE: server
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          authkey: ${{ secrets.TS_AUTHKEY }}
+          hostname: deploy-hey-xyz-${{ github.run_id }}
+          ping: server
+          version: latest
+
+      - name: Add SSH key
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          mkdir -p ~/.ssh
+          MACHINE_IP="$(tailscale ip -4 $MACHINE)"
+          ssh-keyscan $MACHINE_IP >> ~/.ssh/known_hosts
+          echo "$SSH_KEY" | tr -d '\r' > ~/.ssh/key
+          chmod 600 ~/.ssh/key
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add ~/.ssh/key
+
+      - name: Deploy
+        run: |
+          MACHINE_IP="$(tailscale ip -4 $MACHINE)"
+          USERHOST="$MACHINE@$MACHINE_IP"
+          COMMAND="source ~/.zshrc && cd www/hey.xyz && pnpm build && pm2 restart hey.xyz"
+          ssh $USERHOST "$COMMAND"
