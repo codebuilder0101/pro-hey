@@ -9,7 +9,7 @@
     "build": "vite build",
     "codegen": "graphql-codegen --config src/indexer/codegen.ts",
     "dev": "vite dev --port 4783",
-    "start": "vite preview --port 4783",
+    "start": "vite preview --host 0.0.0.0 --port 4783",
     "typecheck": "tsc --pretty"
   },
   "dependencies": {
