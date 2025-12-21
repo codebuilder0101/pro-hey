@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      args: "start",
+      args: "start --host 0.0.0.0",
       cwd: "/Users/server/www/hey.xyz",
       env: {
         NODE_ENV: "production"
