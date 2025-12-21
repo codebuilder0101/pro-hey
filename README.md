@@ -15,7 +15,7 @@ This repository uses [pnpm workspaces](https://pnpm.io/workspaces) to manage mul
 ### Clone the Repository
 
 ```bash
-git clone git@github.com:heyverse/hey.git
+git clone git@github.com:bigint/hey.git
 ```
 
 ### Install NVM and pnpm
