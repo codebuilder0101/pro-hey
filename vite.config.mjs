@@ -67,7 +67,5 @@ export default defineConfig({
     target: "esnext"
   },
   plugins: [tsconfigPaths(), react(), tailwindcss()],
-  preview: {
-    allowedHosts: ["hey.xyz", "www.hey.xyz"]
-  }
+  preview: { allowedHosts: true }
 });
