@@ -15,7 +15,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     env:
-      MACHINE: server
+      MACHINE: apps
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,7 +25,7 @@ jobs:
         with:
           authkey: ${{ secrets.TS_AUTHKEY }}
           hostname: deploy-hey-xyz-${{ github.run_id }}
-          ping: server
+          ping: ${{ env.MACHINE }}
           version: latest
 
       - name: Add SSH key
