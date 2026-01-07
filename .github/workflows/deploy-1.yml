@@ -1,4 +1,4 @@
-name: Deploy 1
+name: Deploy North
 
 on:
   schedule:
@@ -9,7 +9,7 @@ on:
       - main
 
 concurrency:
-  group: deploy-1-${{ github.ref }}
+  group: deploy-north-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
