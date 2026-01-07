@@ -49,5 +49,5 @@ jobs:
         run: |
           MACHINE_IP="$(tailscale ip -4 $MACHINE)"
           USERHOST="root@$MACHINE_IP"
-          COMMAND="cd hey.xyz && git pull --ff-only && pnpm install --frozen-lockfile && pnpm build && pm2 restart hey.xyz --update-env"
+          COMMAND="tailscale ping pi"
           ssh $USERHOST "$COMMAND"
