@@ -78,6 +78,7 @@ const Bookmark = ({ post }: BookmarkProps) => {
 
   const handleToggleBookmark = async () => {
     if (hasBookmarked) {
+      umami.track("unbookmark_post");
       return await undoBookmarkPost();
     }
 
