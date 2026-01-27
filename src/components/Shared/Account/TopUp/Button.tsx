@@ -27,9 +27,10 @@ const TopUpButton = ({
     <Button
       aria-label={label}
       className={className}
-      onClick={() =>
-        setShowFundModal({ amountToTopUp, showFundModal: true, token })
-      }
+      onClick={() => {
+        umami.track("open_top_up");
+        setShowFundModal({ amountToTopUp, showFundModal: true, token });
+      }}
       outline={outline}
       size={size}
       type="button"
