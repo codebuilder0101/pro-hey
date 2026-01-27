@@ -80,6 +80,7 @@ const Follow = ({
     }
 
     setIsSubmitting(true);
+    umami.track("follow");
 
     return await follow({
       variables: { request: { account: account.address } }

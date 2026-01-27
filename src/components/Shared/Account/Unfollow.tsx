@@ -77,6 +77,7 @@ const Unfollow = ({
     }
 
     setIsSubmitting(true);
+    umami.track("unfollow");
     return await unfollow({
       variables: { request: { account: account.address } }
     });

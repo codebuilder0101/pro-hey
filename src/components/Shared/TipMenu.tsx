@@ -132,6 +132,7 @@ const TipMenu = ({ closePopover, post, account }: TipMenuProps) => {
 
   const handleTip = async () => {
     setIsSubmitting(true);
+    umami.track("tip", { amount: cryptoRate });
 
     const tipping: TippingAmountInput = {
       native: cryptoRate.toString(),
