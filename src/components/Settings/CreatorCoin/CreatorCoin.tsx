@@ -125,6 +125,7 @@ const CreatorCoin = () => {
     if (!currentAccount) return;
 
     setIsSubmitting(true);
+    umami.track("save_creator_coin");
     const preparedAccountMetadata = prepareAccountMetadata(currentAccount, {
       attributes: { creatorCoinAddress: data.creatorCoinAddress }
     });
@@ -142,6 +143,7 @@ const CreatorCoin = () => {
     if (!currentAccount) return;
 
     setIsSubmitting(true);
+    umami.track("remove_creator_coin");
     const preparedAccountMetadata = prepareAccountMetadata(currentAccount, {
       attributes: { creatorCoinAddress: undefined }
     });
