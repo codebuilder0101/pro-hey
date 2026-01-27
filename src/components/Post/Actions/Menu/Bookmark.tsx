@@ -81,6 +81,7 @@ const Bookmark = ({ post }: BookmarkProps) => {
       return await undoBookmarkPost();
     }
 
+    umami.track("bookmark_post");
     return await bookmarkPost();
   };
 

@@ -12,6 +12,7 @@ interface LogoutProps {
 const Logout = ({ className = "", onClick }: LogoutProps) => {
   const handleLogout = async () => {
     try {
+      umami.track("logout");
       signOut();
       reloadAllTabs();
     } catch (error) {

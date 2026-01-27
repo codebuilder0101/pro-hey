@@ -117,6 +117,7 @@ const Login = ({ setHasAccounts }: LoginProps) => {
         const accessToken = auth.data?.authenticate.accessToken;
         const refreshToken = auth.data?.authenticate.refreshToken;
         signIn({ accessToken, refreshToken });
+        umami.track("login");
         reloadAllTabs();
         return;
       }

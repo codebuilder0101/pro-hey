@@ -123,6 +123,7 @@ const CollectActionButton = ({
 
   const handleCreateCollect = async () => {
     setIsSubmitting(true);
+    umami.track("collect");
 
     return await executePostAction({
       variables: {

@@ -23,6 +23,7 @@ const Report = ({ post }: ReportProps) => {
       }
       onClick={(event) => {
         stopEventPropagation(event);
+        umami.track("open_report_post");
         setShowReportPostModal(true, post.id);
       }}
     >

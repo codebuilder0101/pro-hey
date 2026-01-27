@@ -29,6 +29,7 @@ const Success = () => {
         const accessToken = auth.data?.switchAccount.accessToken;
         const refreshToken = auth.data?.switchAccount.refreshToken;
         signIn({ accessToken, refreshToken });
+        umami.track("signup");
         reloadAllTabs();
         return;
       }

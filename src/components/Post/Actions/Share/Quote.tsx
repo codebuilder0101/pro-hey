@@ -30,6 +30,7 @@ const Quote = ({ post }: QuoteProps) => {
         if (!currentAccount) {
           return toast.error(ERRORS.SignWallet);
         }
+        umami.track("open_quote_composer");
         setQuotedPost(post);
         setShowNewPostModal(true);
       }}

@@ -86,6 +86,7 @@ const Repost = ({ isSubmitting, post, setIsSubmitting }: RepostProps) => {
     }
 
     setIsSubmitting(true);
+    umami.track("repost");
 
     return await repost({ variables: { request: { post: post.id } } });
   };

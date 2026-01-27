@@ -26,6 +26,7 @@ const Share = ({ post }: ShareProps) => {
       }
       onClick={(event) => {
         stopEventPropagation(event);
+        umami.track("copy_post_link");
         copyLink();
       }}
     >

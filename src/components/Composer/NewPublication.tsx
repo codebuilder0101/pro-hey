@@ -202,11 +202,13 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
       const contentUri = await uploadMetadata(metadata);
 
       if (editingPost) {
+        umami.track("edit_post");
         return await editPost({
           variables: { request: { contentUri, post: editingPost?.id } }
         });
       }
 
+      umami.track(isComment ? "comment" : isQuote ? "quote" : "create_post");
       return await createPost({
         variables: {
           request: {
