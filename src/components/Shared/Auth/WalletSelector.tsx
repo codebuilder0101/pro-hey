@@ -35,7 +35,10 @@ const WalletSelector: FC = () => {
     <div className="space-y-2.5">
       <button
         className="flex items-center space-x-1 text-sm underline"
-        onClick={() => disconnect?.()}
+        onClick={() => {
+          umami.track("disconnect_wallet");
+          disconnect?.();
+        }}
         type="reset"
       >
         <KeyIcon className="size-4" />
