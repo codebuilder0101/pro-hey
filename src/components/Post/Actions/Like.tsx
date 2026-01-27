@@ -83,6 +83,7 @@ const Like = ({ post, showCount }: LikeProps) => {
 
     if (hasReacted) {
       decrement();
+      umami.track("unlike_post");
       return await undoReaction({
         variables: {
           request: { post: post.id, reaction: PostReactionType.Upvote }
