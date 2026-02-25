@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.14.0",
-    "@biomejs/biome": "^2.3.10",
+    "@biomejs/biome": "^2.4.4",
     "@headlessui/react": "^2.2.9",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "5.2.2",
